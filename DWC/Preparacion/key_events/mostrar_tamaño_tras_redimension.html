@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dimensiones de la Página</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Dimensiones de la Ventana</h1>
+    <p id="dimensiones">Ancho: 0px, Alto: 0px</p>
+
+    <script>
+        function actualizarDimensiones() {
+            // Obtiene el ancho y alto de la ventana
+            const ancho = window.innerWidth;
+            const alto = window.innerHeight;
+
+            // Actualiza el contenido del elemento p con las dimensiones actuales
+            document.getElementById("dimensiones").textContent = `Ancho: ${ancho}px, Alto: ${alto}px`;
+        }
+
+        // Llama a la función inicialmente para mostrar las dimensiones cuando se carga la página
+        actualizarDimensiones();
+
+        // Escucha el evento de redimensionado de la ventana
+        window.addEventListener("resize", actualizarDimensiones);
+    </script>
+
+</body>
+</html>

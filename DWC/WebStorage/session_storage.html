@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head></head>
+    <body>
+        <form action="#" id="formu">
+            <label for="nombre">Introduzca su nombre</label>
+            <input type="text" placeholder="Nombre" name="nombre" id="nombre">
+            <label for="edad">Introduzca su edad</label>
+            <input type="int" placeholder="Edad" name="edad" id="edad" step="1">
+            <label for="descripcion">Escriba algo sobre usted</label>
+            <input type="textarea" name="descripcion" id="descripcion">  
+        </form>
+
+        <script>
+            let formulario = document.querySelector('#formu');
+            let inputField;
+            let inputData;
+            formulario.addEventListener('input', (event) => {
+                if(event.target.tagName.toLowerCase() === 'input'){
+                    inputField = event.target.id; //elem.closest(selector) devuelve el ancestro más cercano que coincide con el selector. En nuestro caso buscamos <td> hacia arriba desde el elemento de origen
+                    inputData = event.target.value;
+                }
+                if(inputData !== "") storeInSession(inputField, inputData);
+            });
+
+            function storeInSession (data) {
+                sessionStorage.setItem(inputField, inputData);
+            }
+            function getStoredValues () {}
+            
+        </script>
+    </body>
+</html>

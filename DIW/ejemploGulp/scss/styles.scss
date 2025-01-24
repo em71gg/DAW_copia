@@ -1,0 +1,84 @@
+// Variables
+$color-primario: #4e4aa0;
+$color-secundario: #3498db;
+$fuente-principal: 'Arial', sans-serif;
+$padding-base: 20px;
+
+// Mixins
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// Estilos base
+body {
+    font-family: $fuente-principal;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+// Estilos de header
+header {
+    background-color: $color-primario;
+    color: white;
+    text-align: center;
+    padding: $padding-base;
+
+    h1 {
+        margin: 0;
+        font-size: 2.5em;
+    }
+}
+
+// Estilos de secciones
+main {
+    section {
+        background-color: white;
+        margin: 20px 0;
+        padding: $padding-base;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+        h2 {
+            color: $color-secundario;
+            border-bottom: 2px solid $color-secundario;
+            padding-bottom: 10px;
+        }
+    }
+
+    .curiosidades {
+        ul {
+            list-style-type: none;
+            padding: 0;
+
+            li {
+                padding: 10px;
+                background-color: lighten($color-secundario, 40%);
+                margin: 5px 0;
+                border-radius: 3px;
+
+                &:hover {
+                    background-color: lighten($color-secundario, 35%);
+                }
+            }
+        }
+    }
+}
+
+// Estilos de footer
+footer {
+    @include flex-center;
+    background-color: $color-primario;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}

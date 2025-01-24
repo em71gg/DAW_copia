@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+    <ul id="lista">
+        <li>Elemento 1</li>
+    </ul>
+    <script>
+        let nuevoElemtno = document.createElement("li");
+        nuevoElemtno.textContent = "elemnto 2";
+        document.getElementById("lista").appendChild(nuevoElemtno);
+
+        setTimeout(() => {
+            document.getElementById("lista").removeChild(nuevoElemtno);
+        }, 5000);
+    </script>
+</html>

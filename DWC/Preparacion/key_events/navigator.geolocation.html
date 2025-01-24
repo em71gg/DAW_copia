@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Obtener Localización</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Obtener Localización del Usuario</h1>
+
+    <button onclick="obtenerLocalizacion()">Obtener Mi Localización</button>
+
+    <div id="result"></div>
+
+    <script>
+        function obtenerLocalizacion() {
+            // Verificar si el navegador soporta Geolocation
+            if (navigator.geolocation) {
+                // Obtener la posición del usuario
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        // Mostrar la ubicación en el div
+                        const latitud = position.coords.latitude;
+                        const longitud = position.coords.longitude;
+                        document.getElementById("result").innerHTML = `
+                            <p>Tu ubicación:</p>
+                            <p>Latitud: ${latitud}</p>
+                            <p>Longitud: ${longitud}</p>
+                        `;
+                    },
+                    function(error) {
+                        // En caso de error
+                        let mensajeError = "";
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                mensajeError = "El usuario ha denegado la solicitud de geolocalización.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                mensajeError = "La información de la ubicación no está disponible.";
+                                break;
+                            case error.TIMEOUT:
+                                mensajeError = "El tiempo para obtener la ubicación ha expirado.";
+                                break;
+                            default:
+                                mensajeError = "Ha ocurrido un error desconocido.";
+                                break;
+                        }
+                        document.getElementById("result").innerHTML = `
+                            <p>Error: ${mensajeError}</p>
+                        `;
+                    }
+                );
+            } else {
+                // Si el navegador no soporta Geolocation
+                document.getElementById("result").innerHTML = `
+                    <p>Tu navegador no soporta geolocalización.</p>
+                `;
+            }
+        }
+    </script>
+
+</body>
+</html>

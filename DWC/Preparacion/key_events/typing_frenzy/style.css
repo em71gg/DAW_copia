@@ -1,0 +1,86 @@
+body {
+    height: 100%;
+    margin: 1em;
+    background: linear-gradient(to left top, navy, black) fixed;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  h1 {
+    font-family: cursive, sans-serif;
+    color: #77ff77;
+  }
+  p, button, #result {
+    font-family: sans-serif;
+    font-size: 1.5em;
+  }
+  p, label, #result {
+    color: gold;
+  }
+  button {
+    background-color: #333366;
+    color: lightblue;
+    margin: 1em .5em;
+    transition: background-color 0.2s;
+  }
+  button:hover {
+    background-color: #444488;
+  }
+  #word {
+    color: #ff88dd;
+    font-family: cursive, sans-serif;
+    font-weight: bold;
+    font-size: 2.5em;
+    letter-spacing: .25em;
+    display: none;
+  }
+  #countdownContainer {
+    display: none;
+    align-items: center;
+    height: 9.4em;
+  }
+  #countdown {
+    color: #ffdd88;
+    font-family: cursive, sans-serif;
+    font-weight: bold;
+    margin: auto;
+  }
+  #timeLeft {
+    display: none;
+    margin: 1em auto;
+  }
+  #timeIndicator {
+    height: 1.2em;
+    background-color: #904814;
+    margin: auto;
+    border: 0.1em solid yellow;
+    border-radius: 0.7em;
+  }
+  #timeDisplay {
+    display: none;
+    font-family: cursive, sans-serif;
+    font-size: 1.5em;
+    line-height: 2em;
+    color: yellow;
+  }
+  #scoreBoard {
+    display: none;
+    margin: 1em auto;
+    padding: 0.15em 0 0 0;
+    font-family: monospace, sans-serif;
+    font-size: 2.2em;
+    color: white;
+    background-color: #008800;
+    width: 4em;
+    border: 0.05em solid yellow;
+    border-radius: 0.3em;
+  }
+  #endGameDisplay {
+    margin: 0.7em auto;
+    display: none;
+    font-family: cursive, monospace, sans-serif;
+    font-size: 1.4em;
+    color: navy;
+    width: 22em;
+    background-color: lightblue;
+  }
+  

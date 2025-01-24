@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Imagen Favorita</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .preview {
+            margin-top: 20px;
+            max-width: 200px;
+            max-height: 200px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Esta es mi imagen favorita</h1>
+    
+    <form id="image-form">
+        <label for="image-upload">Selecciona tu imagen favorita (PNG, máx 1 MB):</label>
+        <input type="file" id="image-upload" accept="image/png">
+        <button type="submit">Subir Imagen</button>
+    </form>
+
+    <p id="message" class="error"></p>
+    <img id="preview" class="preview" alt="Previsualización de la imagen" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageInput = document.getElementById('image-upload');
+            const form = document.getElementById('image-form');
+            const message = document.getElementById('message');
+            const preview = document.getElementById('preview');
+
+            imageInput.addEventListener('change', () => {
+                const file = imageInput.files[0];
+
+                // Reiniciar mensajes y previsualización
+                message.textContent = '';
+                preview.src = '';
+
+                if (!file) return;
+
+                // Validar tipo de archivo
+                if (file.type !== 'image/png') {
+                    message.textContent = 'Error: Solo se aceptan archivos PNG.';
+                    return;
+                }
+
+                // Validar tamaño del archivo (1 MB = 1,048,576 bytes)
+                if (file.size > 1048576) {
+                    message.textContent = 'Error: El tamaño máximo permitido es 1 MB.';
+                    return;
+                }
+
+                // Mostrar la previsualización de la imagen
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const file = imageInput.files[0];
+
+                if (!file || file.type !== 'image/png' || file.size > 1048576) {
+                    message.textContent = 'Por favor, selecciona una imagen válida antes de subirla.';
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const response = await fetch('http://localhost:8080/upload', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        alert('Imagen subida exitosamente.');
+                    } else {
+                        alert('Error al subir la imagen.');
+                    }
+                } catch (error) {
+                    alert('Hubo un problema con la conexión al servidor.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

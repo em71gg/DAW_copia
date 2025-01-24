@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivo de Criminales</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+        }
+        .registro, .consultas, .resultados { 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            border-color: black;
+        }
+        .registro , .consultas{ 
+            background-color: #f9fff6; 
+        }
+        
+        .resultados { 
+            display: flex;
+            
+            background-color: #e0dedd; 
+        }
+        label { 
+            display: block; margin-bottom: 5px; 
+        }
+        input[type="text"], input[type="date"], input[type="file"] { 
+            width: 100%; 
+            padding: 8px; 
+            margin-bottom: 10px; 
+            box-sizing: border-box; 
+            border-radius: 10px;
+        }
+        input[type="button"], button { 
+            padding: 10px 20px; 
+            background-color: #ff0000fe; 
+            color: white; 
+            border: 2px;
+            border-color: rgb(0, 0, 0);
+            cursor: pointer; 
+            margin-right: 5px;
+        }
+        input[type="button"]:hover, button:hover { 
+            background-color: #ff00009e;
+        }
+        img { 
+            margin-top: 10px; 
+            max-width: 150px; 
+            height: auto; 
+            border: 2px; 
+            border-color: rgb(0, 0, 0); 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Archivo de Criminales</h1>
+
+    <div class="registro">
+        <h2>Registro de Criminal</h2>
+        <form id="criminalForm">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="fecha">Fecha de detención:</label>
+            <input type="date" id="fecha" name="fecha">
+
+            <label for="foto">Fotografía:</label>
+            <input type="file" id="foto" name="foto" accept="image/*" onchange="mostrarVistaPreviaFoto()">
+            <img id="vistaPreviaFoto" src="" alt="Vista previa" style="display:none;">
+            <p id="nombreFoto">Ningún archivo seleccionado</p>
+
+            <label for="informe">Informe:</label>
+            <input type="file" id="informe" name="informe" accept=".pdf" onchange="mostrarNombreInforme()">
+            <p id="nombreInforme">Ningún archivo seleccionado</p>
+
+            <input type="button" value="Registrar criminal" onclick="registrarCriminal()">
+        </form>
+    </div>
+
+    <div class="consultas">
+        <h2>Consultas</h2>
+        <button onclick="mostrarCriminales()">Listar criminales</button>
+        <button onclick="mostrarFotos()">Mostrar las fotos</button>
+        <button onclick="listarEnLibertad()">Listar en libertad</button>
+        <button onclick="contarLiberados()">Total liberados</button>
+        <button onclick="listarEncarcelados()">Listar encarcelados</button>
+        <button onclick="contarEncarcelados()">Total encarcelados</button>
+        
+        <label for="buscar-nombre">Buscar criminal por nombre:</label>
+        <input type="text" id="buscar-nombre" name="buscar-nombre">
+        <button onclick="buscarPorNombre()">Buscar</button>
+    </div>
+
+    <div class="resultados">
+        <h2>Resultados</h2>
+        <div id="resultados"></div>
+    </div>
+
+    <script>
+        let db;
+        const request = indexedDB.open("CriminalDB", 1);
+
+        request.onupgradeneeded = (event) => {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains("criminales")) {
+                const store = db.createObjectStore("criminales", { keyPath: "id", autoIncrement: true });
+                store.createIndex("criminal", "nombre", { unique: false });
+                store.createIndex("fecha", "fecha", { unique: false });
+            }
+        };
+
+        request.onsuccess = (event) => {
+            db = event.target.result;
+            console.log("Conexión a la base de datos establecida.");
+        };
+
+        request.onerror = () => {
+            console.error("Error al abrir la base de datos.");
+        };
+
+        function mostrarVistaPreviaFoto() {
+            const inputFoto = document.getElementById('foto');
+            const vistaPrevia = document.getElementById('vistaPreviaFoto');
+            const nombreFoto = document.getElementById('nombreFoto');
+
+            if (inputFoto.files && inputFoto.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    vistaPrevia.src = e.target.result;
+                    vistaPrevia.style.display = 'block';
+                };
+                reader.readAsDataURL(inputFoto.files[0]);
+                nombreFoto.textContent = `Archivo seleccionado: ${inputFoto.files[0].name}`;
+            } else {
+                vistaPrevia.style.display = 'none';
+                nombreFoto.textContent = 'Ningún archivo seleccionado';
+            }
+        }
+
+        function mostrarNombreInforme() {
+            const inputInforme = document.getElementById('informe');
+            const nombreInforme = document.getElementById('nombreInforme');
+
+            if (inputInforme.files && inputInforme.files[0]) {
+                nombreInforme.textContent = `Archivo seleccionado: ${inputInforme.files[0].name}`;
+            } else {
+                nombreInforme.textContent = 'Ningún archivo seleccionado';
+            }
+        }
+
+        function registrarCriminal() {
+            const nombre = document.getElementById('nombre').value.trim();
+            const fecha = document.getElementById('fecha').value;
+            const foto = document.getElementById('foto').files[0];
+            const informe = document.getElementById('informe').files[0];
+
+            if (!nombre || !foto || !informe) {
+                alert("Completa todos los campos.");
+                return;
+            }
+
+            const readerFoto = new FileReader();
+            const readerInforme = new FileReader();
+
+            readerFoto.onload = () => {
+                const fotoUrl = readerFoto.result;
+                readerInforme.onload = () => {
+                    const informeData = readerInforme.result;
+
+                    const registro = { nombre, fecha, foto: fotoUrl, informe: informeData };
+                    const transaction = db.transaction(["criminales"], "readwrite");
+                    const store = transaction.objectStore("criminales");
+
+                    store.add(registro);
+
+                    transaction.oncomplete = () => {
+                        alert("Criminal registrado.");
+                        document.getElementById('criminalForm').reset();
+                        document.getElementById('vistaPreviaFoto').style.display = 'none';
+                        document.getElementById('nombreFoto').textContent = 'Ningún archivo seleccionado';
+                        document.getElementById('nombreInforme').textContent = 'Ningún archivo seleccionado';
+                    };
+                    transaction.onerror = () => {
+                        alert("Error al registrar el criminal.");
+                    };
+                };
+                readerInforme.readAsDataURL(informe);
+            };
+            readerFoto.readAsDataURL(foto);
+        }
+
+        function mostrarCriminales() {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            const transaction = db.transaction(["criminales"], "readonly");
+            const store = transaction.objectStore("criminales");
+            const consulta = store.getAll();
+
+            consulta.onsuccess = () => {
+                const criminales = consulta.result;
+                if (criminales.length === 0) {
+                    resultadosDiv.innerHTML = '<p>No hay criminales registrados.</p>';
+                } else {
+                    criminales.forEach(c => {
+                        resultadosDiv.innerHTML += `<p><strong>Nombre:</strong> ${c.nombre}, <strong>Fecha de detención:</strong> ${c.fecha || 'En libertad'}</p>`;
+                    });
+                }
+            };
+        }
+
+        function listarEnLibertad() {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            const transaction = db.transaction(["criminales"], "readonly");
+            const store = transaction.objectStore("criminales");
+            const consulta = store.getAll();
+
+            consulta.onsuccess = () => {
+                const libres = consulta.result.filter(c => !c.fecha);
+                if (libres.length === 0) {
+                    resultadosDiv.innerHTML = '<p>No hay criminales en libertad.</p>';
+                } else {
+                    libres.forEach(c => {
+                        resultadosDiv.innerHTML += `<p><strong>Nombre:</strong> ${c.nombre}, <strong>Fecha de detención:</strong> En libertad</p>`;
+                    });
+                }
+            };
+        }
+
+        function mostrarFotos() {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            const transaction = db.transaction(["criminales"], "readonly");
+            const store = transaction.objectStore("criminales");
+            const consulta = store.getAll();
+
+            consulta.onsuccess = () => {
+                const criminales = consulta.result;
+                if (criminales.length === 0) {
+                    resultadosDiv.innerHTML = '<p>No hay fotos registradas.</p>';
+                } else {
+                    criminales.forEach(c => {
+                        resultadosDiv.innerHTML += `<p><strong>${c.nombre}</strong>:<br><img src="${c.foto}" alt="Foto de ${c.nombre}"></p>`;
+                    });
+                }
+            };
+        }
+
+        function buscarPorNombre() {
+            const nombre = document.getElementById('buscar-nombre').value.trim();
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            const transaction = db.transaction(["criminales"], "readonly");
+            const store = transaction.objectStore("criminales");
+            const index = store.index("criminal");
+            const consulta = index.getAll();
+
+            consulta.onsuccess = () => {
+                const criminal = consulta.result.find(c => c.nombre.toLowerCase() === nombre.toLowerCase());
+                if (!criminal) {
+                    resultadosDiv.innerHTML = `<p>No se encontró ningún criminal con el nombre "${nombre}".</p>`;
+                } else {
+                    resultadosDiv.innerHTML = `<p><strong>Nombre:</strong> ${criminal.nombre}, <strong>Fecha de detención:</strong> ${criminal.fecha || 'En libertad'}</p>`;
+                }
+            };
+        }
+
+        function listarEncarcelados() {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            const transaction = db.transaction(["criminales"], "readonly");
+            const store = transaction.objectStore("criminales");
+            const consulta = store.getAll();
+
+            consulta.onsuccess = () => {
+                const encarcelados = consulta.result.filter(c => c.fecha);
+                if (encarcelados.length === 0) {
+                    resultadosDiv.innerHTML = '<p>No hay criminales encarcelados.</p>';
+                } else {
+                    encarcelados.forEach(c => {
+                        resultadosDiv.innerHTML += `<p><strong>Nombre:</strong> ${c.nombre}, <strong>Fecha de detención:</strong> ${c.fecha}</p>`;
+                    });
+                }
+            };
+        }
+
+        function contarEncarcelados() {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            const transaction = db.transaction(["criminales"], "readonly");
+            const store = transaction.objectStore("criminales");
+            const consulta = store.getAll();
+
+            consulta.onsuccess = () => {
+                const encarcelados = consulta.result.filter(c => c.fecha);
+                resultadosDiv.innerHTML = `<p><strong>Total de criminales encarcelados:</strong> ${encarcelados.length}</p>`;
+            };
+        }
+
+        function contarLiberados () {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            const transaction = db.transaction(["criminales"], "readonly");
+            const store = transaction.objectStore("criminales");
+            const consulta = store.getAll();
+
+            consulta.onsuccess = () => {
+                const encarcelados = consulta.result.filter(c => c.fecha == '');
+                resultadosDiv.innerHTML = `<p><strong>Total de criminales liberados:</strong> ${encarcelados.length}</p>`;
+            };
+
+        }
+
+
+    </script>
+
+</body>
+</html>

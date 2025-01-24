@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Example 1 of the 'load' event</title>
+  <link rel="stylesheet" href="window.onload.init.css">
+  <script src="window.onload.init.js"></script>
+</head>
+<body>
+  
+  <p>PAGE STATUS: <span id="pageStatus">NOT LOADED YET</span></p> 
+  
+  <button id="myButton">Click me</button>
+  <div id="coord">
+    <p>Coordenadas</p>
+    <span></span>
+</div>
+</body>
+</html>
+
+<!--
+
+
+Además, aquí hay una versión revisada de tu código con algunas mejoras y comentarios para que funcione correctamente:
+
+### Código corregido y mejorado:
+
+```javascript
+window.onload = init;
+
+function init(evt) {
+  // Called when the page is loaded
+  console.log("page loaded");
+
+  let span = document.querySelector("#pageStatus");
+  span.innerHTML = "PAGE LOADED"; 
+
+  let b = document.querySelector("#myButton");
+  b.addEventListener('mousemove', function(evt) {
+    console.log("Mouse moved over button: x = " + evt.clientX);
+  });
+
+  // Add a mousemove event listener for the entire document
+  document.addEventListener('mousemove', function(evt) {
+    document.body.innerHTML += "<br>x = " + evt.clientX;
+  });
+}
+```
+
+### Puntos clave:
+1. **Corrección del atributo:** Asegúrate de usar `document.body.innerHTML`.
+2. **Uso de `document.addEventListener`:** Es una buena práctica ser explícito al asociar el evento con `document` en lugar de confiar en el ámbito global.
+3. **Revisión de la consola del navegador:** Verifica si hay otros errores que puedan estar bloqueando la ejecución.
+
+### Problemas posibles y soluciones:
+- **El contenido se sobrescribe:** Si el contenido del `body` se sobrescribe, la página puede quedar en blanco al agregar cada nueva coordenada. 
+Para evitar esto, es mejor usar un contenedor específico (por ejemplo, un `<div>`):
+  
+  ```html
+  <div id="coordinates"></div>
+  ```
+
+  ```javascript
+  document.addEventListener('mousemove', function(evt) {
+    let coordinatesDiv = document.getElementById('coordinates');
+    coordinatesDiv.innerHTML += "<br>x = " + evt.clientX;
+  });
+  ```
+
+- **Demasiados elementos generados:** Si usas este código en una página con mucho movimiento del ratón, puede generar demasiadas líneas y 
+ralentizar la página. Una alternativa sería solo mostrar la última coordenada en lugar de acumularlas:
+
+  ```javascript
+  document.addEventListener('mousemove', function(evt) {
+    let coordinatesDiv = document.getElementById('coordinates');
+    coordinatesDiv.innerHTML = "x = " + evt.clientX;
+  });
+  ```
+-->

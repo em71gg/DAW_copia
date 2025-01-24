@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redimensionar y abrir ventana</title>
+</head>
+<body>
+
+    <button onclick="redimensionarYAbrirVentana()">Redimensionar y abrir nueva ventana</button>
+
+    <script>
+        function redimensionarYAbrirVentana() {
+            // Obtiene las dimensiones de la pantalla
+            const anchoPantalla = window.screen.availWidth;
+            const altoPantalla = window.screen.availHeight;
+
+            // Redimensiona la ventana actual a la mitad del tamaño disponible
+            window.resizeTo(anchoPantalla / 2, altoPantalla / 2);
+
+            // Abre una nueva ventana con dimensiones predefinidas
+            const nuevaVentana = window.open("", "_blank", "width=400,height=300");
+            nuevaVentana.document.write("<h1>Esta es una nueva ventana!</h1>");
+        }
+    </script>
+
+</body>
+</html>

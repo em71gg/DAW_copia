@@ -1,0 +1,50 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+header {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    background-color: rgb(239, 127, 127);
+    height: 100px;
+    width: auto;
+    /*position: fixed;*/
+}
+
+
+main{
+    padding: 20px;
+    display: grid;
+   
+    grid-template-columns: minmax(25%, auto) minmax(25%, auto) minmax(25%, auto) minmax(25%, auto);
+    grid-template-rows: minmax(5%, 25%) minmax(0, 25%) minmax(0, 25%) minmax(0, 25%);
+
+    grid-template-areas: 
+        ". . . ."
+        "title title . ."
+        "content img . ."
+        ". . . .";
+}
+
+#title  {
+    grid-area: title;
+}
+
+#content {
+
+    grid-area: content;
+}
+
+#img {
+    grid-area: img;
+}
+#rocket{
+    /*display: block;*/
+    max-height:100%;
+    max-width: 100%;
+    width: auto;
+    
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+    <body>
+        <input type="text" name="nameInput" placeholder="Insert tu nombre">
+        <input type="submit" value="Enviar">
+        <div id="nameDisplay"></div>
+
+        <script>
+
+            const nameInput = document.getElementById('nameInput');
+            const nameDisplay = document.getElementById('nameDisplay');
+
+            window.onload = function() {
+                const storedName = localStorage.getItem('name');
+                if (storedName) {
+                    nameDisplay.textContent = `Hola, ${storedName}!`;
+                    nameInput.value = storedName; // Rellenar el input con el nombre guardado
+                }
+            };
+
+            // Función para actualizar el nombre en el localStorage y en el div
+            nameInput.addEventListener('input', function() {
+                const name = nameInput.value;
+                if (name) {
+                    localStorage.setItem('name', name);
+                    nameDisplay.textContent = `Hola, ${name}!`;
+                } else {
+                    nameDisplay.textContent = '';
+                    localStorage.removeItem('name');
+                }
+            });
+        </script>
+    </body>
+</html>

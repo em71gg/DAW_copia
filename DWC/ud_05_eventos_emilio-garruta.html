@@ -1,0 +1,186 @@
+<!--
+En esta tarea, te doy una una página de partida, a la que deberás añadir interactividad para que los usuarios
+puedan:
+
+  Crear nuevas ideas mediante un formulario
+  Asociar eventos a las tarjetas creadas
+  Mostrar un mensaje al hacer clic en una idea
+  Cambiar el color de fondo al pasar el ratón por encima
+  Eliminar una idea al hacer doble clic sobre ella
+
+Implementa la funcionalidad descrita usando delegación de eventos para manejar las ideas dinámicas.
+
+PISTAS:
+
+Delegación de eventos: usar el evento click en el contenedor y verificar el elemento mediante la propiedad 
+event.target, del que luego se podrá mostrar el textContent
+Eliminar elementos: investiga event.target.remove()
+Validar entradas: asegúrate de que el campo de texto no esté vacío antes de tomar su valor para crear una 
+idea nueva
+Estilo interactivo: el cambio de color del background al pasar por encima impleméntalo con mouseover 
+(cambia el color) y mouseout (deja el color que estaba) 
+Usa el HTML inicial proporcionado y complementa la funcionalidad con JavaScript.
+Asegúrate de comentar el código y de estructurarlo de manera clara.
+-->
+
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tarea con eventos</title>
+
+  <style>
+
+    body {
+
+      font-family: Arial, sans-serif;
+
+      margin: 20px;
+
+    }
+
+    .card {
+
+      border: 1px solid #ccc;
+
+      border-radius: 8px;
+
+      padding: 10px;
+
+      margin: 10px 0;
+
+      background-color: #D0D3D9;
+
+      cursor: pointer;
+
+      transition: background-color 0.3s;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <h1>Aquí apunto mis ideas</h1>
+
+  
+
+  <form id="ideas-form">
+
+    <input type="text" id="idea-contenido" placeholder="Contenido de la idea">
+
+    <button type="submit">Apuntar idea</button>
+
+  </form>
+
+
+
+  <div id="ideas-container">
+
+    <!-- Las ideas se agregarán aquí -->
+
+  </div>
+
+
+
+  <script>
+
+    /* Implementa aquí lo que pide el enunciado */
+
+    // Uso promesas para esperar a que se cargue el DOM completamente. Aunque por su situacion no haría falta.
+    new Promise((resolve) => {
+        if (document.readyState === 'complete') {
+            resolve();
+        } else {
+            window.addEventListener('load', resolve);
+        }
+    }).then(() => {
+        // Selección de los elementos clave del DOM sobre los que acturán los eventListeners.
+        const form = document.getElementById('ideas-form');
+        const input = document.getElementById('idea-contenido');
+        const container = document.getElementById('ideas-container');
+
+        // Función para generar un color aleatorio uqe se usará en el mouseover
+        const generateRandomColor = () => {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        };
+
+        // Función para manejar el envío del formulario.
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Evita que el formulario se envíe y recargue la página.
+
+            const ideaText = input.value.trim(); // Obtiene el valor del input, eliminando espacios innecesarios.
+
+            if (ideaText === '') {
+                alert('Por favor, escribe alguna idea.');
+                return;
+            }
+
+            // Crear una nueva tarjeta para la idea y se añade al contenedor.
+            const ideaCard = document.createElement('div');
+            ideaCard.classList.add('card');
+            ideaCard.textContent = ideaText;
+
+            container.appendChild(ideaCard);
+
+            // Deja el campo de entrada limpio.
+            input.value = '';
+        });
+
+        // Delegación de eventos para manejar interacciones dinámicas.
+        let clicKTime; //variable que manejará el temporizador necesario para distinguir click de dblclick. Funciona en combinación con event.detail
+        const clickDelay =250;
+        
+        container.addEventListener('click', (event) => {
+            if (!event.target.classList.contains('card')) return;
+            if(event.detail ===2) return;//Si hay dos es doubleclick y salgo. https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/detail
+            clicKTime = setTimeout(() => {
+              alert(`Has hecho click en: \"${event.target.textContent}\"`);
+            }, clickDelay);
+           
+        });
+
+        // Delegación de eventos para eliminar una tarjeta con doble click.
+        container.addEventListener('dblclick', (event) => {
+            if (!event.target.classList.contains('card'))return;
+            
+            //clearTimeout(clicKTime);
+            if(confirm(`¿Quieres eliminar la idea ${event.target.textContent}?`)){
+              event.target.remove();
+            }  
+            
+        });
+
+        // Delegación de eventos para cambiar el color de fondo al pasar el ratón
+        container.addEventListener('mouseover', (event) => {
+            if (event.target.classList.contains('card')) {
+                event.target.style.backgroundColor = generateRandomColor(); // Cambiar a un color random.
+            }
+        });
+
+        container.addEventListener('mouseout', (event) => {
+            if (event.target.classList.contains('card')) {
+                event.target.style.backgroundColor = '#D0D3D9'; // Restaurar el color original.
+            }
+        });
+    });
+
+
+  </script>
+
+</body>
+
+</html>

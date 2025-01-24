@@ -1,0 +1,32 @@
+
+<script>
+
+    window.onload = function() {
+        for (let indice ) {}
+        let storedName = localStorage.getItem('name');
+        if (storedName) {
+            nameDisplay.textContent = `Hola, ${storedName}!`;
+            nameInput.value = storedName; // Rellenar el input con el nombre guardado
+        }
+    };
+
+    let solicitud = indexedDB.open("TareasDb", 1);
+    solicitud.onupgradeneeded = (e) => {
+        let db = e.target.result;
+        db.createObjectStore("usuarios" , {keyPath: "id"});
+    };
+    solicitud.onsuccess = (e) => {
+        let db = e.target.result;
+        let transaccion = db.transaction("usuarios", "readwrite");
+        let store = transaccion.objectStore("usuarios");
+        store.add({id: 2, nombre: "Pepe"});
+    };
+
+    let usuarios = [""]
+    (e) => {
+        let db = e.target.result;
+        let transaccion = db.transaction("usuarios", "readwrite");
+        let store = transaccion.objectStore("usuarios");
+        store.add({id: 2, nombre: "Pepe"});
+    }
+</script>

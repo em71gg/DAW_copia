@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "f0c0a51b-8dd0-4176-8877-1941601db4dd",
+		"name": "Ejemplo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41100043"
+	},
+	"item": [
+		{
+			"name": "Listado",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Mensaje",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Insertar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"UnNombre\",\r\n    \"email\": \"unemail@email.com\",\r\n    \"mensaje\": \"El texto del mensaje\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/ejemplo_apuntes_api/mensaje.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"ejemplo_apuntes_api",
+						"mensaje.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/ejemplo_apuntes_api/mensaje.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"ejemplo_apuntes_api",
+						"mensaje.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"nombre\":\"otroNombre\",\r\n    \"email\":\"otroemail@email.com\",\r\n    \"mensaje\":\"otro mensaje.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/ejemplo_apuntes_api/mensaje.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"ejemplo_apuntes_api",
+						"mensaje.php"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

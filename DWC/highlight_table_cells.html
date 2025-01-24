@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <link type="text/css" rel="stylesheet" href="highlight_table_cells.css">
+    </head>
+    <body>
+        <table id="bagua-table">
+            <tr>
+              <th colspan="3"><em>Bagua</em> Chart: Direction, Element, Color, Meaning</th>
+            </tr>
+            <tr>
+              <td class="nw"><strong>Northwest</strong>
+                <br>Metal
+                <br>Silver
+                <br>Elders
+              </td>
+              <td class="n"><strong>North</strong>
+                <br>Water
+                <br>Blue
+                <br>Change
+              </td>
+              <td class="ne"><strong>Northeast</strong>
+                <br>Earth
+                <br>Yellow
+                <br>Direction
+              </td>
+            </tr>
+            <tr>
+              <td class="w"><strong>West</strong>
+                <br>Metal
+                <br>Gold
+                <br>Youth
+              </td>
+              <td class="c"><strong>Center</strong>
+                <br>All
+                <br>Purple
+                <br>Harmony
+              </td>
+              <td class="e"><strong>East</strong>
+                <br>Wood
+                <br>Blue
+                <br>Future
+              </td>
+            </tr>
+            <tr>
+              <td class="sw"><strong>Southwest</strong>
+                <br>Earth
+                <br>Brown
+                <br>Tranquility
+              </td>
+              <td class="s"><strong>South</strong>
+                <br>Fire
+                <br>Orange
+                <br>Fame
+              </td>
+              <td class="se"><strong>Southeast</strong>
+                <br>Wood
+                <br>Green
+                <br>Romance
+              </td>
+            </tr>
+        
+        </table>
+        <script>
+            
+            let selectedTd;
+            let tabla = document.querySelector('#bagua-table')
+            /*
+            tabla.addEventListener('click', (event) => {
+                let target = event.target;
+                if (target.tagName != 'TD') return;
+                higlight(target);
+            });
+            */
+            tabla.addEventListener('click', (event) => {
+              let td = event.target.closest('td'); //elem.closest(selector) devuelve el ancestro más cercano que coincide con el selector. En nuestro caso buscamos <td> hacia arriba desde el elemento de origen
+              if(!td) return;
+              if(!tabla.contains(td)) return;
+              higlight(td);
+            });
+
+            function higlight(td) {
+                if (selectedTd) {
+                    selectedTd.classList.remove('highlight');
+                }
+                selectedTd = td;
+                selectedTd.classList.add('highlight');
+            }
+        </script>
+        
+    </body>
+</html>

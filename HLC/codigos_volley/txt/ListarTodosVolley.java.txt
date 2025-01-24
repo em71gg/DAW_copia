@@ -1,0 +1,82 @@
+package com.daw.productosvolley;
+
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListarTodos extends AppCompatActivity {
+
+    private ListView lv1;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> todosProductos;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_listar_todos);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        lv1 = findViewById(R.id.listView);
+        todosProductos = new ArrayList<>();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, todosProductos);
+        lv1.setAdapter(adapter);
+
+        listarProductos();
+    }
+
+    private void listarProductos() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, "http://10.0.2.2/registrar_producto/buscar_todos.php", null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject producto = response.getJSONObject(i);
+                                String nombreProducto = producto.getString("producto");
+                                todosProductos.add(nombreProducto);
+                            } catch (JSONException e) {
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        //adapter.notifyDataSetChanged();
+                        lv1.setAdapter(adapter);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "Error al obtener productos", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                });
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
+}

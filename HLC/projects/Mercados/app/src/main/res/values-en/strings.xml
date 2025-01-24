@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mercados</string>
+    <string name="buscarTodo">All the markets are here</string>
+    <string name="id">ID</string>
+    <string name="nombre">Name</string>
+    <string name="ubicacion">Location</string>
+    <string name="fechaIni">Starting Date</string>
+    <string name="fechaFin">Closing Date</string>
+    <string name="anadir">Add</string>
+    <string name="buscar">Search</string>
+    <string name="saludo">Welcome to the Christmas Markets of Seville</string>
+</resources>

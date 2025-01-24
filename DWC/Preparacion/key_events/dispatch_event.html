@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulación de clic</title>
+</head>
+<body>
+    <h1>Simulación de clic</h1>
+    <button id="miBoton">Haz clic o pulsa Enter</button>
+    <p id="mensaje"></p>
+
+    <script>
+        const boton = document.getElementById("miBoton");
+        const mensaje = document.getElementById("mensaje");
+
+        boton.addEventListener("click", function() {
+            mensaje.textContent = "¡Clic!";
+        });
+/*
+document.addEventListener("keydown", ...):
+Este código escucha cualquier pulsación de tecla (evento keydown) en el documento.
+
+if (event.key === "Enter"):
+Comprueba si la tecla presionada es la tecla "Enter".
+Se crea un evento personalizado llamado click con new Event("click").
+Luego, se usa boton.dispatchEvent(clickEvent) para "disparar" este evento 
+artificialmente en el botón. Esto hace que el código asociado al evento 
+click del botón (definido anteriormente) se ejecute como si el botón 
+hubiera sido presionado físicamente.
+*/
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                let clickEvent = new Event("click");
+                boton.dispatchEvent(clickEvent);
+            }
+        });
+    </script>
+</body>
+</html>

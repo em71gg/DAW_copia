@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Países</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            align-items:stretch;
+            display:flex;
+            flex-direction:column;
+            gap:20px;
+        }
+        form {
+            margin-bottom: 20px;
+            display:flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .error {
+            color: red;
+        }
+        img {
+            max-width: 100px;
+            display: block;
+            margin-top: 10px;
+        }
+        p{
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <h1>Búsqueda de Información de Países</h1>
+    <form id="countryForm">
+        <div>
+            <label for="countrySelect">Selecciona un país:</label>
+            <select id="countrySelect">
+            <option value="">--Selecciona un país--</option>
+        </select>
+        </div>
+        
+        <div>
+            <label for="countryInput">O introduce el nombre del país:</label>
+            <input type="text" id="countryInput" placeholder="Ej. Spain">
+        </div>
+        
+        <div>
+            <button type="submit">Enviar petición</button>
+        </div>
+        
+    </form>
+    <div class="container" id="resultContainer">
+        <p id="error" class="error"></p>
+        <p id="fullName"></p>
+        <p id="capital"></p>
+        <p id="population"></p>
+        <img id="flag" src=""> <!--No incluyo el alt para que no aparezca el texto precargado al no haber imagen antes de enviar la consulta-->
+    </div>
+        <h3>Cuestiones más relevantes</h3>
+
+        <p> Lo primero ha sido ver cómo están dispuestos los eobjetos que envía la API de Rest Countries, 
+            que devuelve un array de objetos, donde cada objeto representa un país. La estructura de estos 
+            objetos contiene una amplia gama de propiedades, aunque las más relevantes 
+            para la mayoría de los casos son las relacionadas con el nombre, la capital, la población, la bandera,...</p>
+        <p>Cuando haces una llamada a https://restcountries.com/v3.1/all, obtendrás un array con objetos similares al ejemplo 
+            anterior para todos los países. En dfunción de esto se monta todo el código.</p>
+    <div>
+        <ol>
+            <li><strong>name:</strong>
+                <ul>
+                    <li><strong>common:</strong> Nombre común del país.</li>
+                    <li><strong>official:</strong> Nombre oficial del país.</li>
+                    <li><strong>nativeName:</strong> Nombres en los idiomas nativos del país.</li>
+                </ul>
+            </li>
+            <li><strong>capital:</strong>
+                <ul>
+                    <li>Una lista de las capitales del país (normalmente un solo elemento).</li>
+                </ul>
+            </li>
+            <li><strong>region y subregion:</strong>
+                <ul>
+                    <li><strong>region:</strong> Región general a la que pertenece el país (por ejemplo, "Americas").</li>
+                    <li><strong>subregion:</strong> Subregión específica (por ejemplo, "South America").</li>
+                </ul>
+            </li>
+            <li><strong>population:</strong>
+                <ul>
+                    <li>Número de habitantes del país.</li>
+                </ul>
+            </li>
+            <li><strong>flags:</strong>
+                <ul>
+                    <li><strong>png:</strong> URL a la imagen de la bandera en formato PNG.</li>
+                    <li><strong>svg:</strong> URL a la imagen de la bandera en formato SVG.</li>
+                </ul>
+            </li>
+            <li><strong>languages:</strong>
+                <ul>
+                    <li>Un objeto que mapea los códigos de idioma a sus nombres (por ejemplo, "spa": "Spanish").</li>
+                </ul>
+            </li>
+            <li><strong>borders:</strong>
+                <ul>
+                    <li>Lista de los códigos de los países vecinos (según el estándar ISO 3166-1 alpha-3).</li>
+                </ul>
+            </li>
+            <li><strong>area:</strong>
+                <ul>
+                    <li>Área total del país en kilómetros cuadrados.</li>
+                </ul>
+            </li>
+        </ol>
+    <div>
+
+    </div>
+
+    </div>
+    <script>
+        // Cuando el contenido del DOM esté completamente cargado, se ejecuta la función.
+        document.addEventListener('DOMContentLoaded', () => {
+            // Recogemos las referencias a los elementos del DOM que se utilizarán más adelante.
+            const countryForm = document.getElementById('countryForm'); // Formulario donde el usuario ingresa o selecciona un país.
+            const countryInput = document.getElementById('countryInput'); // Input donde el usuario puede escribir el nombre del país.
+            const countrySelect = document.getElementById('countrySelect'); // Select donde el usuario puede elegir un país de una lista.
+            const resultContainer = document.getElementById('resultContainer'); // Contenedor donde se mostrarán los resultados del país seleccionado.
+    
+            // Elementos que mostrarán la información del país o un mensaje de error.
+            const errorElement = document.getElementById('error'); // Elemento donde se muestra el mensaje de error.
+            const fullNameElement = document.getElementById('fullName'); // Elemento donde se muestra el nombre completo del país.
+            const capitalElement = document.getElementById('capital'); // Elemento donde se muestra la capital del país.
+            const populationElement = document.getElementById('population'); // Elemento donde se muestra la población del país.
+            const flagElement = document.getElementById('flag'); // Elemento donde se muestra la bandera del país.
+    
+            // Realizamos una solicitud HTTP para cargar los nombres de los países desde la API de Rest Countries.
+            fetch('https://restcountries.com/v3.1/all')  // Solicitud GET a la API para obtener todos los países.
+                .then(response => {  // Cuando recibimos la respuesta de la API.
+                    if (!response.ok) {  // Si la respuesta no es exitosa (no tiene código 200).
+                        throw new Error('Error al cargar la lista de países');  // Lanzamos un error.
+                    }
+                    return response.json();  // Si la respuesta es exitosa, la convertimos a JSON.
+                })
+                .then(data => {  // Cuando los datos se han recibido y convertido a JSON.
+                    console.log(data);  // Mostramos los datos recibidos en la consola (para depuración).
+                    // Iteramos sobre cada país recibido en el array de países.
+                    data.forEach(country => {
+                        if (country.name && country.name.common) {  // Verificamos que cada país tenga un nombre común.
+                            const option = document.createElement('option');  // Creamos una nueva opción para el <select>.
+                            option.value = country.name.common;  // Establecemos el valor de la opción (nombre común del país).
+                            option.textContent = country.name.common;  // Establecemos el texto visible de la opción.
+                            countrySelect.appendChild(option);  // Añadimos la opción al <select>.
+                        }
+                    });
+                })
+                .catch(err => {  // Si ocurre un error al realizar la solicitud.
+                    errorElement.textContent = 'No se pudo cargar la lista de países. Por favor, intenta nuevamente más tarde.';  // Mostramos un mensaje de error.
+                    console.error('Error al cargar países:', err);  // Mostramos el error en la consola.
+                });
+    
+            // Función para obtener los datos de un país específico a través de su nombre.
+            const fetchCountryData = (name) => {
+                fetch(`https://restcountries.com/v3.1/name/${name}`)  // Realizamos una solicitud GET para obtener los datos del país por nombre.
+                    .then(response => {  // Cuando recibimos la respuesta de la API.
+                        if (!response.ok) {  // Si la respuesta no es exitosa.
+                            if (response.status === 404) {  // Si el país no existe (código de estado 404).
+                                throw new Error('El país no existe. Por favor, verifica el nombre ingresado.');  // Lanzamos un error con un mensaje personalizado.
+                            } else {
+                                throw new Error('Ocurrió un problema al buscar los datos. Intenta nuevamente más tarde.');  // Si ocurrió otro tipo de error.
+                            }
+                        }
+                        return response.json();  // Si la respuesta es exitosa, la convertimos a JSON.
+                    })
+                    .then(data => {  // Cuando los datos se han recibido y convertido a JSON.
+                        const country = data[0];  // Tomamos el primer país del array (ya que la respuesta es un array).
+    
+                        // Actualizamos el DOM con la información del país.
+                        errorElement.textContent = '';  // Limpiamos cualquier mensaje de error previo.
+                        fullNameElement.textContent = `Nombre completo: ${country.name.official}`;  // Mostramos el nombre completo del país.
+                        capitalElement.textContent = `Capital: ${country.capital ? country.capital[0] : 'N/A'}`;  // Mostramos la capital (si existe, si no, 'N/A').
+                        populationElement.textContent = `Población: ${country.population.toLocaleString()}`;  // Mostramos la población formateada con comas.
+                        flagElement.src = country.flags.png;  // Establecemos la URL de la imagen de la bandera en formato PNG.
+                        flagElement.alt = `Bandera de ${country.name.common}`;  // Establecemos el texto alternativo de la imagen de la bandera.
+                    })
+                    .catch(error => {  // Si ocurre un error al obtener los datos del país.
+                        // Limpiamos los elementos de información y mostramos el mensaje de error.
+                        errorElement.textContent = error.message;
+                        fullNameElement.textContent = '';
+                        capitalElement.textContent = '';
+                        populationElement.textContent = '';
+                        flagElement.src = '';
+                        flagElement.alt = '';
+                    });
+            };
+    
+            // Event listener para manejar el formulario cuando el usuario lo envíe.
+            countryForm.addEventListener('submit', (e) => {
+                e.preventDefault();  // Evita que el formulario se envíe de manera convencional.
+    
+                // Verificamos si el usuario ha completado ambos campos (Input y Select).
+                const isInputFilled = countryInput.value.trim() !== '';  // Verificamos si el input de texto tiene algún valor.
+                const isSelectFilled = countrySelect.value !== '';  // Verificamos si el select tiene una opción seleccionada.
+    
+                if (isInputFilled && isSelectFilled) {  // Si ambos campos están llenos, mostramos un mensaje de error.
+                    errorElement.textContent = 'Por favor, usa solo un medio para buscar: selecciona un país o escribe su nombre, no ambos.';
+                    return;  // Detenemos la ejecución del código para evitar la búsqueda.
+                }
+    
+                const countryName = countryInput.value.trim() || countrySelect.value;  // Si el input tiene valor, lo usamos, si no, usamos el valor del select.
+    
+                if (!countryName) {  // Si no se ha proporcionado ningún nombre de país (ni en el input ni en el select).
+                    errorElement.textContent = 'Por favor, selecciona o introduce un nombre de país.';  // Mostramos un mensaje de error.
+                    return;  // Detenemos la ejecución del código.
+                }
+    
+                fetchCountryData(countryName);  // Si todo está bien, buscamos los datos del país.
+            });
+        });
+    </script>
+    
+    
+</body>
+</html>
+
+

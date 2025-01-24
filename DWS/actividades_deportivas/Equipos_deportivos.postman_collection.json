@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "d1a28cb8-d3dc-498d-be58-ab488e13a8a9",
+		"name": "Equipos_deportivos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41100043"
+	},
+	"item": [
+		{
+			"name": "ListadoEquipos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/DWS/actividades_deportivas/ejercicio/equipos.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"actividades_deportivas",
+						"ejercicio",
+						"equipos.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Equipo",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarEquipos",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarEquipos Copy",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarEquipos Copy 2",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

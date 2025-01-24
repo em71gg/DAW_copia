@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Mercados</string>
+    <string name="buscarTodo">Aqui se ven todos los mercados</string>
+    <string name="id">ID</string>
+    <string name="nombre">Nombre</string>
+    <string name="ubicacion">Ubicacion</string>
+    <string name="fechaIni">Fecha de Inicio</string>
+    <string name="fechaFin">Fecha Fin</string>
+    <string name="anadir">Añadir</string>
+    <string name="buscar">Buscar</string>
+    <string name="saludo">Bienvenidos a los mercados navideños de Sevilla</string>
+</resources>

@@ -1,0 +1,129 @@
+<!--
+Desarrolla una página web en HTML con JavaScript que permita al usuario subir su imagen favorita siguiendo estas instrucciones:
+
+La página debe contener un título, por ejemplo: "Esta es mi imagen favorita".
+Debajo del título, agrega un input de tipo file que permita seleccionar un archivo de tipo imagen (image/png).
+Cuando el usuario seleccione un archivo:
+Si el archivo no es del tipo image/png, muestra un mensaje de error en la página indicando que solo se aceptan archivos PNG.
+Si el archivo es más grande de 1 MB, muestra un mensaje indicando que el tamaño máximo permitido es 1 MB.
+Si el archivo cumple con los requisitos, muestra una miniatura de la imagen seleccionada debajo del input.
+La página debe tener un botón de enviar (submit). Al hacer clic, el archivo debe enviarse al backend en la URL http://localhost:8080/upload mediante una petición POST.
+PISTAS:
+
+El evento change del elemento <input type="file"> te será útil.
+Echa un vistazo a la propiedad file.type
+Usa la propiedad file.size para comprobar el tamaño
+Para mostrar una miniatura de la imagen seleccionada, puedes usar la clase FileReader.
+Incluye mensajes claros de error al usuario cuando las validaciones no se cumplan.
+Utilizarás el método fetch que se proporciona a continuación para enviar la imagen al servidor en una petición POST (presta atención al puerto indicado en el fetch si utilizas el servidor en 8082).
+
+LEVANTAR EL BACKEND
+
+Se trata de un .jar que se puede ejecutar con java -jar demoimagen.jar.
+En caso de tener una máquina virtual de java antigua, puedes descargar la más reciente en https://adoptium.net/es/temurin/releases/ por ejemplo para Win x64.
+
+Al lanzar el backend, levantará un servidor y se quedará escuchando. Cuando le llegue una petición, mostrará un mensaje de este estilo, informando del nombre del archivo recibido y su tamaño.
+-->
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .preview {
+            margin-top: 20px;
+            max-width: 200px;
+            max-height: 200px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+         document.addEventListener('DOMContentLoaded', () => {//Hace que espere a que se cargue el DOM
+            //delcaro comom constantes los elemntos que necesito
+            const imageInput = document.getElementById('image-upload');
+            const form = document.getElementById('image-form');
+            const message = document.getElementById('message');
+            const preview = document.getElementById('preview');
+
+            imageInput.addEventListener('change', () => {//escucha los cambios en el campo de subida del archivo
+                const file = imageInput.files[0];//obtengo el archivo que es el de index cero
+
+                // Reiniciar mensajes y previsualización.
+                message.textContent = '';
+                preview.src = '';
+
+                if (!file) return;//Si no se seleciona archivo salgo
+
+                // Validar tipo de archivo
+                if (file.type !== 'image/png') {
+                    message.textContent = 'Error: Solo se aceptan archivos PNG.'; //Mensaje de error por tipo no válido
+                    return;
+                }
+
+                // Validar tamaño del archivo (1 MB = 1,048,576 bytes)
+                if (file.size > 1048576) {
+                    message.textContent = 'Error: El tamaño máximo permitido es 1 MB.';
+                    return;
+                }
+
+                // Mostrar la previsualización de la imagen con un lector de archivos
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            form.addEventListener('submit', async (event) => {//escucha del envío del formulario.
+                event.preventDefault();//prevenfgo el funcionamiento normal del formulario.
+
+                const file = imageInput.files[0];
+
+                if (!file || file.type !== 'image/png' || file.size > 1048576) {
+                    message.textContent = 'Por favor, selecciona una imagen válida antes de subirla.';
+                    return;
+                }
+                //Creación del objeto para enviar el archivo.
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    
+                    //Envio del archivo al servidor mediante POST
+                    const response = await fetch('http://localhost:8080/upload', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        alert('Imagen subida exitosamente.');
+                    } else {
+                        alert('Error al subir la imagen.');
+                    }
+                } catch (error) {
+                    alert('Hubo un problema con la conexión al servidor.');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Esta es mi imagen favorita</h1>
+    
+    <form id="image-form">
+        <label for="image-upload">Selecciona tu imagen favorita (PNG, máx 1 MB):</label>
+        <input type="file" id="image-upload" accept="image/png">
+        <button type="submit">Subir Imagen</button>
+    </form>
+
+    <p id="message" class="error"></p>
+    <img id="preview" class="preview" alt="Previsualización de la imagen" />
+</body>
+</html>

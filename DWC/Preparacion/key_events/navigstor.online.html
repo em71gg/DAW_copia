@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificar Conexión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Verificar si estás en línea o fuera de línea</h1>
+
+    <button onclick="verificarConexion()">Verificar Conexión</button>
+
+    <div id="result"></div>
+
+    <script>
+        function verificarConexion() {
+            const resultDiv = document.getElementById("result");
+            
+            // Verificar si el usuario está en línea
+            if (navigator.onLine) {
+                resultDiv.innerHTML = "<p>Estás en línea.</p>";
+            } else {
+                resultDiv.innerHTML = "<p>Estás fuera de línea.</p>";
+            }
+        }
+
+        // Escuchar cambios en la conexión de red
+        window.addEventListener('online', function() {
+            document.getElementById("result").innerHTML = "<p>Conectado a Internet.</p>";
+        });
+
+        window.addEventListener('offline', function() {
+            document.getElementById("result").innerHTML = "<p>Desconectado de Internet.</p>";
+        });
+    </script>
+
+</body>
+</html>

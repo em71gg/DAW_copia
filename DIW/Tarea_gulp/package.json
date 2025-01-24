@@ -1,0 +1,25 @@
+{
+  "name": "origen-diciembre-web",
+  "version": "1.0.0",
+  "description": "Proyecto de ejemplo para la unidad de preprocesadores CSS de DIW",
+  "main": "index.html",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp"
+  },
+  "keywords": [
+    "gulp",
+    "sass",
+    "preprocesador",
+    "web"
+  ],
+  "author": "DIW",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.29.3",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.82.0"
+  }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sandboxed Iframe</title>
+</head>
+<body>
+
+    <h1>Ejemplo de Iframe con Sandbox</h1>
+
+    <!-- El Iframe con sandbox
+    Atributo sandbox:
+El atributo sandbox en el <iframe> permite restringir varias capacidades 
+    de la página cargada dentro del iframe. En el ejemplo se establece:
+
+allow-same-origin: Permite que la página cargada en el iframe trate 
+como si proviniera del mismo origen (dominio). Sin este atributo, 
+se bloquea el acceso a recursos de la misma fuente (origen).
+allow-forms: Permite el envío de formularios dentro del iframe.
+Importante: No hemos incluido allow-scripts en el atributo sandbox, 
+lo que significa que los scripts dentro del iframe estarán bloqueados.
+
+El contenido del iframe: Dentro del iframe, se carga un archivo llamado 
+pagina_con_script.html. Esta página puede contener JavaScript, pero debido 
+al atributo sandbox sin allow-scripts, los scripts no se ejecutarán. 
+    
+    
+    -->
+    <iframe src="redimensionar_pantall.html" width="600" height="400" sandbox="allow-same-origin allow-forms allow-scripts">
+        <p>Tu navegador no soporta iframes.</p>
+    </iframe>
+
+</body>
+</html>

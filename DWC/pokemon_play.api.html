@@ -1,0 +1,40 @@
+<!--hacer que el resultado enviado por el jugador se contje con el pokemon rescatado de la API
+Si no acierta lanza mensaje de error, 
+puede pedir pistas:
+    La primera es el numero de letras del pokemon
+    la segunda puede ser dar una letra alatoria y colocarla en su lugar
+    La tercera una segunda letra
+El jugador debe tenr un numero de pistas de terminado y si las agota nop puede pedir más hasta que se resetee 
+el juego tras un número dado de jugadas ganadas, que será game over.
+
+Tras un número dado de jugadas perdidas game over
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Juego Pokemon</title>
+        <link rel="stylesheet" href="./pokemon_play_api.css">
+        <scrip src="./pokemon_play_api.js"></scrip>
+    </head>
+    <body>
+        <header>
+            <h1>Adivina el nombre del Pokemon que aparece en la imagen</h1>
+           
+        </header>
+        <main>
+            <img src="" alt="Imagen Pokemon" id="pokemon">
+            <div>
+                <input type="text" placeholder="¿Cómo se llama el Pokemón?" name="nombre" id="nombre">
+                <button id="enviar">Responder</button>
+                <button id="jugar">Volver a Jugar</button>
+            </div>
+            <div class="resultado">
+                <p id="error"></p>
+                <p
+            </div>
+        </main>
+    </body>
+</html>

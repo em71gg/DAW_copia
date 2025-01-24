@@ -1,0 +1,65 @@
+La promesa en cuestión realiza una serie de transformaciones sobre un valor inicial utilizando varios encadenamientos de `.then()`. Finalmente, el último `.then()` devuelve un valor que es el resultado de todas las transformaciones, en este caso `8`. 
+
+Si deseas capturar este valor final (`8`), puedes hacerlo de las siguientes maneras:
+
+### 1. Usar otro `.then()` para manejar el resultado final
+Puedes encadenar un nuevo `.then()` al final de la cadena para trabajar con el valor final:
+
+```javascript
+<script>
+new Promise(function(resolve, reject) {
+  setTimeout(() => resolve(1), 1000); // (*)
+}).then(function(parrocha) { // (**)
+  console.log(parrocha); // 1
+  return parrocha * 2;
+}).then(function(pitufo) { // (***)
+  console.log(pitufo); // 2
+  return pitufo * 2;
+}).then(function(result) {
+  console.log(result); // 4
+  return result * 2;
+}).then(function(finalValue) { // Capturamos el valor final aquí
+  console.log("Valor final:", finalValue); // 8
+});
+
+</script>
+
+```
+
+### 2. Usar `async/await` para capturar el resultado final
+Otra forma más moderna y limpia es usar `async/await` para capturar el valor final de la promesa. Aquí está cómo hacerlo:
+
+```
+<script>
+(async function() {
+  const finalValue = await new Promise(function(resolve, reject) {
+    setTimeout(() => resolve(1), 1000); // (*)
+  }).then(function(parrocha) { // (**)
+    console.log(parrocha); // 1
+    return parrocha * 2;
+  }).then(function(pitufo) { // (***)
+    console.log(pitufo); // 2
+    return pitufo * 2;
+  }).then(function(result) {
+    console.log(result); // 4
+    return result * 2;
+  });
+
+  console.log("Valor final:", finalValue); // 8
+})();
+```
+</script>
+
+
+### Resultado esperado
+En ambos casos, al final deberías ver los siguientes mensajes en la consola:
+```
+1
+2
+4
+Valor final: 8
+```
+
+### Resumen
+- Con `then()`, puedes agregar otro encadenamiento al final de la promesa.
+- Con `async/await`, puedes capturar el valor final de forma más sencilla y leerlo como una variable.
