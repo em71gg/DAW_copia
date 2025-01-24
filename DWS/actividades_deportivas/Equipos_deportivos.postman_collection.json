@@ -45,18 +45,33 @@
 			"response": []
 		},
 		{
-			"name": "ActualizarEquipos Copy",
+			"name": "Equipo sólo un parametro",
 			"request": {
-				"method": "PUT",
-				"header": []
-			},
-			"response": []
-		},
-		{
-			"name": "ActualizarEquipos Copy 2",
-			"request": {
-				"method": "PUT",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"equipo_id\": 23\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/actividades_deportivas/ejercicio/equipos_alumnos.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"actividades_deportivas",
+						"ejercicio",
+						"equipos_alumnos.php"
+					]
+				}
 			},
 			"response": []
 		}

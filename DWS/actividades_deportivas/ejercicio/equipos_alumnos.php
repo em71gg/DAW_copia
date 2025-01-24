@@ -52,7 +52,7 @@
                 }
             }
             
-        }
+        }else { $mensajesError[] = "Debe indicar el alumno_id. ";}
        
         if ($equipoId !== null) {
              //consulta para comprobar que el id del equipo existe, rescatar la edad mínima y el numero de jugadores
@@ -103,7 +103,7 @@
                 }
             }
   
-        }
+        } else {$mensajesError[] = "Debe indicar el equipo_id. ";}
         if(count($mensajesError) == 0) {
             $insert = "INSERT INTO equipos_alumno(equipo_id, alumno_id) VALUES (:equipo_id, :alumno_id)";
             $consulta = $conexion->prepare($insert);
@@ -119,7 +119,7 @@
         }
         else {
             
-            $mensajeJson = implode("Ademas: ", $mensajesError);
+            $mensajeJson = implode("Ademas, ", $mensajesError);
             salidaDatos(json_encode([$mensajeJson]), array('HTTP/1.1 400 Bad Request'));
         }
     
