@@ -8,23 +8,94 @@
   require_once("../utiles/config.php");
   require_once("../utiles/funciones.php");
   $datos = "";
-
-  // ESCRIBA AQUI EL CÓDIGO PHP NECESARIO
+  $conexion = conectarPDO($database);
   
-  /*
-    Datos del tenista y una nueva clave con los titulos que tiene, que es una estructura en la que aparecen los nombres de los títulos agrupados por años
-  */
+  if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (isset($_GET['id'])) {
+      
+      $consulta = $conexion -> prepare ("SELECT 
+                                              id, 
+                                              nombre, 
+                                              apellidos, 
+                                              altura, 
+                                              anno_nacimiento AS 'año de nacimiento',
+                                              (
+                                                  /*Si hubiese que devolver un json
+                                                  SELECT 
+                                                      JSON_OBJECTAGG(
+                                                          anno, titulos
+                                                      )
+                                                  FROM (
+                                                      SELECT 
+                                                          anno, 
+                                                          JSON_ARRAYAGG(
+                                                              (SELECT nombre FROM torneos WHERE id = titulos.torneo_id)
+                                                          ) */
+                                                /*Para devolver un array*/
+                                                SELECT 
+                                                            JSON_ARRAYAGG(
+                                                                JSON_ARRAY(anno, titulos)
+                                                            )
+                                                        FROM (
+                                                            SELECT 
+                                                                anno, 
+                                                                JSON_ARRAYAGG(
+                                                                    (SELECT nombre FROM torneos WHERE id = titulos.torneo_id)
+                                                                )
+                                                          AS titulos
+                                                      FROM titulos
+                                                      WHERE tenista_id = ?
+                                                      GROUP BY anno
+                                                  ) AS titulos_anno
+                                              ) AS titulos
+                                          FROM
+                                              tenistas 
+                                          WHERE
+                                              id = ?
+                                        ");
+    $consulta -> bindParam(1, $_GET['id']);
+    $consulta -> bindParam(2, $_GET['id']);
+    $consulta -> execute();
+    if ($consulta->rowCount() > 0) {
+      salidaDatos (json_encode($consulta->fetch(PDO::FETCH_ASSOC)),
+      array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+    }  
+    else{
+          salidaDatos('No se encuentra el tenista pedido.', array('HTTP/1.1 404 Not Found'));
+      }
+    }
+    
+                                      
+  }
 
-  // ESCRIBA AQUI EL CÓDIGO PHP NECESARIO
+  if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
+    {
+      
+        // Transformamos el JSON de entrada de datos a un array asociativo
+        $datos = json_decode(file_get_contents('php://input'), true);
+        $id = $datos['id'];
 
-  /*
-    Borrar un tenista
-  */
+        //Entitulos tenista_id hace referencia como foreign key a id de tenistas, lueog debo borrar primero el registro vinculado en titulos 
+        $delForeignKey = $conexion -> prepare("DELETE FROM titulos WHERE tenista_id=?");
+        $delForeignKey -> bindParam(1, $id);
+        $delForeignKey -> execute();
+        $delForeignKey = null;
+        $delete = "DELETE FROM tenistas where id=:id";
+        $consulta = $conexion->prepare($delete);
+        $consulta->bindParam(':id', $id);
+        $consulta->execute();
+        
+        if ($consulta->rowCount() > 0) {
+        salidaDatos('Borrado realizado.', array( 'HTTP/1.1 200 OK'));
+        $consulta = null;
+        }   
+        else {
+                salidaDatos('No se encuentra el tenista recibido.', array('HTTP/1.1 404 Not Found'));
+        }
+       
+        exit();
 
-  // ESCRIBA AQUI EL CÓDIGO PHP NECESARIO
-
-//En caso de que ninguna de las opciones anteriores se haya ejecutado
-header ($headerJSON);
-header ($codigosHTTP["400"]);
-echo  $datos;
+    }
+  //En caso de que ninguna de las opciones anteriores se haya ejecutado
+  salidaDatos('No se ha podido realizar la petición.', array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request'));
 ?>

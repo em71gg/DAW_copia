@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $consulta = $dbConexion->prepare($insert);
         bindAllParams($consulta, $datos);
         $consulta->execute();
-        $mensajeId = $dbConexion→lastInsertId();
+        $mensajeId = $dbConexion -> lastInsertId();
         if($mensajeId) {
             $datos['id'] = $mensajeId;
             salidaDatos(json_encode($datos), 

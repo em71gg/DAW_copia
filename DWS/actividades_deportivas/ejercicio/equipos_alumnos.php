@@ -104,6 +104,7 @@
             }
   
         } else {$mensajesError[] = "Debe indicar el equipo_id. ";}
+        
         if(count($mensajesError) == 0) {
             $insert = "INSERT INTO equipos_alumno(equipo_id, alumno_id) VALUES (:equipo_id, :alumno_id)";
             $consulta = $conexion->prepare($insert);

@@ -30,30 +30,31 @@
     */
 
     if ($torneoId !== null && $fechaTorneo !== null){
-      $checkTituloGanado = $conexion -> prepare("SELECT * FROM titulos WHERE anno = ? AND torneo_id = ?");
+      $checkTituloGanado = $conexion -> prepare("SELECT tenista_id FROM titulos WHERE anno = ? AND torneo_id = ?");
       $checkTituloGanado -> bindParam(1, $fechaTorneo);
       $checkTituloGanado -> bindParam(2, $torneoId);
       $checkTituloGanado -> execute();
-
+      $campeon = $checkTituloGanado -> fetch(PDO::FETCH_ASSOC);
+      $campeonFecha = $campeon['tenista_id'];
  
       
-      if ($checkTituloGanado -> rowCount() == 0) {//Si no existe ganador para esa consulta se hace el insert
+      if (empty($campeonFecha)) {//Si no existe ganador para esa consulta se hace el insert
         
         $insert = "INSERT INTO titulos(anno, tenista_id, torneo_id) VALUES (:anno, :tenista_id, :torneo_id)";
         $consulta = $conexion->prepare($insert);
         bindAllParams($consulta, $datos);
         $consulta->execute();
-        
-        if($consulta -> rowCount() >0) {
-            
-            salidaDatos(json_encode(["mensaje" => "Ganador asignado."]), 
+        $mensajeId = $conexion -> lastInsertId();
+        if($mensajeId) {
+            $datos['id'] = $mensajeId;
+            salidaDatos(json_encode($datos), 
             array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         }
       }
       else {//Se devuelve el mensaje de campeonato previamente ganado
        
         $buscaCampeon = $conexion -> prepare("SELECT nombre, apellidos FROM tenistas WHERE id =?");
-        $buscaCampeon -> bindParam (1, $tenistaId);
+        $buscaCampeon -> bindParam (1, $campeonFecha);
         $buscaCampeon -> execute();
         $resultado = $buscaCampeon -> fetch(PDO::FETCH_ASSOC);
         if ($resultado){

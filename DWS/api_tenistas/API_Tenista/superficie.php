@@ -13,7 +13,7 @@
   $conexion = conectarPDO($database);
   $mensajesError = [];
   $nombreSuperficieRegistrado = null;
-  $nuevoNombre = null;
+  //$nuevoNombre = null;
   
 
   if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
@@ -29,27 +29,30 @@
 
       if($consulta -> rowCount() == 0) {
         
-        $mensajesError[]= "La superficie $superficieId no existe.";
+        $mensajesError[]= "La superficie con id $superficieId no existe.";
         /*salidaDatos(json_encode(["mensaje" => "La superficie $superficieId no existe."]), array('HTTP/1.1 400 Bad Request'));
         exit;*/
       }else{
         $resultado = $consulta ->fetch(PDO::FETCH_ASSOC);
         $nombreSuperficieRegistrado = $resultado["nombre"];
         if ($nombreSuperficieRegistrado == $nuevoNombre) {
-          $mensajesError[] = "La superfiece ya tiene ese nombre";
+          $mensajesError[] = "La superficie ya tiene ese nombre.";
         }
       }
       
     }
+    if ($nuevoNombre == null){
+      $mensajesError[] = "Debe indicar un tipo de pista.";
+    }
       
-    if ($nuevoNombre !== null && count($mensajesError) == 0) {
+    if (/*$nuevoNombre !== null && */count($mensajesError) == 0) {
       $campos = getParams($datos);
       $consultaPut = $conexion -> prepare("UPDATE superficies SET $campos WHERE id='$superficieId'");
       bindAllParams($consultaPut,$datos);
       $consultaPut -> execute();
     
       if ($consultaPut -> rowCount() >0) {
-        salidaDatos('Superficie actulizada con éxito.', array( 'HTTP/1.1 200 OK'));
+        salidaDatos('Superficie actualizada con éxito.', array( 'HTTP/1.1 200 OK'));
         exit;
       }
       else {
@@ -57,7 +60,7 @@
         exit;
       }
     }
-    $mensajeJson = implode("Ademas: ", $mensajesError);
+    $mensajeJson = implode(" Además: ", $mensajesError);
     salidaDatos(json_encode([$mensajeJson]), array('HTTP/1.1 400 Bad Request'));
   }
   salidaDatos('No se ha podido atender la petición', array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request'));
