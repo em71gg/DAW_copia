@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/irPpal"
+        android:title="@string/irPalOverflow" />
+    <item
+        android:id="@+id/buscMdo"
+        android:title="@string/irBuscrMdoOverflow" />
+    <item
+        android:id="@+id/scrMdo"
+        android:title="@string/irScrollMercados" />
+</menu>

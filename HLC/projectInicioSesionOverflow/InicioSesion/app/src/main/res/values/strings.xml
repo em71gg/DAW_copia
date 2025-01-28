@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">InicioSesion</string>
+    <string name="NotieneCuenta">¿No tiene cuenta? Regístrese.</string>
+    <string name="cerrarSession">Cerrar Sesión</string>
+    <string name="idPrivado">Identificador</string>
+    <string name="nombrePrivado">Nombre</string>
+    <string name="fechaInicioPrivado">Fechaa Inicio</string>
+    <string name="fechaFinPrivado">Fecha de fin</string>
+    <string name="UbicacionPrivado">Ubicación</string>
+    <string name="agregarPrivado">Agregar Mercado</string>
+    <string name="IncioSesion">Inicio</string>
+    <string name="BuscarMdo">Buscar Mercado</string>
+    <string name="InsertarMdo">Agregar Mercado</string>
+    <string name="ListarMdos">Listar Mercados</string>
+
+
+</resources>

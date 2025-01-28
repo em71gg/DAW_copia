@@ -1,0 +1,29 @@
+{
+    "project_info": {
+      "project_number": "987527068758",
+      "project_id": "iniciosesiondawtarde",
+      "storage_bucket": "iniciosesiondawtarde.firebasestorage.app"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:987527068758:android:e1f1b73af04c4be24ecff7",
+          "android_client_info": {
+            "package_name": "com.daw.iniciosesion"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDl757cfKhvMsp-pv2245wkuV5HLAlazT0"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
