@@ -22,9 +22,6 @@
             android:name=".BuscarMercado"
             android:exported="false" />
         <activity
-            android:name=".BuscarUsuario"
-            android:exported="false" />
-        <activity
             android:name=".Registro"
             android:exported="false" />
         <activity

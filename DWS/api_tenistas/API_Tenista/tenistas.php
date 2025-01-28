@@ -20,7 +20,7 @@
                                               altura, 
                                               anno_nacimiento AS 'año de nacimiento',
                                               (
-                                                  /*Si hubiese que devolver un json
+                                                  /*Si hubiese que devolver un json*/
                                                   SELECT 
                                                       JSON_OBJECTAGG(
                                                           anno, titulos
@@ -30,9 +30,9 @@
                                                           anno, 
                                                           JSON_ARRAYAGG(
                                                               (SELECT nombre FROM torneos WHERE id = titulos.torneo_id)
-                                                          ) */
+                                                          ) 
                                                 /*Para devolver un array*/
-                                                SELECT 
+                                                /*SELECT 
                                                             JSON_ARRAYAGG(
                                                                 JSON_ARRAY(anno, titulos)
                                                             )
@@ -41,7 +41,7 @@
                                                                 anno, 
                                                                 JSON_ARRAYAGG(
                                                                     (SELECT nombre FROM torneos WHERE id = titulos.torneo_id)
-                                                                )
+                                                                )*/
                                                           AS titulos
                                                       FROM titulos
                                                       WHERE tenista_id = ?
