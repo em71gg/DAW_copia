@@ -70,12 +70,12 @@
         </div>
       </div>
     </nav>
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    
     <div class="flex">
         
-        <div class="w-64 flex-1 bg-green-200 m-1 rounded-full ...">01</div>
+      <div class="w-64 flex-1 bg-green-200 m-1 rounded-full ...">
+          <h1 class="text-3xl font-bold underline">Hello world!</h1>
+      </div>
         <div class="w-32 flex-1 bg-green-200 m-1 rounded-full ...">02</div>
       </div>
       <div class="grid grid-cols-3 gap-x-4 gap-y-2" >
@@ -85,9 +85,10 @@
         <div class=" m-1">04</div>
         <div class="m-1">
           <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto bg-amber-50 p-6 rounded-lg shadow-lg w-96">
-              <h2 class="text-xl font-bold mb-4 text-center text-amber-950">Formulario de Contacto</h2>
               <form onsubmit="handleSubmit(event)" class="space-y-4">
-                <div>
+                <fieldset>
+                  <legend><h2 class="text-xl font-bold mb-4 text-center text-amber-950">Formulario de Contacto</h2></legend>
+                  <div>
                     <label class="block text-sm font-medium text-amber-700">Correo Electrónico</label>
                                     <input type="email" required class="mt-1 p-2 w-full border rounded-lg" placeholder="ejemplo@correo.com">
                 </div>
@@ -95,12 +96,18 @@
                     <label class="block text-sm font-medium text-amber-700">Teléfono</label>
                     <input type="tel" required class="mt-1 p-2 w-full border rounded-lg" placeholder="+34 666666666">
                 </div>
+              </fieldset>
+              <fieldset>
                 <div>
                   <button id="submit-btn" type="submit" class="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 flex justify-center items-center">
                     <span id="spinner" class="hidden animate-spin h-5 w-5 border-t-2 border-white rounded-full mr-2"></span>
                     Enviar
                 </button>
                 </div>
+              </fieldset>
+               
+                
+                
                 
               </form>
               <p id="success-message" class="mt-4 text-amber-700 text-center hidden">¡Enviado con éxito!</p>
