@@ -53,12 +53,13 @@
                                           WHERE
                                               id = ?
                                         ");
-    $consulta -> bindParam(1, $_GET['id']);
-    $consulta -> bindParam(2, $_GET['id']);
-    $consulta -> execute();
+        $consulta -> bindParam(1, $_GET['id']);
+        $consulta -> bindParam(2, $_GET['id']);
+        $consulta -> execute();
     if ($consulta->rowCount() > 0) {
-      salidaDatos (json_encode($consulta->fetch(PDO::FETCH_ASSOC)),
-      array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
+        $datosTenista = $consulta->fetch(PDO::FETCH_ASSOC); //obtiene los datos como un array asociativo.
+        $datosTenista['titulos'] = json_decode($datosTenista['titulos'], true); // convierte la cadena JSON en un objeto JSON válido.
+        salidaDatos(json_encode($datosTenista), array('Content-Type: application/json', 'HTTP/1.1 200 OK'));//se usa para enviar la respuesta en formato JSON adecuado.
     }  
     else{
           salidaDatos('No se encuentra el tenista pedido.', array('HTTP/1.1 404 Not Found'));
