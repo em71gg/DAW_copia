@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "10f03750-9349-4c50-9814-9eae41354480",
+		"name": "Tenistas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41100043"
+	},
+	"item": [
+		{
+			"name": "superficies",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" :1,\r\n    \"nombre\" :\"Rápida\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/api_tenistas/API_Tenista/superficie.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"api_tenistas",
+						"API_Tenista",
+						"superficie.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Coronar Campeón",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"anno\": 2032,\r\n    \"tenista_id\": 1,\r\n    \"torneo_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/api_tenistas/API_Tenista/titulos.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"api_tenistas",
+						"API_Tenista",
+						"titulos.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Coronar Campeón Ya existe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"anno\": 1988,\r\n    \"tenista_id\": 4,\r\n    \"torneo_id\" : 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/api_tenistas/API_Tenista/titulos.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"api_tenistas",
+						"API_Tenista",
+						"titulos.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tenista",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/api_tenistas/API_Tenista/tenistas.php?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"api_tenistas",
+						"API_Tenista",
+						"tenistas.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tenista no existe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/DWS/api_tenistas/API_Tenista/tenistas.php?id=234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"api_tenistas",
+						"API_Tenista",
+						"tenistas.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "234"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Tenista exito",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : 17\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/DWS/api_tenistas/API_Tenista/tenistas.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"DWS",
+						"api_tenistas",
+						"API_Tenista",
+						"tenistas.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
