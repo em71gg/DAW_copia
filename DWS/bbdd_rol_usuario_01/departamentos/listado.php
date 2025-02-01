@@ -85,7 +85,7 @@
         </table>
         <div class="contenedor">
             <div class="enlaces">
-                <p><a href="../acceso/index.php">Volver a página de listados</a>
+                <p><a href="../index.php">Volver a página de listados</a>
 
                 <?php
                     if($rol == 1):

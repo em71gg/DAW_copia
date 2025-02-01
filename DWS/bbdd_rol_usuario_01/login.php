@@ -21,7 +21,7 @@
         </p>
     </form>
 
-    <p><a href="./restablecer/confirmarCorreo.php">Contraseña olvidada</a></p>
+    <p><a href="./resetPassword/resetPassword.php">Contraseña olvidada</a></p>
     <p>email: admin@email.com, rol: 1 adminstrador</p>
     <p>email: gestor@email.com, rol: 2 gestor</p>
     <p>email: consulta@email.com, rol: 3 consultor</p>

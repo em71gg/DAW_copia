@@ -244,7 +244,7 @@
 	            <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $nombre//pintamos nombre del empleado ?>">
 	            <?php
 	            	//Si hay error en el nombre...	
-					if(!empty($errores['errorNombre'])):           
+					if(!empty($errors['errorNombre'])):           
 				?>
 	            	<p class="error"><?php echo $errores['errorNombre']//Pintamos el error en la sede ?></p>
 	            <?php
