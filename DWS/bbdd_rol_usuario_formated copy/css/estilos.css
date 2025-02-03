@@ -1,0 +1,54 @@
+.contenedor {
+    display: flex;
+}
+
+.enlaces {
+    padding: 1em;
+}
+
+.estilo_enlace, .confirmacion_borrar {
+    text-decoration: none;
+}
+
+.errores {
+    margin-left: 1em;
+    color: red;
+}
+
+
+/*Header*/
+
+header {
+    background-color: #f4f4f4;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ccc;
+}
+
+.header-container h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.logout-link {
+    text-decoration: none;
+    color: #007BFF;
+    font-size: 1em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre texto e ícono */
+}
+
+.logout-link i {
+    margin-left: auto; /* Alinea el ícono al extremo derecho */
+}
+
+.logout-link:hover {
+    color: #0056b3;
+}
+
+.formulario{
+    display: block;
+}
