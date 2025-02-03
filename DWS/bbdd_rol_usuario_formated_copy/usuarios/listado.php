@@ -16,11 +16,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de sedes</title>
-    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   <!-- <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body>
-    <header>
+<header>
+        <div class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 dark:from-gray-500 dark:via-gray-600 dark:to-gray-500 py-8 md:py-16">
+            <div class="flex flex-row justify-between items-center px-6">
+                <p class="text-3xl font-bold text-white text-center flex-grow text-center">
+                    Aplicación Empresa
+                </p>
+
+            </div>
+        </div>
+    </header>
+    <!--<header>
         <div class="header-container">
             
             <a href="../acceso/cerrar-sesion.php" class="logout-link">
@@ -28,7 +39,7 @@
             </a>
         </div>
         
-    </header>
+    </header>-->
     <h1>Listado de usuarios</h1>
 
     <?php
@@ -54,13 +65,13 @@
             $rdo = $query -> fetchAll(PDO::FETCH_ASSOC);
     ?>
 
-    <table border="1" cellpadding="10">
+    <table class="table-auto border-collapse border border-indigo-600 ...">
         <thead>
             
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Estado</td>
-            <td>Fecha</td>
+            <th class="border border-gray-300 ...">Email</th>
+            <th class="border border-gray-300 ...">Rol</th>
+            <th class="border border-gray-300 ...">Estado</td>
+            <td class="border border-gray-300 ...">Fecha</td>
             
         <!--<?php
             if($rol == 1):

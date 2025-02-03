@@ -4,7 +4,7 @@ session_start();
 // Comprueba si existe la sesión "email", en caso contrario vuelve a la página de login
 if (!isset($_SESSION["email"])) header("Location: ../login.php");
 $rol = $_SESSION['rol_id'];
-echo $rol;
+
 
 require_once('../utiles/variables.php');
 require_once('../utiles/funciones.php');
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Email
 
     $rol = obtenerValorCampo('rol');
-    echo $rol;
+    
     if ($rol === "Seleccione un rol" || empty($rol)) {
         $errores[] = "Debe seleccionar un roll.";
     } else {
@@ -105,9 +105,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
+    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
+<header>
+        <div class="header-container">
+            
+            <a href="../acceso/cerrar-sesion.php" class="logout-link">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </a>
+        </div>
+</header>
     <h1>Registro</h1>
     <!-- Mostramos errores por HTML -->
     <?php if (isset($errores)): ?>
@@ -125,14 +135,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Campo de Email -->
             <label>
                 Correo electrónico
-                <input type="text" name="email">
+                <input type="text" name="email" placeholder="Email" value="<?php
+                echo $email?>">
             </label>
         </p>
         <p>
             <!-- Campo de Contraseña -->
             <label>
                 Contraseña
-                <input type="password" name="password">
+                <input type="password" name="password" placeholder="Contraseña" value="<?php
+                echo $passwordForm?>">
             </label>
         </p>
         <p>

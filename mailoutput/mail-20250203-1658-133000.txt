@@ -1,0 +1,14 @@
+To: marzo@email.com
+Subject: Activa tu cuenta
+From: dwes@php.com
+Content-type: text/plain; charset=utf-8
+
+
+            Hola!
+ 
+            Gracias por registrate en la mejor plataforma de internet, demuestras inteligencia.
+
+            Para activar entra en el siguiente enlace:
+
+           http://localhost:3000/DWS/bbdd_rol_usuario_formated/acceso/verificar-cuenta.php?email=marzo%40email.com&token=58e1392d6cb21bfae33ef2e1f47b4515
+                
