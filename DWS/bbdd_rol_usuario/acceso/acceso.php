@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['email'] = $_REQUEST['email'];
         $_SESSION['rol_id'] = $rol;
         // Redireccionamos a la página privada
-        echo "Vamos a privado";
+        //echo "Vamos a privado";
         header('Location: index.php');
         exit();
         }

@@ -15,15 +15,18 @@
             if (empty($pass1) || empty($pass2)) {//si las contraseñasno coinciden
                 $errores['faltaPass'] = "debe introducir y confirmar la contraseña.";
             }
-            if($pass1 != $pass2){//si todo ok con las contraseñas envío correo con link que al confirmase hará el update en la base de datos
+            elseif($pass1 != $pass2){//si todo ok con las contraseñas envío correo con link que al confirmase hará el update en la base de datos
                 $errores['passDiscrepan'] = "Las contraseñas deben coincidir.";
             }
             if(count($errores) == 0){
-                $_SESSION['pass'] = $pass2;
-                echo"<p>Ok las contraseñas</p>";
-                echo "<p>Valor actual email: $email</p>";
+                $_SESSION['password'] = $pass2;
+                //echo"<p>Ok las contraseñas</p>";
+                //echo "<p>Valor actual email: $email</p>";
                 //creo un nuevo token
                 $token = bin2hex(openssl_random_pseudo_bytes(16));
+                $timeStamp = time(); // Hora actual en segundos
+                //$timeToken = "$token|$timeStamp";
+
                 $conexion = conectarPDO($host, $user, $password, $bbdd);
                 $insertToken = $conexion -> prepare ('UPDATE usuarios SET token=?, activo="0", fecha=CURRENT_TIMESTAMP WHERE email =?');
                 $insertToken -> bindParam(1, $token);
@@ -39,13 +42,15 @@
                         "Content-type" => "text/plain; charset=utf-8"
                     ];
                     // Variables para el email
-                    $passEncode = urlencode($pass2);
+                    //$passEncode = urlencode($pass2);
                     $tokenEncode = urlencode($token);
+                    $timeEncode = urlEncode($timeStamp);
                     // Texto del email
                     $textoEmail = "
                     Hola!\n 
                     Active su nueva contraseña pulsando en el siguiente enlace:\n
-                    http://localhost:3000/DWS/bbdd_rol_usuario/restablecer/linkConfirmación.php?password=$passEncode&token=$tokenEncode&registrado=1
+                    http://localhost:3000/DWS/bbdd_rol_usuario/restablecer/linkConfirmación.php?token=$tokenEncode&time=$timeEncode&registrado=1 \n
+                    El enlace tiene una duración de 5 minutos.
                     ";
                     // Envio del email
                     mail($_SESSION['email'], 'Activa tu cuenta', $textoEmail, $headers);
@@ -70,7 +75,7 @@
 
 <body>
     
-
+            <?php echo "<p> la variabl de sesion es : " . $_SESSION['email'] . "</p>";?>
 
             <form action="#" method="post">
                 <input type="hidden" name="flag" value="1">

@@ -16,16 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             desconectarPDO($consulta, $conexion);
 
             if ($consulta->rowCount() > 0) { //Si el email existe en la bbdd llevo  creo sesion y llevo a introducir contraseña
-                echo "$email existe en la base de datos";
-                echo "Valor email tras crear la sesion: $email";
-
-                session_name('restart');//creo la sesion y la variable email.
+               
+                session_name('reset');//creo la sesion y la variable email.
                 session_start();
                 $_SESSION['email'] = $email;
                 header('location:setPass.php');
                 exit();
             } else { //Si no existe el correo en la bbdd llevo a login
-                echo "<p>No existe como usuario</p>";
+                $errores['noUsuario'] = "No existe como usuario";
                 header('refresh:3; url=../login.php');
             }
         } else { //Si el email no es válido se pasa el error
@@ -53,7 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="email">Introduce Email: </label>
         <input type="text" placeholder="<?php echo ($email != "" ? $email : "Email") ?>" name="email" id="email">
         <?php
-
+        if (!empty($errores['noUsuario'])):
+        ?>
+            <p class="errores"><?php echo $errores['noUsuario'] ?></p>
+        <?php
+        endif;
+        ?>
+        
+        <?php
         if (!empty($errores['emailVacio'])):
         ?>
             <p class="errores"><?php echo $errores['emailVacio'] ?></p>
