@@ -1,5 +1,5 @@
- /* Reset de estilo base */
- * {
+/* Reset de estilo base */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -32,9 +32,14 @@ header {
 /* Estilo para el header interno */
 .header-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    
     padding: 0 1.5rem;
+}
+.header-container div {
+    flex: 1; /* Hace que los elementos a la izquierda y derecha ocupen espacio y centren el título */
+    text-align: center;
 }
 
 /* Título */
@@ -42,30 +47,37 @@ header {
     font-size: 2rem;
     font-weight: bold;
     color: white;
-    text-align: center;
-    flex-grow: 1;
+
 }
 
 #options-header{
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: right;
+    gap:1rem;
+    
+    
 }
-/* Botón Cerrar sesión */
+/* inputs cabecera */
 .logout-button-container {
-    display: flex;
-    gap: 1rem;
+    color:white;
+    margin:1rem;
+    width: 100%;
 }
 
 .logout-button {
     padding: 0.75rem 1rem;
     font-size: 1rem;
     background-color: #3b82f6;
-    color: white;
+    color: white !important;
     border: 2px solid transparent;
     border-radius: 0.375rem;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s, border 0.3s;
+}
+#user{
+    color:white;
 }
 
 .logout-button:hover {
@@ -79,15 +91,16 @@ header {
 }
 
 /* Modo oscuro */
-body.dark-mode .header-bg {
+/*body.dark-mode .header-bg {
     background: linear-gradient(to right, #6b7280, #4b5563, #6b7280);
-}
+}*/
 
 /* Contenedor principal */
 main {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    color: #4a5568;
     width: 100%;
     max-width: 600px;
     padding: 1.5rem;
@@ -95,13 +108,15 @@ main {
 
 /* Tarjetas de contenido */
 .form-container,
-.info-container {
+.info-container,
+.tablecontainer {
     width: 100%;
 }
 
 /* Formulario */
 .form-card,
-.info-card {
+.info-card,
+.info-table {
     background-color: white;
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -153,6 +168,7 @@ main {
     border: 2px solid #e2e8f0;
     border-radius: 0.375rem;
     box-sizing: border-box;
+    
 }
 
 .input:focus {
@@ -197,3 +213,4 @@ main {
     font-size: 0.875rem;
     color: #4a5568;
 }
+

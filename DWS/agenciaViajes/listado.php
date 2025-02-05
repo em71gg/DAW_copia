@@ -1,8 +1,7 @@
 <?php
-
-
+require_once('../utiles/');
+require_once('../utiles/')
 ?>
-
 
 
 <!DOCTYPE html>
@@ -20,33 +19,30 @@
     <header>
         <div class="header-bg">
             <div class="header-container">
-                <p class="header-title">Aplicación Empresa</p>
+                <div></div>
+                <div>
+                    <p class="header-title">Aplicación Empresa</p>
+                </div>   
                 <div id="options-header">
                     <form action="#" method="post">
                         <div class="logout-button-container">
-
-                            <input type="text" class="logout-button" placeholder="Usuario">
-
-
-
+                            <input type="text" class="logout-button" placeholder="Usuario" id="user">
                         </div>
                         <div class="logout-button-container">
-                            
-                        <input type="password" class="logout-button" placeholder="Contraseña">
-                                    
-                                </button>
-                            </a>
+                            <input type="password" class="logout-button" placeholder="Contraseña">
                         </div>
                     </form>
 
                 </div>
-
             </div>
         </div>
     </header>
 
     <main id="content" role="main">
-        <div class="form-container">
+        <div class="table-container">
+            <div class=info-table>
+        </div>
+        <div class="form-container"> 
             <div class="form-card">
                 <div class="text-center">
                     <h1 class="title">¿Olvidó su contraseña?</h1>

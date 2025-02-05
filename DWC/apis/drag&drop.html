@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <style>
+            body {
+            /* Prevent the user selecting text in the example */
+            user-select: none;
+            }
+            #zona-arrastre{
+                height: 100px;
+                width: 200px;
+                border: 1px solid rgb(94, 81, 94);
+                border-radius: 10px 5px 10px 5px 10px 5px 10px 5px;
+            }
+            
+            .dropzone.dragover {
+            background-color: purple;
+            }
+
+            .dragging {
+            opacity: 0.5;
+            }
+        </style>
+
+        <script>
+           /* let dragged;
+            source.addEventListener("dragstart", (event) => {
+            // store a ref. on the dragged elem
+            dragged = event.target;
+            // make it half transparent
+            event.target.classList.add("dragging");
+            });
+
+            source.addEventListener("dragend", (event) => {
+            // reset the transparency
+            event.target.classList.remove("dragging");
+            });
+            /* events fired on the drop targets */
+           /*const target = document.getElementById("zona-arrastre");
+            target.addEventListener(
+            "dragover",
+            (event) => {
+                // prevent default to allow drop
+                event.preventDefault();
+            },
+            false,
+            );
+            target.addEventListener("dragenter", (event) => {
+            // highlight potential drop target when the draggable element enters it
+            if (event.target.classList.contains("dropzone")) {
+                event.target.classList.add("dragover");
+            }
+            });
+
+            target.addEventListener("dragleave", (event) => {
+            // reset background of potential drop target when the draggable element leaves it
+            if (event.target.classList.contains("dropzone")) {
+                event.target.classList.remove("dragover");
+            }
+            });
+            target.addEventListener("drop", (event) => {
+            // prevent default action (open as link for some elements)
+            event.preventDefault();
+            // move dragged element to the selected drop target
+            if (event.target.classList.contains("dropzone")) {
+                event.target.classList.remove("dragover");
+                event.target.appendChild(dragged);
+            }
+            });*/
+
+            function dropHandler(event) {
+                // Evitar el comportamiendo por defecto (Evitar que el fichero se abra/ejecute)
+                event.preventDefault();
+                
+                if (event.dataTransfer.items) {
+                    // Usar la interfaz DataTransferItemList para acceder a el/los archivos)
+                    for (var i=0; i<eventevent.dataTransfer.items.lenght; i++){
+                        // Si los elementos arrastrados no son ficheros, rechazarlos
+                        if(event.dataTransfer.items[i].kind === "file"){
+                        var file = event.dataTransfer.items[i].getAsFile();
+                        }
+                    }
+                }
+                else{
+                    // Usar la interfaz DataTransfer para acceder a el/los archivos
+                    for(var i = 0; i< event.dataTransfer.files.lenght){
+
+                    }
+                }
+                removeDragData(event);
+            }
+            function removeDragData(ev) {
+            console.log("Removing drag data");
+
+            if (ev.dataTransfer.items) {
+                // Use DataTransferItemList interface to remove the drag data
+                ev.dataTransfer.items.clear();
+            } else {
+                // Use DataTransfer interface to remove the drag data
+                ev.dataTransfer.clearData();
+            }
+            }
+        </script>
+
+    </head>
+    <body>
+        <h1>Ejercicio drag & drop</h1>
+        <div class="dropzone" id="zona-arrastre" ondrop="dropHandler(event)">Arrastra tus ficheros aquí</div>
+        <pre></pre>
+    </body>
+</html>
