@@ -1,12 +1,12 @@
- /* Reset de estilo base */
- * {
+/* Reset de estilo base */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 /* Estilos generales */
-body {
+body{
     font-family: Arial, sans-serif;
     background-color: #f7fafc;
     color: #4a5568;
@@ -32,9 +32,14 @@ header {
 /* Estilo para el header interno */
 .header-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    
     padding: 0 1.5rem;
+}
+.header-container div {
+    flex: 1; /* Hace que los elementos a la izquierda y derecha ocupen espacio y centren el título */
+    text-align: center;
 }
 
 /* Título */
@@ -42,25 +47,29 @@ header {
     font-size: 2rem;
     font-weight: bold;
     color: white;
-    text-align: center;
-    flex-grow: 1;
+
 }
 
 #options-header{
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: right;
+    gap:1rem;
+    
+    
 }
-/* Botón Cerrar sesión */
+/* inputs cabecera */
 .logout-button-container {
-    display: flex;
-    gap: 1rem;
+    color:white;
+    margin:1rem;
+    width: 100%;
 }
 
-.logout-button {
+.logout-button  {
     padding: 0.75rem 1rem;
     font-size: 1rem;
     background-color: #3b82f6;
-    color: white;
+    color: white !important;
     border: 2px solid transparent;
     border-radius: 0.375rem;
     font-weight: 600;
@@ -68,40 +77,100 @@ header {
     transition: background-color 0.3s, border 0.3s;
 }
 
+#user{
+    color:white;
+}
+
 .logout-button:hover {
     background-color: #2563eb;
-    border: 2px solid #2563eb;
+    border: 2px solid #fbfbfb;
+    
 }
 
 .logout-button:focus {
     outline: none;
     box-shadow: 0 0 0 2px #2563eb;
 }
+.logout-button::placeholder{
+    color: rgb(203, 224, 255);
+}
 
 /* Modo oscuro */
-body.dark-mode .header-bg {
+/*body.dark-mode .header-bg {
     background: linear-gradient(to right, #6b7280, #4b5563, #6b7280);
-}
+}*/
 
 /* Contenedor principal */
 main {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    color: #4a5568;
     width: 100%;
-    max-width: 600px;
+    max-width: auto;
     padding: 1.5rem;
 }
 
 /* Tarjetas de contenido */
-.form-container,
-.info-container {
+.table-container {
     width: 100%;
 }
+.container-table{
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #93c5fd;
+    padding: 1.5rem;
+  }
 
-/* Formulario */
-.form-card,
-.info-card {
+  #div-table{
+    width: 90%; /* O cualquier otro tamaño deseado */
+    /*max-width: 600px;*/
+    overflow-x: auto; /* Para evitar desbordamiento horizontal */
+    border-radius: 0.75rem;
+  }
+  #customers {
+    font-family: Arial, Helvetica, sans-serif;
+   
+    /*overflow: hidden; adapta el contenido al contenedor que lo contiene*/
+    border-collapse: collapse;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+  }
+  thead{
+    border-radius: 0.75rem 0.75rem 0 0;
+    background: linear-gradient(to right, #3b82f6, #2563eb, #3b82f6);
+  }
+  #customers td,
+  #customers th {
+    /*border: 1px solid #ddd;*/
+    padding: 8px;
+  }
+ 
+  #customers tr:nth-child(even) {
+    background-color: #eff6fa;
+  }
+
+  #customers tr:hover {
+    background-color: #ddd;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    /*background-color: #368dfe;*/
+    color: white;
+  }
+
+
+
+.info-table
+{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -153,6 +222,7 @@ main {
     border: 2px solid #e2e8f0;
     border-radius: 0.375rem;
     box-sizing: border-box;
+    
 }
 
 .input:focus {
@@ -197,3 +267,4 @@ main {
     font-size: 0.875rem;
     color: #4a5568;
 }
+
