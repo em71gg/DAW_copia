@@ -67,10 +67,9 @@ $rdo = $consulta -> fetchAll(PDO::FETCH_ASSOC);
                         <td>" . $campo['fecha_actividad'] . "</td>
                         <td>" . $campo['aforo'] . "</td>
                     </tr>".PHP_EOL;
-                    }
-                   
-
+                    }  
                     ?>
+                </table>
             </div>
         </div>
     </main>
