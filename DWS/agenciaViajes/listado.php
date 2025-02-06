@@ -7,7 +7,7 @@ $conexion = conectarPDO($host, $user, $password, $bbdd);
 $consulta = $conexion->prepare("SELECT nombre, descripcion, fecha_actividad, aforo FROM ofertas WHERE visada=1");
 $consulta->execute();
 
-$rdo = $consulta -> fetchAll(PDO::FETCH_ASSOC);
+$rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -47,30 +47,42 @@ $rdo = $consulta -> fetchAll(PDO::FETCH_ASSOC);
 
     <main id="content" role="main">
         <div class="table-container">
+
             <div class=info-table>
                 <div class="text-center">
                     <h1 class="title">Listado de actividades</h1>
                 </div>
-                <table id="customers">
-                    <tr>
-                        <th>Nombre de la Actividad</th>
-                        <th>Descripción de la actividad</th>
-                        <th>Fecha de la actividad</th>
-                        <th>Aforo</th>
-                    </tr>
-                    <?php
+                <div id="div-table">
+                    <table id="customers">
+                        <thead>
+                            <tr>
+                                <th>Nombre de la Actividad</th>
+                                <th>Descripción de la actividad</th>
+                                <th>Fecha de la actividad</th>
+                                <th>Aforo</th>
+                            </tr>
+                        </thead>
 
-                    foreach($rdo as $campo){
-                        echo "<tr>
-                        <td>" . $campo['nombre'] . "</td>
-                        <td>" . $campo['descripcion'] . "</td>
-                        <td>" . $campo['fecha_actividad'] . "</td>
-                        <td>" . $campo['aforo'] . "</td>
-                    </tr>".PHP_EOL;
-                    }  
-                    ?>
-                </table>
+
+                        <tbody>
+                            <?php
+
+                            foreach ($rdo as $campo) {
+                                echo "<tr>
+                                <td>" . $campo['nombre'] . "</td>
+                                <td>" . $campo['descripcion'] . "</td>
+                                <td>" . $campo['fecha_actividad'] . "</td>
+                                <td>" . $campo['aforo'] . "</td>
+                            </tr>" . PHP_EOL;
+                            }
+                            ?>
+                        </tbody>
+
+                    </table>
+                </div>
+
             </div>
+
         </div>
     </main>
 </body>

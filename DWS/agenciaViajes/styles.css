@@ -122,19 +122,31 @@ main {
     border: 2px solid #93c5fd;
     padding: 1.5rem;
   }
+
+  #div-table{
+    width: 90%; /* O cualquier otro tamaño deseado */
+    /*max-width: 600px;*/
+    overflow-x: auto; /* Para evitar desbordamiento horizontal */
+    border-radius: 0.75rem;
+  }
   #customers {
     font-family: Arial, Helvetica, sans-serif;
+   
+    /*overflow: hidden; adapta el contenido al contenedor que lo contiene*/
     border-collapse: collapse;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
     width: 100%;
   }
-
+  thead{
+    border-radius: 0.75rem 0.75rem 0 0;
+    background: linear-gradient(to right, #3b82f6, #2563eb, #3b82f6);
+  }
   #customers td,
   #customers th {
     /*border: 1px solid #ddd;*/
     padding: 8px;
   }
-
+ 
   #customers tr:nth-child(even) {
     background-color: #eff6fa;
   }
@@ -147,15 +159,18 @@ main {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #368dfe;
+    /*background-color: #368dfe;*/
     color: white;
   }
 
-/* Formulario */
-.form-card,
-.info-card,
+
+
 .info-table
 {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

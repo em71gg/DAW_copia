@@ -179,4 +179,42 @@
 /**
  * FIN FUNCIONES TRABAJAR CON BBDD
  */
+ /**
+*funcoines cabeceras 
+*/
+
+//Obtener parámetros
+function getParams($params)
+{
+    $parametros = [];
+    foreach($params as $param => $valor) 
+    {
+        $parametros[] = "$param=:$param";
+    }
+    return implode(", ", $parametros);
+}
+
+//Asociar todos los parámetros a un sql
+function bindAllParams($consulta, $params)
+{
+    foreach($params as $param => $value)
+    {
+        $consulta->bindValue(':'.$param, $value);
+    }
+    return $consulta;
+}
+//Mostrar los datos de salida con las cabeceras recibidas
+ function salidaDatos($data, $httpHeaders=array())
+    {
+        if (is_array($httpHeaders) && count($httpHeaders)) 
+        {
+        foreach ($httpHeaders as $httpHeader) 
+        {
+        header($httpHeader);
+        }
+        }
+
+        print $data;
+        exit();
+    }
 ?>

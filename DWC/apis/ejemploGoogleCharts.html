@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+</html>
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        div{
+            #grafica {
+
+width: 900px;
+
+height: 500px;
+
+margin: 0 auto;
+
+}
+        }
+    </style>
+</head>
+
+<body>
+    <div id="grafica"></div>
+
+    <script>
+         google.charts.load('current', {'packages':['corechart']});
+
+google.charts.setOnLoadCallback(dibujarGrafica);
+
+
+
+function dibujarGrafica() {
+
+   var datos = google.visualization.arrayToDataTable([
+
+        ['Mes', 'Ventas'],
+
+        ['Enero', 100],
+
+        ['Febrero', 117],
+
+        ['Marzo', 66],
+
+        ['Abril', 103],
+
+        ['Mayo', 80],
+
+        ['Junio', 120],
+
+        ['Julio', 150],
+
+        ['Agosto', 130],
+
+        ['Septiembre', 110],
+
+        ['Octubre', 90],
+
+        ['Noviembre', 140],
+
+        ['Diciembre', 160]
+
+    ]);
+
+
+
+   var opciones = {
+
+        title: 'Horas desperdiciadas en youtube en 2024',
+
+        curveType: 'function',
+
+        legend: { position: 'bottom' }
+
+    };
+
+
+
+   var grafica = new google.visualization.LineChart(document.getElementById('grafica'));
+
+    grafica.draw(datos, opciones);
+
+}
+    </script>
+</body>
+</html>
