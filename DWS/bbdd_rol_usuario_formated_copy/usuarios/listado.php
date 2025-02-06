@@ -1,27 +1,29 @@
 <?php
-    // Activa las sesiones
-	session_name("sesion-privada");
-	session_start();
-	// Comprueba si existe la sesión "email", en caso contrario vuelve a la página de login
-	if (!isset($_SESSION["email"])) header("Location: ../login.php");
-    $rol= $_SESSION['rol_id'];
-    // Incluye ficheros de variables y funciones
-    require_once("../utiles/variables.php");
-    require_once("../utiles/funciones.php");
+// Activa las sesiones
+session_name("sesion-privada");
+session_start();
+// Comprueba si existe la sesión "email", en caso contrario vuelve a la página de login
+if (!isset($_SESSION["email"])) header("Location: ../login.php");
+$rol = $_SESSION['rol_id'];
+// Incluye ficheros de variables y funciones
+require_once("../utiles/variables.php");
+require_once("../utiles/funciones.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de sedes</title>
-   <!-- <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
+
 <body>
-<header>
+    <header>
         <div class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 dark:from-gray-500 dark:via-gray-600 dark:to-gray-500 py-8 md:py-16">
             <div class="flex flex-row justify-between items-center px-6">
                 <p class="text-3xl font-bold text-white text-center flex-grow text-center">
@@ -31,7 +33,8 @@
             </div>
         </div>
     </header>
-    <!--<header>
+    <main id="content" role="main" class="w-full max-w-md mx-auto p-6">
+        <!--<header>
         <div class="header-container">
             
             <a href="../acceso/cerrar-sesion.php" class="logout-link">
@@ -40,14 +43,14 @@
         </div>
         
     </header>-->
-    <h1>Listado de usuarios</h1>
+        <h1>Listado de usuarios</h1>
 
-    <?php
-            // Realiza la conexion a la base de datos a través de una función 
-            $conexion = conectarPDO($host, $user, $password, $bbdd);
-            
-            // Realiza la consulta a ejecutar en la base de datos en una variable
-            $query = $conexion->query('SELECT 
+        <?php
+        // Realiza la conexion a la base de datos a través de una función 
+        $conexion = conectarPDO($host, $user, $password, $bbdd);
+
+        // Realiza la consulta a ejecutar en la base de datos en una variable
+        $query = $conexion->query('SELECT 
                                             email, 
                                             nombre,
                                             CASE
@@ -57,68 +60,69 @@
                                             fecha
                                         FROM usuarios
                                         JOIN roles
-                                        WHERE usuarios.rol_id = roles.id');//añado id a la consulta
+                                        WHERE usuarios.rol_id = roles.id'); //añado id a la consulta
 
-            
-            // Obten el resultado de ejecutar la consulta para poder recorrerlo. El resultado es de tipo PDOStatement
 
-            $rdo = $query -> fetchAll(PDO::FETCH_ASSOC);
-    ?>
+        // Obten el resultado de ejecutar la consulta para poder recorrerlo. El resultado es de tipo PDOStatement
 
-    <table class="table-auto border-collapse border border-indigo-600 ...">
-        <thead>
-            
-            <th class="border border-gray-300 ...">Email</th>
-            <th class="border border-gray-300 ...">Rol</th>
-            <th class="border border-gray-300 ...">Estado</td>
-            <td class="border border-gray-300 ...">Fecha</td>
-            
-        <!--<?php
-            if($rol == 1):
-        ?>-->
-            <th>Acción</th>
-        <?php
-            endif;
+        $rdo = $query->fetchAll(PDO::FETCH_ASSOC);
         ?>
-        </thead> 
-        <tbody>
-        <?php
-                foreach($rdo as $row){
-                    echo "<tr><td>". $row['email']. "</td><td>". $row['nombre'] . "</td><td>"
-                    . $row['estado'] . "</td><td>". $row['fecha'];
-                    
-                        echo "<td><a href='modificar.php?emailUsuario=$row[email]' class='estilo_enlace'>&#9998</a>
-                        <a href='borrar.php?emailUsuario=$row[email]' class='confirmacion_borrar'>&#128465</a></td>";
-                 }
-                      
-                
+        <div
+            class="mt-7 bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-white">
+            <table class="table-auto border-collapse border rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300 ...">
+                <thead>
 
-        ?>
+                    <th class="border border-gray-300 ...">Email</th>
+                    <th class="border border-gray-300 ...">Rol</th>
+                    <th class="border border-gray-300 ...">Estado</td>
+                    <td class="border border-gray-300 ...">Fecha</td>
 
-        </tbody>
-    </table>
-    <div class="contenedor">
-        <div class="enlaces">
-        <p><a href="../acceso/index.php">Volver a página de listados</a>&nbsp;&nbsp;<a href="../acceso/registro.php">Registrar nuevo usuario</a>
+                    <!--<?php
+                        if ($rol == 1):
+                        ?>-->
+                    <th>Acción</th>
+                <?php
+                        endif;
+                ?>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($rdo as $row) {
+                        echo "<tr class='border border-gray-300 ...'><td class='border border-gray-300 ...'>" . $row['email'] . "</td><td class='border border-gray-300 ...'>" . $row['nombre'] .
+                            "</td><td class='border border-gray-300 ...'>" . $row['estado'] . "</td><td class='border border-gray-300 ...'>" . $row['fecha'];
 
+                        echo "<td class='border border-gray-300 ...'><a href='modificar.php?emailUsuario=$row[email]' >&#9998</a>
+                        <a href='borrar.php?emailUsuario=$row[email]'>&#128465</a></td>";
+                    }
+                    ?>
+
+                </tbody>
+            </table>
         </div>
-    </div>
+        <div class="contenedor">
+            <div class="enlaces">
+                <p><a href="../acceso/index.php">Volver a página de listados</a>&nbsp;&nbsp;<a href="../acceso/registro.php">Registrar nuevo usuario</a>
+
+            </div>
+        </div>
+    </main>
 
     <?php
 
-        // Libera el resultado y cierra la conexión
-        desconectarPDO($query, $conexion);
-    
+    // Libera el resultado y cierra la conexión
+    desconectarPDO($query, $conexion);
+
     ?>
 
-    <script type="text/javascript">    
-            var elementos = document.getElementsByClassName("confirmacion_borrar");
-        var confirmFunc = function (e) {
+    <script type="text/javascript">
+        var elementos = document.getElementsByClassName("confirmacion_borrar");
+        var confirmFunc = function(e) {
             if (!confirm('Está seguro de que desea borrar este registro?')) e.preventDefault();
         };
         for (var i = 0, l = elementos.length; i < l; i++) {
             elementos[i].addEventListener('click', confirmFunc, false);
         }
-</script>    
+    </script>
 </body>
+
 </html>
