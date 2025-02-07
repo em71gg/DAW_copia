@@ -123,19 +123,20 @@ main {
     padding: 1.5rem;
   }
 
-  #div-table{
+ /* #div-table{
     width: 90%; /* O cualquier otro tamaño deseado */
     /*max-width: 600px;*/
-    overflow-x: auto; /* Para evitar desbordamiento horizontal */
+    /*overflow-x: auto; /* Para evitar desbordamiento horizontal */
+   /* overflow: hidden;
     border-radius: 0.75rem;
-  }
+  }*/
   #customers {
     font-family: Arial, Helvetica, sans-serif;
    
-    /*overflow: hidden; adapta el contenido al contenedor que lo contiene*/
+    overflow: hidden;/*adapta el contenido al contenedor que lo contiene*/
     border-collapse: collapse;
     border-radius: 10px 10px 0 0;
-    width: 100%;
+    width: 100%;*/
   }
   thead{
     border-radius: 0.75rem 0.75rem 0 0;
