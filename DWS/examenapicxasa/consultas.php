@@ -18,10 +18,8 @@ FROM ofertas where usuario_id=?");
 $ofertasOfertante->bindParam(1, $id_usuario);
 $ofertasOfertante->execute();
 $datosOfertante = $ofertasOfertante->fetch(PDO::FETCH_ASSOC);
-$datosOfertante['oferta'] = json_decode($datosOfertante['oferta'], true);
-/*while ($registro = $ofertasOfertante->fetch(PDO::FETCH_ASSOC)) {
-$registros[] = $registro;
-}*/
+$datosOfertante['oferta'] = json_decode($datosOfertante['oferta'], true);//paso el string delarra a array
+
 salidaDatos(
     json_encode($datosOfertante),
     array('Content-Type: application/json', 'HTTP/1.1 200 OK')

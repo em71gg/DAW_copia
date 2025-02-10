@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 . $idAlta . ".", array('Content-Type: application/json', 'HTTP/1.1 200 OK'));
         }
     } else {
-        echo var_dump($mensajesError);
+        
         $mensajeJson = implode(PHP_EOL, $mensajesError);
         salidaDatos(json_encode($mensajeJson), array('HTTP/1.1 400 Bad Request'));
     }
