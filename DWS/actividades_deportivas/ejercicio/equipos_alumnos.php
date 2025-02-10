@@ -120,8 +120,8 @@
         }
         else {
             
-            $mensajeJson = implode("Ademas, ", $mensajesError);
-            salidaDatos(json_encode([$mensajeJson]), array('HTTP/1.1 400 Bad Request'));
+            $mensajeJson = implode(PHP_EOL, $mensajesError);
+            salidaDatos(json_encode($mensajeJson), array('HTTP/1.1 400 Bad Request'));
         }
     
     }

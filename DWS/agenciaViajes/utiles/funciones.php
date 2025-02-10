@@ -188,7 +188,8 @@ function getParams($params)
 {
     $parametros = [];
     foreach($params as $param => $valor) 
-    {
+    {   
+        if($param=='id') continue;
         $parametros[] = "$param=:$param";
     }
     return implode(", ", $parametros);

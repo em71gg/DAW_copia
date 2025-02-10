@@ -74,6 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT')
         $consulta = $dbConexion->prepare($update);
         bindAllParams($consulta, $datos);
         $consulta->execute();
+        
+        
         salidaDatos('', array( 'HTTP/1.1 200 OK'));
     }
 //En caso de que ninguna de las opciones anteriores se haya ejecutado
