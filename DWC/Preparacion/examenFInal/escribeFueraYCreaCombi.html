@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <p >Vamos a crear input dinámicamente en tres segundos debe aparecer y podrás usarlo</p>
+    <!--<input type = "text" id="enter">-->
+    
+    <p id="display"></p>
+    <script>
+        let display = document.querySelector('#display'); // Variable donde mostraré los mensajes
+
+        setTimeout(() => {
+            // Crear el input dinámicamente
+            let inputField = document.createElement('input');
+            inputField.setAttribute('id', 'enter');
+            inputField.setAttribute('type', 'text');
+            document.body.appendChild(inputField); // Agregar el input al documento
+
+            // Agregar eventos una vez que el input existe en el DOM
+            inputField.addEventListener('focus', () => {
+                display.innerHTML = "Atención, alguien va a escribir.";
+            });
+
+            inputField.addEventListener('input', () => {
+                display.innerHTML = inputField.value;
+            });
+
+        }, 3000); // Se ejecutará después de 3 segundos
+
+    </script>
+
+  </body>
+</html>

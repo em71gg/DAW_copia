@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     COUNT(a.id) > 0, 
                     JSON_ARRAYAGG(
                     /*Si quiero salida array*/
-                        /*JSON_ARRAY(
+                        JSON_ARRAY(
                             a.nombre,
                             a.apellidos,
                             a.edad
-                        )*/
+                        )
                         /*si quiero salida json object*/
                         JSON_OBJECT(
                             'nombre', a.nombre,
@@ -138,9 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         $mensajesError[] = "Debe especificar un deporte id. ";
     }
     if ($nombreId !== null) {
-        //verificar que noesta siendo usad ese nombre
-        $checkName = $conexion->prepare("SELECT * FROM equipos WHERE nombre = ?");
-        $checkName->bindParam(1, $nombreId);
+        //verificar que no esta siendo usado ese nombre
+        $checkName = $conexion->prepare("SELECT * FROM equipos WHERE nombre = ? AND id != ?");
+        $checkName -> bindParam(1, $nombreId);
+        $checkName -> bindParam(2,$equipoId);
         $checkName->execute();
         if ($checkName->rowCount() > 0) {
             $mensajesError[] = "Ese nombre ya pertecene a otro equipo";

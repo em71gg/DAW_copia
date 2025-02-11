@@ -91,7 +91,7 @@
                     exit;*/
                 }
                 if ($edadAlumno < $edadMinima) {//si no llega a la edad
-                    $mensajesError[]= "El alumno indicado no tiene la edad minima necesaria para pertencer al equipo.";
+                    $mensajesError[]= "El alumno indicado no tiene la edad minima necesaria para pertenecer al equipo.";
                     /*salidaDatos(json_encode(["mensaje" => "El alumno indicado no tiene la edad mínima necesaria para pertencer al equipo."]), array('HTTP/1.1 400 Bad Request'));
                     exit;*/
                 }
@@ -121,7 +121,7 @@
         else {
             
             $mensajeJson = implode(PHP_EOL, $mensajesError);
-            salidaDatos(json_encode($mensajeJson), array('HTTP/1.1 400 Bad Request'));
+            salidaDatos($mensajeJson, array('HTTP/1.1 400 Bad Request'));
         }
     
     }

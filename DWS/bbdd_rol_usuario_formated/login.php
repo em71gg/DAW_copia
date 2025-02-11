@@ -16,7 +16,6 @@
                 <p class="text-3xl font-bold text-white text-center flex-grow text-center">
                     Aplicación Empresa
                 </p>
-
             </div>
         </div>
     </header>
