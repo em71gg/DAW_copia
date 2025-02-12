@@ -1,0 +1,14 @@
+To: admin@email.com
+Subject: Activa tu cuenta
+From: dwes@php.com
+Content-type: text/plain; charset=utf-8
+
+
+                    Hola!
+ 
+                    Active su nueva contraseña pulsando en el siguiente enlace:
+
+                    http://localhost:3000/DWS/bbdd_rol_usuario_formated/restablecer/linkConfirmación.php?token=11a47eb7aeeb74689c7c2c73bbe1e5b2&time=1739388695&registrado=1 
+
+                    El enlace tiene una duración de 5 minutos.
+                    

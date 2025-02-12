@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <h1>Contador reactivo con RxJS</h1>
+      <div id="contador">0</div>
+    </main>
+    <script>
+      const { interval } = rxjs;
+
+      const contador$ = interval(1000);
+
+      contador$.subscribe((valor) => {
+        document.getElementById("contador").textContent = valor;
+      });
+    </script>
+  </body>
+</html>

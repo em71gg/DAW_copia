@@ -26,16 +26,18 @@ header {
 .header-bg {
     background: linear-gradient(to right, #3b82f6, #2563eb, #3b82f6);
     padding: 2rem 0;
+    height: fit-content;
     width: 100%;
 }
 
 /* Estilo para el header interno */
 .header-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    
     padding: 0 1.5rem;
+    height: fit-content;
 }
 .header-container div {
     flex: 1; /* Hace que los elementos a la izquierda y derecha ocupen espacio y centren el título */
@@ -48,6 +50,11 @@ header {
     font-weight: bold;
     color: white;
 
+}
+
+.header-text{
+    font-size: 1rem;
+    color:white;
 }
 
 #options-header{

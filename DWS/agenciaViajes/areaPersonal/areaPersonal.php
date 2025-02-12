@@ -4,7 +4,18 @@ require_once('./utiles/variables.php');
 
 $conexion = conectarPDO($host, $user, $password, $bbdd);
 
-$consulta = $conexion->prepare("SELECT nombre, descripcion, fecha_actividad, aforo FROM ofertas WHERE visada=1");
+$consulta = $conexion->prepare("SELECT 
+                                    o.nombre,
+                                    o.descripcion
+                                    o.fecha_actividad,
+                                    o.aforo - COALESCE(COUNT(s.oferta_id), 0) AS plazas_disponibles
+                                FROM ofertas o
+                                LEFT JOIN solicitudes s ON o.id = s.oferta_id/*lef join para que me rescate también las ofertas que no tengan coincidencia en solicitud, osea las que tienen todas las plazas libres porque no ha habido solicitudes todavía*/
+                                GROUP BY o.nombre
+                                HAVING plazas_disponibles > 0
+                                WHERE o.visada =1");
+
+
 $consulta->execute();
 
 $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -32,16 +43,9 @@ $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div id="options-header">
                     <form action="./areaPersonal/areaPersonal.php" method="post">
-                        <p class="header-text">In
-                            iciar Sesión</p>
+                        
                         <div class="logout-button-container">
-                            <input type="text" class="logout-button" placeholder="Usuario" id="user">
-                        </div>
-                        <div class="logout-button-container">
-                            <input type="password" class="logout-button" placeholder="Contraseña">
-                        </div>
-                        <div class="logout-button-container">
-                            <input type="submit" class="logout-button" placeholder="Contraseña">
+                            <input type="submit" class="logout-button" placeholder="Cerrar Sesion">
                         </div>
                     </form>
 
