@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="div1">
+        <h1>Simulacion de clck con el teclado</h1>
+      </div>
+      <div id="boton">
+        <button id="bt">Haz click o pulsa enter</button>
+      </div>
+      <div id="mensaje"></div>
+    </main>
+    <script>
+        const boton = document.querySelector('#boton');
+        const mensaje = document.querySelector('#mensaje');
+
+        boton.addEventListener('click', () =>{
+            if (event.detail === 0) {
+            // Si detail es 0, significa que el evento no proviene de un clic real, 
+            // sino de JavaScript
+            mensaje.textContent = 'Has pulsado Enter';
+            } 
+            else {
+            mensaje.textContent = 'Has pulsado el botón';
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if(event.key === 'Enter'){
+                let clickEvent = new Event('click');
+                boton.dispatchEvent(clickEvent);
+            }
+        });
+      
+    </script>
+  </body>
+</html>

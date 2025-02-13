@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        main{
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+
+    </header>
+
+    <main>
+        <div>
+            <button id="fetchButton">Hacer llamad asíncrona</button>
+        </div id='output'>
+
+        <div>
+        </div>
+    </main>
+    <script>
+        document.querySelector('#fetchButton').addEventListener('click', () =>{
+            fetch('endpoint')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('#output').innerHTML = `<h3>${data.<campo1>}</h3><p>${data.<campo2>}</p>`;
+            })
+            .catch(error => console.log('Error obteniendo los datos: ', error));
+        });
+
+
+        
+    </script>
+</body>
+
+</html>

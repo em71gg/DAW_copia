@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="imagen">
+        <img id="img" src="img1.png">
+      </div>
+      <div id="boton">
+        <button id="bt">Cambiar Imagen</button>
+      </div>
+    </main>
+    <script>
+      let imagen = document.querySelector('#img');
+      let boton = document.querySelector('#bt');
+     
+      
+      boton.addEventListener('click', () => {
+        if(imagen.src.endsWith('img1.png')/*imagen.src == 'img1.png'*/){//Lo verde no funcionaba porque imagen.src devuelve la ruta completa incluyendo localhost, por eso endswith
+          imagen.setAttribute('src', 'img2.png');
+        }
+        else{
+          imagen.setAttribute('src','img1.png');
+        }
+        
+      });
+
+
+    </script>
+  </body>
+</html>

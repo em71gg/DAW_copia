@@ -1,0 +1,86 @@
+<!--Pantalla con radio buttons para selccionar le background color  y que
+ el últimoselecionado se quede guardada wen una cookie
+ cookie: tema, ambito, duracion max age
+ -->
+
+ <!DOCTYPE html>
+ <html>
+    <head>
+        <style>
+            #claro{
+                background-color: rgb(227, 251, 193);
+            }
+            #oscuro{
+                background-color:rgb(0, 0, 0);
+                color:beige;
+            }
+
+            #gradiente{
+                background: linear-gradient(to right, orange, yellow, orange,  yellow, orange, yellow, orange);
+            }
+        </style>
+    </head>
+    <body id="">
+        <main>
+            <div> 
+                <input type="radio" id="claro" name="background-color" data-toggle-id="claro"/>
+                <label for="claro">Tema claro</label>
+                <input type="radio" id="oscuro" name="background-color" data-toggle-id="oscuro"/>
+                <label for="oscuro">Tema oscuro</label>
+                <input type="radio" id="gradiente" name="background-color" data-toggle-id="gradiente"/>
+                <label for="gradiente">Tema gradiente</label>
+            </div>
+
+        </main>
+    <script>
+     
+        //Función para obtener una cookie
+        function getCookie(name) {
+            let matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]).split(',')[0] : undefined;
+            }
+            /*function getCookie(name) {
+                let matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                ));
+                
+                if (matches) {
+                    let cookieValue = decodeURIComponent(matches[1]);
+                    let valueBeforeComma = cookieValue.split(',')[0];  // Obtiene la parte antes de la coma
+                    return valueBeforeComma;  
+                }
+                return undefined;  // Si no existe la cookie, devuelve undefined
+            }*/
+       /*function getCookie(name) {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    console.log(cookie);
+                    if (cookie.startsWith(name + '=')) {
+                       // console.log()
+                        return cookie.substring(name.length + 1);
+                    }
+                }
+                return null;
+            }*/
+
+            // Cargar el tema desde la cookie al cargar la página
+        const savedTheme = getCookie('backgroundTheme');
+        //console.log(savedTheme);
+        if (savedTheme) {
+            document.body.setAttribute('id', savedTheme);
+        }
+        
+        document.addEventListener('click', (event) => {
+                const idt = event.target.dataset.toggleId;
+                if (idt) {
+                    document.body.setAttribute('id', idt); // Cambiar el tema
+                    
+                    document.cookie = `backgroundTheme= ${idt}, max-age=3600`;
+                }
+            });
+    </script>
+    </body>
+ </html>

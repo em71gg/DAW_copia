@@ -1,0 +1,27 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <input type = "text" id="enter">
+    <p id=""></p>
+    <p id="display"></p>
+    <script>
+        let texto = document.querySelector('#enter'); //variable de donde tomaré el texto y escuchare
+        let display = document.querySelector('#display');//variable donde alojaré el texto
+
+        texto.addEventListener('focus', () => {//listener que actuará sobre el evento focus
+            display.innerHTML = "Atención alguien va a escribir.";
+
+        });
+        
+        texto.addEventListener('input', () =>{//Listener para escuchar los cambios en texto escuchado al evento input
+            display.innerHTML = texto.value;//escribo en 
+        });
+
+    </script>
+  </body>
+</html>

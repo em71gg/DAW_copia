@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header></header>
+
+    <main>
+      <div></div>
+    </main>
+
+    <script>
+              onst persona = {
+
+      nombre: "Ana",
+
+      edad: 30,
+
+      habilidades: ["JavaScript", "CSS", "HTML"]
+
+      };
+
+
+
+      // Convertir el objeto a JSON
+
+      const jsonString = JSON.stringify(persona);
+
+      console.log("JSON convertido:", jsonString);
+
+
+
+      // Parsear JSON de vuelta a objeto
+
+      const objetoParseado = JSON.parse(jsonString);
+
+      console.log("Objeto parseado:", objetoParseado);
+
+      const xmlData = `
+
+      <persona>
+
+          <nombre>Ana</nombre>
+
+          <edad>30</edad>
+
+          <habilidades>
+
+              <habilidad>JavaScript</habilidad>
+
+              <habilidad>CSS</habilidad>
+
+          </habilidades>
+
+      </persona>`;
+
+
+
+      // Parsear el XML
+
+      const parser = new DOMParser();
+
+      const xmlDoc = parser.parseFromString(xmlData, "text/xml");
+
+
+
+      // Acceder a los datos
+
+      const nombre = xmlDoc.getElementsByTagName("nombre")[0].textContent;
+
+      const edad = xmlDoc.getElementsByTagName("edad")[0].textContent;
+
+      console.log(`Nombre: ${nombre}, Edad: ${edad}`);
+    </script>
+  </body>
+</html>

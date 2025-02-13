@@ -3,7 +3,7 @@
     <head>
     </head>
     <body>
-        <form action="action_datosPersonales.php" method="post">
+        <form action="datosPersonalesAction.php" method="post">
             <div>
                 <label for="name">Escriba su nombre</label>
                 <input type="text" name="nombre" placeholder = "nombre" id="name">

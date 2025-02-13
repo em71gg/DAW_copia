@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+Para practicar las callbacks, vamos a simular tareas pesadas con temporizadores.
+Crea una función temporizador que reciba un número de segundos y un callback.
+La función debe contar el tiempo en segundos e imprimir cada segundo en la consola 
+hasta llegar al número indicado. Cuando termine, debe ejecutar el callback que imprima un mensaje 
+como: "¡El temporizador ha terminado!".
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header></header>
+
+    <main>
+      <div></div>
+    </main>
+    <script>
+      function temporizador(segundos, callback) {
+        let contador = 0;
+
+        const intervalo = setInterval(() => {
+          contador++;
+
+          console.log(contador);
+
+          if (contador === segundos) {
+            clearInterval(intervalo);
+
+            callback();
+          }
+        }, 1000);
+      }
+
+      temporizador(5, () => {
+        console.log("¡El temporizador ha terminado!");
+      });
+    </script>
+  </body>
+</html>

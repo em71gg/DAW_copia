@@ -1,0 +1,44 @@
+
+function buscarDatos(callback) {
+
+    setTimeout(() => {
+
+        console.log('Datos encontrados.');
+
+        callback(['pequeño', 'cabaret', 'ambulante']);
+
+    }, 2000);
+
+}
+
+
+
+function procesarDatos(datos, callback) {
+
+    setTimeout(() => {
+
+        console.log('Datos procesados.');
+
+        const resultados = datos.map(nombre => nombre.toUpperCase());
+
+        callback(resultados);
+
+   }, 3000);
+
+}
+
+
+
+function mostrarResultados(resultados, callback) {
+
+    setTimeout(() => {
+
+        console.log('Resultados:');
+
+        resultados.forEach(resultado => console.log(resultado));
+
+        callback();
+
+    }, 1000);
+
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <!--<input type = "text" id="enter">-->
+      <div id="id1">
+        <p>
+          Vamos a crear input dinámicamente en tres segundos debe aparecer y
+          podrás usarlo
+        </p>
+      </div>
+      <div id="id2">
+        <p id="display"></p>
+      </div>
+      <div id="id3"></div>
+    </main>
+
+    <script>
+      let display = document.querySelector("#display"); // Variable donde mostraré los mensajes
+      let listaCreada = false; // Variable para controlar si la lista ya fue creada
+
+      setTimeout(() => {
+
+        // Crear el input dinámicamente
+        let inputField = document.createElement("input");
+        inputField.setAttribute("id", "enter");
+        inputField.setAttribute("type", "text");
+        document.querySelector("#id1").appendChild(inputField); // Agregar el input al documento
+
+        //crear el input submit dinamicamente
+        let inputSend = document.createElement("input");
+        inputSend.setAttribute("id", "submit");
+        inputSend.setAttribute("type", "submit");
+        inputSend.setAttribute("value", "Agregar");//sin este atributo el submit no se muestra
+        document.querySelector("#id1").appendChild(inputSend);
+
+        // Agregar eventos una vez que el input existe en el DOM
+
+        //si entro en el input text se escribe esto en display
+        inputField.addEventListener("focus", () => {
+          display.innerHTML = "Atención, alguien va a escribir.";
+        });
+
+        //conforme se va escribiendo el texto se va actualizando en pantalla en display.
+        inputField.addEventListener("input", () => {
+          display.innerHTML = inputField.value; //el contenido de lo escrito en el input es la propiedad value
+        });
+
+        //crea los items si se hace click en el submit
+        inputSend.addEventListener("click", () => {
+          if (inputField.value.trim() !== "") {
+            if (!listaCreada) {
+              let lista = document.createElement("ol");
+              lista.setAttribute("id", "lista");
+              document.querySelector("#id3").appendChild(lista);
+              listaCreada = true;
+            }
+
+            let lista = document.querySelector("#lista");
+            let itemLista = document.createElement("li");
+            itemLista.innerHTML = inputField.value;
+            lista.appendChild(itemLista);
+            inputField.value = ""; // Limpiar input después de agregar el element
+          }
+        });
+
+        //crea los items si se hace enter tras escribir en el input
+        inputField.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && inputField.value.trim() !== "") {
+            //para asegurarnos de que solo se agregue un nuevo elemento <li>
+            // a la lista cuando el usuario presiona la tecla "Enter" y el
+            // input no esté vacío.
+            if (!listaCreada) {
+              let lista = document.createElement("ol");
+              lista.setAttribute("id", "lista");
+              document.querySelector("#id3").appendChild(lista);
+              listaCreada = true;
+            }
+
+            let lista = document.querySelector("#lista");
+            let itemLista = document.createElement("li");
+            itemLista.innerHTML = inputField.value;
+            lista.appendChild(itemLista);
+            inputField.value = ""; // Limpiar input después de agregar el element
+          }
+        });
+      }, 3000); // Se ejecutará después de 3 segundos
+    </script>
+  </body>
+</html>
