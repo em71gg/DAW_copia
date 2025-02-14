@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset>div {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+
+        .radio {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <main>           
+        <div class="radio">
+            <input type="number" placeholder="valor1" id="num1">
+            <input type="number" placeholder="valor2" id="num2">
+
+            <button id="sumar">Sumar</button>
+            <button id="restar">Restar</button>
+            <button id="pi">Valor PI</button>
+
+            <p id="display">Resultado = </p>
+           
+        </div>
+    </main>
+    <script type="module" src="./main.js"></script>
+</body>
+
+</html>

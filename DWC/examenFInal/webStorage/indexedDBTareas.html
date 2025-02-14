@@ -1,0 +1,17 @@
+
+<script>
+    let solicitud = indexedDB.open("MiBaseDatos", 1); //apertura base de datos
+
+    solicitud.onupgradeneeded = (e) => {
+        let db = e.target.result;
+        db.createObjectStore("usuarios", {keyPath: "id"});
+    };
+
+    solicitud.onsuccess = (e) => {
+        let db = e.target.result;
+        let transaction = db.transaction("usuarios" , "readwrite");
+        let store = transaction.objectStore("usuarios");
+        store.add({id: 1, nombre: "pepe"});
+    };
+
+</script>
