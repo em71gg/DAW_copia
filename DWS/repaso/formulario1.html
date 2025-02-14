@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset>div {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+        .radio{
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div>
+            <form action="./formulario2.php" method="post">
+
+                <fieldset>
+                    <legend>Datos personales del formulario</legend>
+                    <p>Escriba los datos siguientes</p>
+
+
+                    <div>
+
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre">
+                        <label for="apellidos">Apellidos</label>
+                        <input type="text" name="apellidos" id="apellidos">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email">
+                    </div>
+                    <div>
+                        <label for="peso">Peso</label>
+                        <input type="number" name="peso" id="peso">
+                        <label for="edad">Edad</label>
+                        <input type="text" name="edad" id="edad">
+                    </div>
+
+                    
+                    <div class="radio">
+                        <p>Sexo</p>
+                        <label for="hombre">Hombre</label>
+                        <input type="radio" id="hombre" name="sexo" value="hombre">
+                        <label for="mujer">Mujer</label>
+                        <input type="radio" id="mujer" name="sexo" value="mujer">
+                        <p>Estdo</p>
+                        <label for="soltero">Soltero<Estado/label>
+                        <input type="radio" id="soltero" name="estado" value="Soltero">
+                        <label for="casado">Casado<Estado/label></Estado>
+                        <input type="radio" id="casado" name="estado" value="Casado">
+                        <label for="otro">Otro<Estado/label></Estado>
+                        <input type="radio" id="otro" name="estado" value="Otro">
+                    </div>
+                    
+                    <div class="radio">
+                        <p>Interes</p><!--Check-->
+                        <input type="checkbox" id="cine" name="intereses[]" value="cine">
+                        <label for="cine">Cine</label>
+                        <input type="checkbox" id="literatura" name="intereses[]" value="literatura">
+                        <label for="literatura">Literatura</label>
+                        <input type="checkbox" id="tebeos" name="intereses[]" value="tebeos">
+                        <label for="tebeos">Tebeos</label>
+                        <input type="checkbox" id="deporte" name="intereses[]" value="deporte">
+                        <label for="deporte">Deporte</label>
+                        <input type="checkbox" id="musica" name="intereses[]" value="musica">
+                        <label for="musica">Música</label>
+
+                    </div>
+                    <div>
+                        <input type="submit" name="enviar" value="Enviar">
+                        <input type="reset" name="borrar" value="Borrar">
+                    </div>
+
+
+        </div>
+        </fieldset>
+
+        </form>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </main>
+</body>
+
+</html>

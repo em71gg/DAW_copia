@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset>div {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+
+        .radio {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div>
+            <form action="./form2.php" method="post">
+
+                <fieldset>
+                    <legend>Datos personales del formulario</legend>
+                    <p>Escriba los datos siguientes</p>
+
+
+                    <div>
+
+                        <!--inputs texts-->
+                        <label for=""></label>
+                        <input type="" name="" id="">
+                    </div>
+                    <div>
+                        <!--select-->
+                        <label for=""></label>
+                        <select name="" id="">
+                            <option value="algo">algo </option>
+                        </select>
+                    </div>
+
+                    <div class="radio">
+                        <p>Elija una opcion</p><!--radio-->
+
+                        <label for="">radio</label>
+                        <input type="radio" id="" name="" value="">
+                    </div>
+
+                    <div class="radio">
+                        <p>casillas de verificacion</p><!--Check-->
+                        <input type="checkbox" id="" name="intereses[]" value="">
+                        <label for=""></label>
+
+                    </div>
+                    <div>
+                        <input type="submit" name="enviar" value="Enviar">
+                        <input type="reset" name="borrar" value="Borrar">
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </main>
+</body>
+
+</html>

@@ -5,6 +5,7 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resetear'])) {
     $_SESSION['maxScore'] = 0;
     $_SESSION['juego'] = [];
+    session_destroy();
 }
 
 // Obtener la puntuación máxima almacenada en la sesión
@@ -19,7 +20,7 @@ $repeticiones = []; // Inicializar repeticiones
 // Si se presiona "Lanzar", generar una nueva jugada
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['jugar'])) {
     $tirada = [1, 2, 3, 4, 5, 6];
-    $n = 8; // Número de dados a lanzar
+    $n = rand(1,8); // Número de dados a lanzar
     $juego = [];
 
     for ($i = 0; $i < $n; $i++) {
