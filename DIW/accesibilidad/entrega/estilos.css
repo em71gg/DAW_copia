@@ -1,0 +1,162 @@
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f0f0f0;
+}
+
+.titulo {
+    font-weight: bold;
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.subtitulo {
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 0.4em;
+}
+
+.subsubtitulo {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 0.3em;
+}
+
+.encabezado {
+    background-color: #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+.menu {
+    background-color: #aaa;
+    padding: 10px;
+}
+
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.menu ul li {
+    margin: 0 15px;
+}
+
+.menu ul li a {
+    color: #000;
+    text-decoration: none;
+}
+
+.hero {
+    padding: 50px 20px;
+    text-align: center;
+    background-image: url('hero.png');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info {
+    padding: 20px;
+    background-color: #ddd;
+}
+
+.testimonios {
+    padding: 20px;
+    background-color: #eee;
+}
+
+.imagenes {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #ccc;
+}
+
+.imagenes img {
+    width: 200px;
+    height: 150px;
+    background-color: #999;
+}
+
+.contacto {
+    display: flex;
+    padding: 20px;
+    background-color: #ddd;
+}
+
+.formulario {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.formulario input,
+.formulario textarea {
+    width: 95%;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.formulario button {
+    padding: 10px 20px;
+    background-color: #888;
+    color: #fff;
+    border: none;
+}
+
+.mapa {
+    flex: 1;
+}
+
+.mapa iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+}
+
+.pie {
+    background-color: #aaa;
+    padding: 20px;
+    text-align: center;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.popup.mostrar {
+    display: block;
+}
+
+.popup .cerrar {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.popup .boton {
+    background-color: #90EE90;
+    color: #ADFF2F;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}

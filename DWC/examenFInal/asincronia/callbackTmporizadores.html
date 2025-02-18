@@ -23,16 +23,19 @@ como: "¡El temporizador ha terminado!".
     <header></header>
 
     <main>
-      <div></div>
+      <div>
+        <p id="rdo"></p>
+      </div>
     </main>
     <script>
+      const rdo = document.querySelector('#rdo')
       function temporizador(segundos, callback) {
         let contador = 0;
 
         const intervalo = setInterval(() => {
           contador++;
 
-          console.log(contador);
+          rdo.textContent= segundos;
 
           if (contador === segundos) {
             clearInterval(intervalo);
@@ -43,7 +46,7 @@ como: "¡El temporizador ha terminado!".
       }
 
       temporizador(5, () => {
-        console.log("¡El temporizador ha terminado!");
+        rdo.textContent = ("¡El temporizador ha terminado!");
       });
     </script>
   </body>

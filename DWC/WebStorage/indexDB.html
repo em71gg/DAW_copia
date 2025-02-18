@@ -2,7 +2,7 @@
 <script>
 
     window.onload = function() {
-        for (let indice ) {}
+        for (let indice) {
         let storedName = localStorage.getItem('name');
         if (storedName) {
             nameDisplay.textContent = `Hola, ${storedName}!`;
@@ -29,4 +29,5 @@
         let store = transaccion.objectStore("usuarios");
         store.add({id: 2, nombre: "Pepe"});
     }
+}
 </script>

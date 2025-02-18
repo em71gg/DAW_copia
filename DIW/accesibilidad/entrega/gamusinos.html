@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamusinos Patrol</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <!-- Encabezado -->
+    <div class="encabezado">
+        <p class="titulo">Gamusinos Patrol</p>
+        <p>Expertos en la caza de gamusinos</p>
+    </div>
+
+    <!-- Menú de navegación -->
+    <div class="menu">
+        <ul>
+            <li><a href="#inicio" tabindex="2">Inicio</a></li>
+            <li><a href="#testimonios" tabindex="3">Testimonios</a></li>
+            <li><a href="#contacto" tabindex="1">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero" id="inicio">
+        <p class="subtitulo">¡Vive la emoción de cazar gamusinos!</p>
+        <p>Únete a la aventura y descubre el mundo mágico de los gamusinos.</p>
+    </div>
+
+    <!-- Información complementaria -->
+    <div class="info">
+        <p class="subtitulo">¿Por qué elegirnos?</p>
+        <p>Somos líderes en la caza de gamusinos con más de 10 años de experiencia. Nuestros clientes nos avalan.</p>
+    </div>
+
+    <!-- Testimonios -->
+    <div class="testimonios" id="testimonios">
+        <p class="subtitulo">Casos de éxito</p>
+        <p>"¡Por fin vi un gamusino! Gracias, Gamusinos Patrol." - Íker Jiménez</p>
+        <p>"Increíble experiencia, totalmente recomendable." - Aramís Fuster</p>
+    </div>
+
+    <!-- Imágenes -->
+    <div class="imagenes">
+        <img src="gam1.png" alt="">
+        <img src="gam2.png" alt="">
+        <img src="gam3.png" alt="">
+        <img src="gam4.png" alt="">
+    </div>
+
+    <!-- Contacto -->
+    <div class="contacto" id="contacto">
+        <div class="formulario">
+            <p class="subtitulo">Contacto</h2>
+            <form>
+                <input type="text" placeholder="Nombre">
+                <input type="email" placeholder="Email">
+                <textarea placeholder="Mensaje"></textarea>
+                <button type="submit" tabindex="-1">Enviar</button>
+            </form>
+        </div>
+        <div class="mapa">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4362.766168349068!2d-5.990647423291827!3d37.391747034130226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126c0353d029a7%3A0xb679313d20066ac5!2sIES%20Vel%C3%A1zquez!5e1!3m2!1ses!2ses!4v1739360607698!5m2!1ses!2ses"
+                style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+
+    <!-- Pie de página.-->
+    <div class="pie">
+        <p>&copy; 2025 Gamusinos Patrol. Todos los derechos reservados.</p>
+    </div>
+
+    <!-- Popup de apúntate a la newsletter :D -->
+    <div class="popup" id="popup">
+        <span class="cerrar" id="cerrar">X</span>
+        <p class="subsubtitulo">Apúntate a nuestra newsletter</p>
+        <input type="email" placeholder="Introduce tu email">
+        <div class="boton">Aceptar</div>
+    </div>
+
+    <script>
+        // Muestra un popup después de...
+        setTimeout(() => {
+            document.getElementById('popup').classList.add('mostrar');
+        }, 5000); // ... 5 segundos
+
+        // Cerrar el popup al hacer clic en la X
+        document.getElementById('cerrar').addEventListener('click', () => {
+            document.getElementById('popup').classList.remove('mostrar');
+        });
+    </script>
+</body>
+
+</html>

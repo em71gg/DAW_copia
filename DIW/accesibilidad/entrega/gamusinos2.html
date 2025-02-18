@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamusinos Patrol</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <!-- Encabezado, se ha cambiado el div por header para mejorar la semántica del documento-->
+    <header class="encabezado">
+        <h1 class="titulo">Gamusinos Patrol</h1>
+        <p>Expertos en la caza de gamusinos</p>
+    </header>
+
+    <!-- Menú de navegación, se ha añadido aria-label para que los lectores de pantalla describan 
+     correctamente el propósito de la navegación. -->
+    <nav class="menu" aria-label="Menú de navegación">
+        <ul>
+            <li><a href="#inicio">Inicio</a></li> <!-- Se eliminó el tabindex innecesario para permitir un flujo de navegación lógico. -->
+            <li><a href="#testimonios">Testimonios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero, se ha agregado role='banner' y aria-label para mejorar la accesibilidad de la sección principal.-->
+    <section class="hero" id="inicio" role="banner" aria-label="Sección de bienvenida">
+        <h2 class="subtitulo">¡Vive la emoción de cazar gamusinos!</h2>
+        <p>Únete a la aventura y descubre el mundo mágico de los gamusinos.</p>
+    </section>
+
+    <!-- Información, se agregó aria-labelledby para mejorar la accesibilidad de la sección informativa.-->
+    <section class="info" aria-labelledby="porque-elegirnos">
+        <h2 id="porque-elegirnos" class="subtitulo">¿Por qué elegirnos?</h2>
+        <p>Somos líderes en la caza de gamusinos con más de 10 años de experiencia. Nuestros clientes nos avalan.</p>
+    </section>
+
+    <!-- Testimonios, se añadió aria-labelledby para describir la sección a usuarios de lectores de pantalla.-->
+    <section class="testimonios" id="testimonios" aria-labelledby="casos-exito">
+        <h2 id="casos-exito" class="subtitulo">Casos de éxito</h2>
+        <blockquote>"¡Por fin vi un gamusino! Gracias, Gamusinos Patrol." - Íker Jiménez</blockquote>
+        <blockquote>"Increíble experiencia, totalmente recomendable." - Aramís Fuster</blockquote>
+    </section>
+
+    <!-- Imágenes, se han añadido descripciones alt a todas las imágenes para mejorar la accesibilidad.-->
+    <section class="imagenes" aria-label="Galería de imágenes de gamusinos">
+        <img src="gam1.png" alt="Gamusino en el bosque">
+        <img src="gam2.png" alt="Equipo de caza de gamusinos en acción">
+        <img src="gam3.png" alt="Huella de un gamusino en la tierra">
+        <img src="gam4.png" alt="Cabaña de exploradores de gamusinos">
+    </section>
+
+    <!-- Contacto, se han añadido label y aria-required a los campos de formulario para cumplir con las WCAG.-->
+    <section class="contacto" id="contacto" aria-labelledby="contacto-form">
+        <h2 id="contacto-form" class="subtitulo">Contacto</h2>
+        <form class="formulario">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required aria-required="true">
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required aria-required="true">
+            
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" required aria-required="true"></textarea>
+            
+            <button type="submit" style="background-color: #005a9c; color: #ffffff;">Enviar</button> <!--Se ajusta el contraste de color en el botón 'Enviar' para mejorar la legibilidad.-->
+        </form>
+        <div class="mapa">
+            <!-- Se agrega un title al iframe para que los usuarios de lectores de pantalla comprendan su propósito. -->
+            <iframe title="Ubicación en el mapa de nuestra sede" src="https://www.google.com/maps/embed?..." allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Pie de página , se cambia a la etiqueta footer en lugar de div para mejorar la semántica y 
+     accesibilidad del documento-->
+    <footer class="pie">
+        <p>&copy; 2025 Gamusinos Patrol. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Popup de apúntate a la newsletter :D, se añade role='dialog' y aria-labelledby 
+     para mejorar la accesibilidad del popup y se agrega aria-label al botón de cerrar el 
+     popup para describir su propósito.-->
+    <div class="popup" id="popup" role="dialog" aria-labelledby="popup-title">
+        <button class="cerrar" id="cerrar" aria-label="Cerrar ventana">X</button>
+        <h2 id="popup-title" class="subsubtitulo">Apúntate a nuestra newsletter</h2>
+        <label for="email-newsletter">Introduce tu email</label>
+        <input type="email" id="email-newsletter" placeholder="Introduce tu email">
+        <button class="boton">Aceptar</button>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('popup').classList.add('mostrar');
+        }, 5000);
+
+        document.getElementById('cerrar').addEventListener('click', () => {
+            document.getElementById('popup').classList.remove('mostrar');
+        });
+    </script>
+</body>
+</html>

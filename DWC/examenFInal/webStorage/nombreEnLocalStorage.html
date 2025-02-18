@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset>div {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+
+        .radio {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div id="saludo">
+
+        </div>
+        <div>
+            <form action="" method="post">
+
+                <fieldset>
+                    <legend>Incscribe tu monbre en Local Storage</legend>
+                    <p>Escriba su información</p>
+
+
+                    <div>
+
+                        <!--inputs texts-->
+                        <label for="nombre"></label>
+                        <input type="text" name="nombre" id="nombre" placeholder="Nombre">
+                    </div>
+                    <div>
+                        <input type="submit" name="enviar" value="Enviar" id="enviar">
+                        <input type="reset" name="borrar" value="Borrar">
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </main>
+    <script>
+        const inputName = document.querySelector('#nombre');
+        const enviar = document.querySelector('#enviar');
+        const displaySaludo = document.querySelector('#saludo');
+        if(localStorage.getItem('nombre')){
+            let nombre = localStorage.getItem('nombre');
+            let saludo = document.createElement('p');
+            saludo.textContent = "Hola " + nombre + ", bienvenido.";
+            displaySaludo.append(saludo);   
+        }
+        
+
+        enviar. addEventListener('click', (boton) => {
+            boton.preventDefault();
+            let valor = inputName.value;
+            let clave = inputName.id;
+            guardarDatos(clave, valor);
+        });
+
+        function guardarDatos (clave, valor) {
+            localStorage.setItem(clave, valor);
+        }
+        
+    </script>
+</body>
+
+</html>

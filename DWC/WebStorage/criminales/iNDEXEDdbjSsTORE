@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdeliver.net/npm/jsstore@4.9.0/dist/jsstore.min.js"></script>
+    <script src="https://cdn.jsdeliver.net/npm/jsstore@4.9.0/dist/jsstore.worker.min.js"></script>
     <style>
         main {
             display: flex;
@@ -86,6 +88,16 @@
         <div></div>
         <div></div>
     </main>
+    <script>
+        import {Connection} from "jsstore";
+
+        const getWorkerPath = () => {
+            if(process.env.NODE_ENV === "development") {
+                return require("file-loader?name=scripts/[name].[hash].js!jsstore/dist/jsstore.worker.js");
+            }
+        }
+
+    </script>
 </body>
 
 </html>

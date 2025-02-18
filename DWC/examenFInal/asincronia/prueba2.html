@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+        #container, #botonesJuego, #finJuego {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .block {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Juego de cartas: pulsa si quieres jugar. Puedes elegir el número de cartas del juego.</h1>
+    </header>
+    <main>
+        <div>
+            <h1>Inicio del juego de cartas</h1>
+            <button id="iniciarJuego">Iniciar Juego</button>
+        </div>
+        <div id='container'></div>
+        <div id="botonesJuego"></div>
+        <div id="finJuego"></div>
+        <div id="estadisticas"></div>
+    </main>
+    <script>
+        let contenedor = document.querySelector('#container');
+        let controles = document.querySelector('#botonesJuego');
+        let finalizar = document.querySelector('#finJuego');
+        let estadisticas = document.querySelector('#estadisticas');
+        document.querySelector('#iniciarJuego').addEventListener('click', comenzarJuego);
+        
+        let tamanoMazo = 20;
+        let puntuacion = 0;
+        let indiceCartaActual = 0;
+        let mazo = [];
+        let apuestas = 0;
+        let aciertos = 0;
+        let fallos = 0;
+        
+        function comenzarJuego() {
+            tamanoMazo = 20;
+            puntuacion = 0;
+            indiceCartaActual = 0;
+            mazo = [];
+            apuestas = 0;
+            aciertos = 0;
+            fallos = 0;
+            contenedor.innerHTML = "";
+            controles.innerHTML = "";
+            finalizar.innerHTML = "";
+            estadisticas.innerHTML = "";
+            
+            fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+                .then(response => response.json())
+                .then(data => fetch(`https://deckofcardsapi.com/api/deck/${data.deck_id}/draw/?count=${tamanoMazo}`))
+                .then(response => response.json())
+                .then(data => {
+                    mazo = data.cards.map(carta => {
+                        carta.suit = { "SPADES": "PICAS", "HEARTS": "CORAZONES", "DIAMONDS": "DIAMANTES", "CLUBS": "TRÉBOLES" }[carta.suit] || carta.suit;
+                        carta.value = { "KING": "13", "QUEEN": "12", "JACK": "11", "ACE": "14" }[carta.value] || carta.value;
+                        return carta;
+                    });
+                    mostrarCartaActual();
+                    agregarBotones();
+                })
+                .catch(error => {
+                    contenedor.innerHTML = `<p>Error al obtener los datos del juego: ${error}</p>`;
+                });
+        }
+
+        function finalizarJuego() {
+            contenedor.innerHTML = "";
+            controles.innerHTML = "";
+            finalizar.innerHTML = "";
+            dibujarGrafico();
+            let botonReiniciar = document.createElement('button');
+            botonReiniciar.textContent = "Reiniciar Juego";
+            botonReiniciar.addEventListener("click", comenzarJuego);
+            finalizar.append(botonReiniciar);
+        }
+
+        function dibujarGrafico() {
+            google.charts.load('current', { packages: ['corechart'] });
+            google.charts.setOnLoadCallback(() => {
+                let data = google.visualization.arrayToDataTable([
+                    ['Tipo', 'Cantidad'],
+                    ['Aciertos', aciertos],
+                    ['Fallos', fallos],
+                    ['Total Apuestas', apuestas],
+                    ['Puntuación', puntuacion]
+                ]);
+                let options = { 
+                    title: 'Estadísticas del Juego',
+                    chartArea: { width: '50%' },
+                    hAxis: {
+                        title: 'Cantidad',
+                        minValue: Math.min(0, puntuacion)
+                    },
+                    vAxis: {
+                        title: 'Categoría'
+                    }
+                };
+                let chart = new google.visualization.BarChart(estadisticas);
+                chart.draw(data, options);
+            });
+        }
+    </script>
+</body>
+
+</html>

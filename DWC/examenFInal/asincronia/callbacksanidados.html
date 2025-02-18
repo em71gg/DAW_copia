@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        main{display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset>div {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+
+        .radio {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+
+    </header>
+
+    <main>
+
+
+        <div id="container">
+            <p id="rdo"></p>
+        </div>
+    </main>
+    <script>
+        const rdo = document.querySelector('#rdo');
+        const contenedor =document.querySelector('#container');
+        function buscarDatos(callback) {
+
+            setTimeout(() => {
+
+                rdo.textContent ='Datos encontrados.';
+
+                callback(['pequeño', 'cabaret', 'ambulante']);
+
+            }, 2000);
+
+        }
+
+        function procesarDatos(datos, callback) {
+
+            setTimeout(() => {
+
+                rdo.textContent= 'Datos procesados.';
+
+                const resultados = datos.map(nombre => nombre.toUpperCase());
+
+                callback(resultados);
+
+            }, 3000);
+
+        }
+
+        function mostrarResultados(resultados, callback) {
+
+            setTimeout(() => {
+
+                rdo.textContent = 'Resultados:';
+
+                resultados.forEach(resultado =>{
+                    //contenedor.createElement;
+                    let parr = document.createElement('p');
+                    parr.textContent = resultado;
+                    contenedor.append(parr);
+
+                }); 
+                callback();
+
+            }, 1000);
+
+        }
+        buscarDatos((datos) => {
+            procesarDatos(datos, (resultados) => {
+                mostrarResultados(resultados, () => {
+                    console.log('Proceso finalizado.');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

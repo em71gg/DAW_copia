@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+       
+        header{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            background: black;
+            color: white;
+            width: 100%;
+            
+        }
+        p{
+            text-decoration-style: double;
+        }
+        main {
+            color:black;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+        #presentacion {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #botonesJuego{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+        }
+        button  {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            background-color: #cf0000;
+            color: white;
+            border: 2px solid transparent;
+            border-color: black;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, border 0.3s;
+        }
+        button:hover {
+            background-color: rgb(230, 230, 7);
+            border: 2px solid #fbfbfb;
+            color: black;
+            border-color: black;
+            
+        }
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #000000;
+        }
+        button::placeholder{
+            color: rgb(203, 224, 255);
+        }
+        #estadisticas {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%; 
+            height: 400px; 
+            margin: auto;
+        }
+     
+        footer{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            background: black;
+            color: white;
+            width: 100%;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>Juego de cartas: pulsa si quieres jugar.</h1>
+        </div>
+       
+    </header>
+    <main>
+        <div id="presentacion">
+            <h1>Inicio del juego de cartas</h1>
+            <button id="iniciarJuego">Iniciar Juego</button>
+        </div>
+        <div id='container'></div>
+        <div id="botonesJuego"></div>
+        <div id="finJuego"></div>
+        <div id="estadisticas"></div>
+    </main>
+    <footer>
+        <div>
+            <h1>¿Cuántas podrás acertar?</h1>
+        </div>
+    </footer>
+    <script>
+        let contenedor = document.querySelector('#container');
+        let controles = document.querySelector('#botonesJuego');
+        let finalizar = document.querySelector('#finJuego');
+        let estadisticas = document.querySelector('#estadisticas');
+        document.querySelector('#iniciarJuego').addEventListener('click', comenzarJuego);
+        
+        let tamanoMazo = 20;
+        let puntuacion = 0;
+        let indiceCartaActual = 0;
+        let mazo = [];
+        let apuestas = 0;
+        let aciertos = 0;
+        let fallos = 0;
+
+        
+        function comenzarJuego() {
+            let botonInicio = document.querySelector('#iniciarJuego');
+            botonInicio.disabled = true;
+            tamanoMazo = 20;
+            puntuacion = 0;
+            indiceCartaActual = 0;
+            mazo = [];
+            apuestas = 0;
+            aciertos = 0;
+            fallos = 0;
+            contenedor.innerHTML = "";
+            controles.innerHTML = "";
+            finalizar.innerHTML = "";
+            estadisticas.innerHTML ="";
+            
+            fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1') //se genera un nuevo id, no es estrcitamente necesario hacerlo 
+                                                                                // cada vez que se inicie el juego, 
+                                                                                // ya que cada id se puede usar durante 20 días sin que expire, pero
+                                                                                //me garantiza que cada vez que se habra la aplicación funcione ya que 
+                                                                                //el id generado será válido
+                .then(response => response.json())
+                .then(data => fetch(`https://deckofcardsapi.com/api/deck/${data.deck_id}/draw/?count=${tamanoMazo}`))//genero el mazo de 20 cartas
+                .then(response => response.json())
+                .then(data => {
+                    mazo = data.cards.map(carta => {//procesamos el array para dar valores comparables y nombres en castellano
+                        carta.suit = { "SPADES": "PICAS", "HEARTS": "CORAZONES", "DIAMONDS": "DIAMANTES", "CLUBS": "TRÉBOLES" }[carta.suit] || carta.suit;
+                        carta.value = { "KING": "13", "QUEEN": "12", "JACK": "11", "ACE": "14" }[carta.value] || carta.value;
+                        return carta;
+                    });
+                    //se llama a las funciones necesarias para el juego
+                    mostrarCartaActual();
+                    agregarBotones();
+                    //Se vuleve a habilitar el boton
+                    botonInicio.disabled = false;
+                })
+                .catch(error => {
+                    contenedor.innerHTML = `<p>Error al obtener los datos del juego: ${error}</p>`;
+                    botonInicio.disabled = false;
+                });
+        }
+
+        function mostrarCartaActual () {//depliega la carta que corresponde en cada momento empezando por la incial del mazo
+            contenedor.innerHTML = "";
+            let carta = mazo[indiceCartaActual];
+            let verValorCarta = document.createElement("p");
+            verValorCarta.textContent = `La carta es el ${carta.value} de ${carta.suit}.`;
+            contenedor.append(verValorCarta);
+
+            let verImgCarta = document.createElement("img");
+            verImgCarta.setAttribute("src", carta.image);
+            verImgCarta.setAttribute("alt", `Carta: ${carta.value} de ${carta.suit}`);
+            contenedor.append(verImgCarta);
+            actualizarPuntuacion();
+        }
+
+        function jugar(eleccion) {
+            if (indiceCartaActual >= mazo.length - 1) return; //Si se ha visto la última carta sale
+            let valorActual = parseInt(mazo[indiceCartaActual].value);//valor numérico
+            let valorSiguiente = parseInt(mazo[++indiceCartaActual].value);
+            //comapramos las eleciones con los valores y actualizamos variables
+            if ((eleccion === "mayor" && valorSiguiente > valorActual) || (eleccion === "menor" && valorSiguiente < valorActual)) {
+                aciertos ++;
+                puntuacion++;
+                apuestas ++;
+            } else if (valorSiguiente !== valorActual) {
+                fallos ++
+                puntuacion--;
+                apuestas ++;
+            }
+            mostrarCartaActual ();//actualizamos
+            //si se llega al final sale
+            if (indiceCartaActual === mazo.length - 1) finalizarJuego();
+        }
+
+        function finalizarJuego () { //deja la página con los resultados y el boton para iniciar juego
+            controles.innerHTML = "";
+            finalizar.innerHTML = "";
+            contenedor.innerHTML ="";
+           
+            presentarResultados ();
+        }
+
+        function actualizarPuntuacion () {
+            let puntuacionDisplay = document.querySelector("#puntuacion");
+            if (!puntuacionDisplay) {//Si no existe e display lo crea
+                puntuacionDisplay = document.createElement("p");
+                puntuacionDisplay.setAttribute("id", "puntuacion");
+                contenedor.append(puntuacionDisplay);
+            }
+            //actualiza el texto con el valor de la puntuación
+            puntuacionDisplay.textContent = `Puntuación: ${puntuacion}`;
+        }
+
+        function agregarBotones () { //agrega los botones necesarios
+            let botonMas = document.createElement('button');
+            botonMas.textContent = "La carta será mayor.";
+            botonMas.addEventListener("click", () => jugar("mayor"));
+            controles.append(botonMas);
+
+            let botonMenos = document.createElement('button');
+            botonMenos.textContent = "La carta será menor.";
+            botonMenos.addEventListener("click", () => jugar("menor"));
+            controles.append(botonMenos);
+            
+            let botonFin = document.createElement('button');
+            botonFin.textContent = "Finalizar Juego.";
+            botonFin.addEventListener("click", finalizarJuego);
+            finalizar.append(botonFin);
+        }
+
+        function presentarResultados () {//uso de google charts para presentar los datos recogidos del juego
+           
+            google.charts.load('current', { packages: ['corechart'] });
+            google.charts.setOnLoadCallback(() => {
+                let data = google.visualization.arrayToDataTable([
+                    ['Tipo', 'Cantidad'],
+                    ['Aciertos', aciertos],
+                    ['Fallos', fallos],
+                    ['Total Apuestas', apuestas],
+                    ['Puntuación', puntuacion]
+                ]);
+                let options = { 
+                    title: 'Estadísticas del Juego',
+                    chartArea: { width: '50%' },
+                    hAxis: {
+                        title: 'Cantidad',
+                        minValue: Math.min(0, puntuacion)
+                    },
+                    vAxis: {
+                        title: 'Categoría'
+                    },
+                    colors : ['#727372', '#727372', '#727372', '#727372']
+                };
+                 
+                estadisticas.innerHTML = "";//Limpio
+                
+                let chart = new google.visualization.BarChart(estadisticas);
+                chart.draw(data, options);
+            });
+        }
+    </script>
+</body>
+
+</html>

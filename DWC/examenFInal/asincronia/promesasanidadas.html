@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        main{display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset>div {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+
+        .radio {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+
+    </header>
+
+    <main>
+
+
+        <div id="container">
+            <p id="rdo"></p>
+        </div>
+    </main>
+    <script>
+        const rdo = document.querySelector('#rdo');
+        const contenedor =document.querySelector('#container');
+        
+        const buscarDatos = () => {
+            return new Promise ((resolve, reject) => {
+                setTimeout(() => {
+                    let exito = Math.random() > 0.1 ?true : false;
+                    if (exito){
+                        rdo.textContent = 'Datos encontrados';
+                        setTimeout(() => {
+                            resolve(['pequeño', 'cabaret', 'ambulante']);
+                        }, 2000);
+                        
+                    }
+                    else{
+                        reject ("Hubo un error");
+                    }
+                    
+                }, 2000);
+            });
+        }
+
+        const procesarDatos = (datos) => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const resultados = datos.map(nombre => nombre.toUpperCase());
+                    resolve (resultados);
+                }, 2000);
+            });
+        }
+
+        const mostrarResultados = (resultados) => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resultados.forEach(resultado =>{
+                        //contenedor.createElement;
+                        let parr = document.createElement('p');
+                            parr.textContent = resultado;
+                            contenedor.append(parr);
+                    });
+                    resolve();
+                }, 2000)
+            });
+        }
+
+        buscarDatos()
+        .then(datos => {
+            rdo.textContent ='Datos procesados';
+            return procesarDatos(datos)})
+        .then(resultados => {
+            rdo.textContent ='Resultados'
+            return mostrarResultados(resultados)})
+        .catch(error => {
+            let err = document.createElement('p');
+            err.textContent = "ha ocurrido algo malo";
+            contenedor.append(err);
+        })
+        .finally(()=>{
+            setTimeout(() => {
+                let parr = document.createElement('p');
+                parr.textContent = 'Proceso terminado';
+                container.append(parr);
+            }, 1000);
+            
+        });
+    </script>
+</body>
+
+</html>
