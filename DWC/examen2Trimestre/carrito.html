@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu repositorio digital para leer y tal</title>
+</head>
+<body>
+    <h1>Tu repositorio digital para leer y tal</h1>
+    <label for="email">Introduce tu email:</label>
+    <input type="email" id="email" placeholder="tuemail@ejemplo.com">
+    <p>Selecciona los libros electrónicos que te interesan y pulsa "Recibir por correo".</p>
+    <ul id="lista-epubs"></ul>
+    <h2>Carrito</h2>
+    <ul id="carrito"></ul>
+    <button id="enviar">Recibir por correo</button>
+    <button id="borrar">Vaciar carrito</button>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const listaLibros = ["Momo", "V de Vendetta", "El infinito en un junco", "Fahrenheit 451", "El barón rampante", "Sin noticias de Grub"];
+            const listaElementos = document.getElementById("lista-epubs");
+            const carritoElementos = document.getElementById("carrito");
+            const emailInput = document.getElementById("email");
+            const btnEnviar = document.getElementById("enviar");
+            const btnVaciar = document.querySelector('#borrar');
+            let carrito =  [];
+             
+            function actualizarUI() {
+                listaElementos.innerHTML = "";
+                listaLibros.forEach(libro => {
+                    const li = document.createElement("li");
+                    const btnAgregar = document.createElement("button");
+                    btnAgregar.textContent = "➕";
+                    btnAgregar.style.marginRight = "10px";
+                    btnAgregar.disabled = carrito.includes(libro);
+                    btnAgregar.addEventListener("click", () => agregarAlCarrito(libro));
+                    li.appendChild(btnAgregar);
+                    li.appendChild(document.createTextNode(libro));
+                    listaElementos.appendChild(li);
+                });
+                carritoElementos.innerHTML = "";
+                carrito.forEach(libro => {
+                    const li = document.createElement("li");
+                    const btnQuitar = document.createElement("button");
+                    btnQuitar.textContent = "❌";
+                    btnQuitar.style.marginRight = "10px";
+                    btnQuitar.addEventListener("click", () => quitarDelCarrito(libro));
+                    li.appendChild(btnQuitar);
+                    li.appendChild(document.createTextNode(libro));
+                    carritoElementos.appendChild(li);
+                });
+            }
+            
+            function agregarAlCarrito(libro) {
+                if (!carrito.includes(libro)) {
+                    carrito.push(libro);
+                    actualizarUI();
+                }
+                localStorage.setItem("carrito", JSON.stringify(carrito));
+            }
+            
+            function quitarDelCarrito(libro) {
+                carrito = carrito.filter(item => item !== libro);
+                actualizarUI();
+                localStorage.setItem("carrito", JSON.stringify(carrito));
+            }
+    
+            btnEnviar.addEventListener("click", () => {   
+                fetch('https:httpbin.org/post', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(carrito)
+                })
+                .then(response => response.json())
+                .then(data => console.log('Respuesta; ', data))    
+                .catch(error => console.error('Error: ', error))
+            });
+            btnVaciar.addEventListener('click', () => {
+                carrito=[];
+                localStorage.removeItem('carrito');
+
+            });
+            actualizarUI();
+        });
+    </script>
+</body>
+</html>

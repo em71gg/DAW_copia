@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <style>
+        header{
+            height: 150;
+            width: auto;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset>div {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+        }
+
+        .radio {
+            display: block;
+        }
+        img{
+            height: 280;
+            width: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="cabecero">
+        
+    </header>
+    <main>
+        <div id="">
+            <img id="imagen" src="imagen1.png" alt="haz click">
+           
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </main>
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const cabecero = document.querySelector('#cabecero');
+            const imagen = document.querySelector('#imagen');
+
+            let today = dayjs().format('DD/MM/YYYY');
+            let date = document.createElement('h1');
+            date.innerHTML = "<h1> La fehca de hoys es: " + today;    
+            cabecero.append(date);
+
+            imagen.addEventListener('click', () => {
+                fetch('https://api.chucknorris.io/jokes/random')
+                .then(response => response.json())
+                .then(data => {
+                    let mensaje = data.value;
+                    return mensaje;
+            })
+                .then(mensaje => {
+                    const addMessage = () => {
+                        const message = new SpeechSynthesisUtterance("Hola a todos");
+                        speechSynthesis.speak(mensaje);
+                        if(imagen.src.endsWith('imagen1.png'))imagen.setAttribute('src', 'imagen2.png');
+                        }
+                })
+                
+                .finally(imagen.setAttribute('src', 'imagen1.png'))
+                .catch(error => console.error('Error: ', error))
+            }
+            )
+            
+        });
+        
+        
+    </script>
+</body>
+
+</html>
