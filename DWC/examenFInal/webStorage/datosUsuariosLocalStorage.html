@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        fieldset>div {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            flex-wrap:wrap;
+        }
+        
+       
+
+        .radio {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div>
+            <form action="" method="">
+
+                <fieldset>
+                    <legend>Datos personales del formulario</legend>
+                    <p>Escriba los datos siguientes</p>
+
+
+                    <div>
+
+                        <!--inputs texts-->
+                        <label for="username">Nombre de usuario</label>
+                        <input type="text" name="username" id="username" placeholder="Nombre de usuario">
+                        <label for="name">Nombre</label>
+                        <input type="text" name="name" id="name" placeholder="Nombre">
+                        <label for="apellidos">Apellidos</label>
+                        <input type="text" name="apellidos" id="apellidos" placeholder="apellidos">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" name="email" id="email" placeholder="Correo electrónico">
+                    </div>
+           
+
+                    
+
+                    <div class="radio">
+                        <p>Elija sexo</p><!--radio-->
+
+                        <label for="sexo">Masculino</label>
+                        <input type="radio" id="sexo" name="sexo" value="masculino">
+                        <label for="sexo">Femenino</label>
+                        <input type="radio" id="sexo" name="sexo" value="femenino">
+                    </div>
+
+                    <div>
+                        <input type="submit" name="enviar" value="Enviar" id="enviar">
+                        <input type="reset" name="borrar" value="Borrar">
+                    </div>
+                </fieldset>
+            </form>
+
+            <div>
+                <button id="listar">Listar Usuarios</button>
+
+                <ul id="listaUsuarios"></ul>
+
+            </div>
+
+            <div>
+                <button id="verUsuario">Verdatos usuario</button>
+                <label for="nombre">Introducir nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+
+                <p id="datosUsuario"></p>
+            </div>
+
+            <div>
+                <button id="borrarUsuario">Eliminar usuario</button>
+                <label for="nombreBorrar">Introducir nombre</label>
+                <input type="text" id="nombreBorrar"  placeholder="Nombre">
+            </div>
+
+    </main>
+    <script>
+        const enviar = document.querySelector('#enviar');
+        const listarUsuarios = document.querySelector('#listar');
+        const listaUsuarios = document.querySelector('#listaUsuarios');
+        const mostrarUsuario = document.querySelector('#verUsuario'); 
+        const escribeUsuario = document.querySelector('#datosUsuario'); 
+        const borrarUsuario = document.querySelector('#borrarUsuario');
+
+        enviar.addEventListener('click' , (event) => {
+            event.preventDefault();
+
+            let username = document.querySelector('#username').value.trim();
+            let name = document.querySelector('#name').value.trim();
+            let apellidos= document.querySelector('#apellidos').value.trim();
+            let email = document.querySelector('#email').value.trim();
+            let sexo = document.querySelector('input[name="sexo"]:checked')? document.querySelector('input[name="sexo"]:checked').value : 'Sin definir' ;
+            
+            let userData = {//guardo los datos del usuario en json
+                "nombre" : name,
+                "apellidos" :apellidos,
+                "email" : email,
+                "sexo": sexo
+            }
+            let users = JSON.parse(localStorage.getItem("users")) || {}; //obtengo los datos de local storage o un objeto vacio
+
+            users[username] = userData //Agrego un nuevo usuario con clave valor
+
+            localStorage.setItem("users", JSON.stringify(users));
+
+        });
+
+        listarUsuarios.addEventListener('click', () => {
+
+            let users = JSON.parse(localStorage.getItem("users")) || {};//tomo el json que quiero usar
+            
+            listaUsuarios.innerHTML = ""; //sanitizo;
+            
+            if(Object.keys(users).length ===0) {
+                listaUsuarios.innerHTML = '<li>No hay usuarios que mostrar</li>';
+                return;
+            }
+
+            for(let username in users) {
+                let user = users[username];
+                let li = document.createElement('li');
+                li.textContent = `Nombre de usuario: ${username}, nombre: ${user.nombre}`;
+                listaUsuarios.append(li);
+            }
+        });
+
+        mostrarUsuario.addEventListener('click', () => {
+            let users = JSON.parse(localStorage.getItem("users")) || {};
+            let user = document.querySelector('#nombre').value.trim();
+
+            escribeUsuario.innerHTML = "";
+            let username = users[user]
+            escribeUsuario.textContent = `Username: ${user}, nombre: ${username.nombre}, sexo: ${username.sexo}`;
+        });
+
+        borrarUsuario.addEventListener('click', () => {
+            let usuarios = JSON.parse(localStorage.getItem('users')) || {};
+
+            let usernameABorrar = document.querySelector('#nombreBorrar').value.trim();
+
+            try{
+                //localStorage.removeItem(usuarios[usernameABorrar]); No puedo usarla porque 
+                // removeItem sólo opera sobre clave directa users. Por eso borro parte del objeto y 
+                //lo actualizo
+                delete usuarios[usernameABorrar];
+                localStorage.setItem('users', JSON.stringify(usuarios));
+                alert(`Usuario ${usernameABorrar} borrado con éxito`);
+            }catch (error) {
+                alert('Error al borrar' + error);
+            }
+        });
+    </script>>
+</body>
+
+</html>
