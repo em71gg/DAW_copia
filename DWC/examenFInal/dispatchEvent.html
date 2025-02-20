@@ -22,10 +22,10 @@
       <div id="mensaje"></div>
     </main>
     <script>
-        const boton = document.querySelector('#boton');
+        const boton = document.querySelector('#bt');
         const mensaje = document.querySelector('#mensaje');
 
-        boton.addEventListener('click', () =>{
+        boton.addEventListener('click', (event) =>{
             if (event.detail === 0) {
             // Si detail es 0, significa que el evento no proviene de un clic real, 
             // sino de JavaScript
@@ -38,8 +38,8 @@
 
         document.addEventListener("keydown", (event) => {
             if(event.key === 'Enter'){
-                let clickEvent = new Event('click');
-                boton.dispatchEvent(clickEvent);
+                //let clickEvent = new Event('click');
+                boton.click();
             }
         });
       

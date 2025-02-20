@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        iframe { width: 100%; height: 280px; border: none; }
+    </style>
+</head>
+<body>
+    <main>
+        <div>
+            <p id="localizacion"></p>
+            <p id="direccion"></p>
+        </div>
+        <div>
+            <button id="posicionar">Obtener Posición</button>
+        </div>
+        <iframe id="mapFrame"></iframe>
+    </main>
+    <script>
+        const textoLocalizacion = document.querySelector('#localizacion');
+        const posicionar = document.querySelector('#posicionar');
+        const mapFrame = document.querySelector('#mapFrame');
+
+        posicionar.addEventListener('click', () => {
+            obtenerPosicion();
+        });
+
+        function obtenerPosicion() {
+            navigator.geolocation.getCurrentPosition(position => {
+                let latitud = position.coords.latitude;
+                let longitud = position.coords.longitude;
+                let mensaje = `La posición es latitud: ${latitud}, longitud: ${longitud}`;
+                textoLocalizacion.textContent = mensaje;
+                
+                // Generar URL de OpenStreetMap con marcador
+                let mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitud-0.01},${latitud-0.01},${longitud+0.01},${latitud+0.01}&layer=mapnik&marker=${latitud},${longitud}`;
+                mapFrame.src = mapUrl;
+            }, () => {
+                textoLocalizacion.textContent = "No se pudo obtener la ubicación";
+            });
+        }
+    </script>
+</body>
+</html>

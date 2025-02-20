@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #grafica {
+            width: 900px;
+            height: 500px;
+            margin: 0 auto;
+        }
+
+        #inputContainer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="inputContainer">
+        <label for="mes">Mes:</label>
+        <select id="mes">
+            <option value="Enero">Enero</option>
+            <option value="Febrero">Febrero</option>
+            <option value="Marzo">Marzo</option>
+            <option value="Abril">Abril</option>
+            <option value="Mayo">Mayo</option>
+            <option value="Junio">Junio</option>
+            <option value="Julio">Julio</option>
+            <option value="Agosto">Agosto</option>
+            <option value="Septiembre">Septiembre</option>
+            <option value="Octubre">Octubre</option>
+            <option value="Noviembre">Noviembre</option>
+            <option value="Diciembre">Diciembre</option>
+        </select>
+
+        <label for="ventas">Ventas:</label>
+        <input type="number" id="ventas" min="0" />
+        <button onclick="agregarDato()">Agregar</button>
+    </div>
+
+    <div id="grafica"></div>
+
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(dibujarGrafica);
+
+        // Datos iniciales
+        var datosArray = [
+            ['Mes', 'Ventas'],
+            ['Enero', 100],
+            ['Febrero', 117],
+            ['Marzo', 66],
+            ['Abril', 103],
+            ['Mayo', 80],
+            ['Junio', 120],
+            ['Julio', 150],
+            ['Agosto', 130],
+            ['Septiembre', 110],
+            ['Octubre', 90],
+            ['Noviembre', 140],
+            ['Diciembre', 160]
+        ];
+
+        function dibujarGrafica() {
+            var datos = google.visualization.arrayToDataTable(datosArray);
+
+            var opciones = {
+                title: 'Horas desperdiciadas en YouTube en 2024',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var grafica = new google.visualization.LineChart(document.getElementById('grafica'));
+            grafica.draw(datos, opciones);
+        }
+
+        function agregarDato() {
+            var mes = document.getElementById("mes").value;
+            var ventas = parseInt(document.getElementById("ventas").value, 10);
+
+            if (!isNaN(ventas) && ventas >= 0) {
+                // Buscar si el mes ya existe y actualizar su valor
+                var existe = false;
+                for (var i = 1; i < datosArray.length; i++) {
+                    if (datosArray[i][0] === mes) {
+                        datosArray[i][1] = ventas;
+                        existe = true;
+                        break;
+                    }
+                }
+
+                // Si el mes no existe, agregarlo (aunque en este caso siempre existen)
+                if (!existe) {
+                    datosArray.push([mes, ventas]);
+                }
+
+                // Redibujar la gráfica
+                dibujarGrafica();
+            } else {
+                alert("Por favor, ingrese un valor válido para las ventas.");
+            }
+        }
+    </script>
+</body>
+
+</html>

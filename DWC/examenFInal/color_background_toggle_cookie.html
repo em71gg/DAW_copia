@@ -41,31 +41,7 @@
             ));
             return matches ? decodeURIComponent(matches[1]).split(',')[0] : undefined;
             }
-            /*function getCookie(name) {
-                let matches = document.cookie.match(new RegExp(
-                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-                ));
-                
-                if (matches) {
-                    let cookieValue = decodeURIComponent(matches[1]);
-                    let valueBeforeComma = cookieValue.split(',')[0];  // Obtiene la parte antes de la coma
-                    return valueBeforeComma;  
-                }
-                return undefined;  // Si no existe la cookie, devuelve undefined
-            }*/
-       /*function getCookie(name) {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    console.log(cookie);
-                    if (cookie.startsWith(name + '=')) {
-                       // console.log()
-                        return cookie.substring(name.length + 1);
-                    }
-                }
-                return null;
-            }*/
-
+            
             // Cargar el tema desde la cookie al cargar la página
         const savedTheme = getCookie('backgroundTheme');
         //console.log(savedTheme);
