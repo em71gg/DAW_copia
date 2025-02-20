@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</head>
+<body>
+    <main>
+        <div>
+            <p id="localizacion"></p>
+        </div>
+        <div>
+            <button id="posicionar">Obtener Posición</button>
+        </div>
+        <div id="map"></div>
+    </main>
+    <script>
+        let map;
+        let marker;
+        
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 15,
+            });
+        }
+        
+        document.querySelector('#posicionar').addEventListener('click', () => {
+            navigator.geolocation.getCurrentPosition(position => {
+                let lat = position.coords.latitude;
+                let lng = position.coords.longitude;
+                let mensaje = `La posición es latitud: ${lat}, longitud: ${lng}`;
+                document.querySelector('#localizacion').textContent = mensaje;
+                
+                let location = { lat, lng };
+                map.setCenter(location);
+                
+                if (marker) {
+                    marker.setPosition(location);
+                } else {
+                    marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                    });
+                }
+            }, () => {
+                document.querySelector('#localizacion').textContent = "No se pudo obtener la ubicación";
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!--
+🔹 Obtener una clave API válida para Google Maps
+Ve a la Consola de Google Cloud:
+👉 https://console.cloud.google.com/
+Crea un nuevo proyecto o usa uno existente.
+Habilita la API de Google Maps JavaScript:
+En el menú, ve a API y servicios → Biblioteca.
+Busca Google Maps JavaScript API y habilítala.
+Obtén la clave API:
+Ve a Credenciales y crea una nueva clave de API.
+(Opcional) Restringe la clave API:
+Puedes restringirla para que solo funcione en dominios específicos.
+-->
