@@ -31,20 +31,13 @@ $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
                     <p class="header-title">Agencia de viajes</p>
                 </div>
                 <div id="options-header">
-                    <form action="./areaPersonal/areaPersonal.php" method="post">
-                        <p class="header-text">In
-                            iciar Sesión</p>
+                    
                         <div class="logout-button-container">
-                            <input type="text" class="logout-button" placeholder="Usuario" id="user">
+                            <a class="fcc-btn" href="./acceso/login.php">Login</a>  
                         </div>
                         <div class="logout-button-container">
-                            <input type="password" class="logout-button" placeholder="Contraseña">
+                            <a class="fcc-btn" href="./acceso/registrarse.php">Registrarse</a>
                         </div>
-                        <div class="logout-button-container">
-                            <input type="submit" class="logout-button" placeholder="Contraseña">
-                        </div>
-                    </form>
-
                 </div>
             </div>
         </div>

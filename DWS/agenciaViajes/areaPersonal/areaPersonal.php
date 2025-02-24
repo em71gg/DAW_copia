@@ -4,16 +4,27 @@ require_once('../utiles/variables.php');
 
 $conexion = conectarPDO($host, $user, $password, $bbdd);
 
-$consulta = $conexion->prepare("SELECT 
+$consulta = $conexion->prepare ("SELECT 
                                     o.nombre,
-                                    o.descripcion
+                                    o.descripcion,
+                                    o.fecha_actividad,
+                                    o.aforo - COALESCE(COUNT(s.oferta_id), 0) AS plazas_disponibles
+                                FROM ofertas o
+                                LEFT JOIN solicitudes s ON o.id = s.oferta_id
+                                WHERE o.visada = 1
+                                GROUP BY o.nombre, o.descripcion, o.fecha_actividad, o.aforo
+                                HAVING (o.aforo - COALESCE(COUNT(s.oferta_id), 0)) > 0");
+
+/*("SELECT 
+                                    o.nombre,
+                                    o.descripcion,
                                     o.fecha_actividad,
                                     o.aforo - COALESCE(COUNT(s.oferta_id), 0) AS plazas_disponibles
                                 FROM ofertas o
                                 LEFT JOIN solicitudes s ON o.id = s.oferta_id/*lef join para que me rescate también las ofertas que no tengan coincidencia en solicitud, osea las que tienen todas las plazas libres porque no ha habido solicitudes todavía*/
-                                GROUP BY o.nombre
+                                /*GROUP BY o.nombre
                                 HAVING plazas_disponibles > 0
-                                WHERE o.visada =1");
+                                WHERE o.visada =1");*/
 
 
 $consulta->execute();
@@ -30,7 +41,7 @@ $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrada</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 
 <body>
