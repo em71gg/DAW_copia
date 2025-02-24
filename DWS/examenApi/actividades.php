@@ -3,6 +3,7 @@
 require_once('./utiles/funciones.php');
 require_once('./utiles/variables.php');
 $conexion = conectarPDO($host, $user, $password, $bbdd);
+//$mensajesError =[]; Mejor meterlo en cada método para que sean independientes
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
@@ -12,9 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         e.plazas,
                         u.nombre as aula
                         FROM extraescolar e 
-                        JOIN clases c ON e.id = c.extraescolar_id
-                        Join ubicacion u ON c.extraescolar_id =u.extraescolar_id
-                        group BY e.nombre    
+                        LEFT JOIN ubicacion u ON e.id =u.extraescolar_id
         ");
     $consulta->execute();
     $registros = [];
@@ -42,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    $chekcNombre = $conexion->prepare("SELECT *
+    $checkNombre = $conexion->prepare("SELECT *
     FROM extraescolar
     WHERE nombre=?");
     $checkNombre->bindParam(1, $datos['nombre']);
@@ -63,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     plazas ) 
                                     VALUES
                                     (:nombre, 
-                                    :plazas, 
+                                    :plazas 
                                     )");
         bindAllParams($alta, $datos);
         $alta->execute();
@@ -89,9 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     
     $id = isset($datos['id']) ? $datos['id'] : null;
     $nombre = isset($datos['nombre']) ? $datos['nombre'] : null;
-    $nombre = isset($datos['plazas']) ? $datos['plazas'] : null;
-    
-    
+    $plazas = isset($datos['plazas']) ? $datos['plazas'] : null;
+    $mensajesError = [];
 
     if ($id !== null) {
 
@@ -103,10 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             $mensajesError[] = "No existe ese id.";
         }
     } else { //si no se ha pasado la se avisa
-        $mensajesError[] = "Debe especificar la id de la petición";
+        //$mensajesError[] = "Debe especificar la id de la petición";
     }
 
-    if ($checkNombre !== null){
+    if ($nombre !== null){
         $checkNombre = $conexion->prepare("SELECT *
         FROM extraescolar
         WHERE nombre=?");
@@ -124,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
     if (count($mensajesError) == 0) {
         $campos = getParams($datos);
-        $update = "UPDATE extraescolares SET $campos WHERE id = :id";
+        $update = "UPDATE extraescolar SET $campos WHERE id = :id";
         $consulta = $conexion->prepare($update);
         bindAllParams($consulta, $datos);
         $consulta->execute();
