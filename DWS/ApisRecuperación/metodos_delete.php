@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
         $delForeignKey1 -> bindParam(1, $id);
         $delForeignKey1 -> execute();
         $delForeignKey1 = null;
-
+        //Primero hay que borrar las claves forasteras de otras tablas
         $delForeignKey2 = $conexion -> prepare('DELETE FROM ubicacion WHERE extraescolar_id=?');
         $delForeignKey2 -> bindParam(1, $id);
         $delForeignKey2 -> execute();
@@ -38,5 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
         exit();
 
     }
+
+    //En caso de que ninguna de las opciones anteriores se haya ejecutado
+    salidaDatos('', array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request'));
 
 ?>

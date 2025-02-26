@@ -57,3 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         salidaDatos($mensajeJson, array('HTTP/1.1 400 Bad Request'));
     }
 }
+//En caso de que ninguna de las opciones anteriores se haya ejecutado
+salidaDatos('', array('Content-Type: application/json', 'HTTP/1.1 400 Bad Request'));
+?>
