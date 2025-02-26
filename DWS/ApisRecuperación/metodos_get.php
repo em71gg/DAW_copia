@@ -10,18 +10,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     if (isset($_GET['id'])){//consulta para seleccionar un elemento por id
         //Mostrar un mensaje
-            $select = "SELECT 
+            $consulta = $conexion -> prepare('SELECT 
                         a.nombre as Nombre,
                         a.apellidos as Apellidos,
                         a.edad as Edad,
-                        COALESCE(e.nombre, '') as Actividad,
-                        COALESCE(u.nombre, '') as Aula
+                        COALESCE(e.nombre, "") as Actividad,
+                        COALESCE(u.nombre, "") as Aula
                         FROM alumnos a
                         LEFT JOIN clases c ON a.id = c.alumno_id
                         LEFT JOIN extraescolar e ON c.alumno_id = e.id
                         LEFT JOIN ubicacion u ON e.id = u.extraescolar_id
-                        WHERE a.id = :id";
-            $consulta = $conexion->prepare($select);
+                        WHERE a.id = :id');
             $consulta->bindParam(':id', $_GET['id']);
             $consulta->execute();
             if ($consulta->rowCount() > 0) {
@@ -36,17 +35,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if(isset($_GET['conExtra'])){//ejemplo para listado que cunpla una condición diferente al id
                             //el id se pasa por postman creando la clave 'conExtra'con valor 1
 
-        $consulta = $conexion->prepare("SELECT
+        $consulta = $conexion->prepare('SELECT
                                         a.nombre as Nombre,
                                         a.apellidos as Apellidos,
                                         a.edad as Edad,
-                                        COALESCE(e.nombre, '') as Actividad,
-                                        COALESCE(u.nombre, '') as Aula
+                                        COALESCE(e.nombre, "") as Actividad,
+                                        COALESCE(u.nombre, "") as Aula
                                         FROM alumnos a
                                         JOIN clases c ON a.id = c.alumno_id
                                         JOIN extraescolar e ON c.alumno_id = e.id
                                         LEFT JOIN ubicacion u ON e.id = u.extraescolar_id
-                                        ");
+                                        ');
         $consulta->execute();
         $registros = [];
         while ($registro = $consulta->fetch(PDO::FETCH_ASSOC)) {
@@ -60,17 +59,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     }
 
-    $consulta = $conexion->prepare("SELECT
+    $consulta = $conexion->prepare('SELECT
                                         a.nombre as Nombre,
                                         a.apellidos as Apellidos,
                                         a.edad as Edad,
-                                        COALESCE(e.nombre, '') as Actividad,
-                                        COALESCE(u.nombre, '') as Aula
+                                        COALESCE(e.nombre, "") as Actividad,
+                                        COALESCE(u.nombre, "") as Aula
                                         FROM alumnos a
                                         LEFT JOIN clases c ON a.id = c.alumno_id
                                         LEFT JOIN extraescolar e ON c.alumno_id = e.id
                                         LEFT JOIN ubicacion u ON e.id = u.extraescolar_id
-                                    ");
+                                    ');
     $consulta->execute();
     $registros = [];//Array que recojerá los registros de la consulta y será codificado en json como respuesta
     while ($registro = $consulta->fetch(PDO::FETCH_ASSOC)) {

@@ -22,9 +22,7 @@
                                               (
                                                   /*Si hubiese que devolver un json*/
                                                   SELECT 
-                                                      JSON_OBJECTAGG(
-                                                          anno, titulos
-                                                      )
+                                                      JSON_OBJECTAGG(anno, titulos)
                                                   FROM (
                                                       SELECT 
                                                           anno, 

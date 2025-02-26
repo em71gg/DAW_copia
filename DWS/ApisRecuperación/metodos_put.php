@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     if ($id !== null) {
 
         //verificamos que existe registro con esa id
-        $consultaExiste = $conexion->prepare("SELECT * FROM extraescolar WHERE id = ?");
+        $consultaExiste = $conexion->prepare('SELECT * FROM extraescolar WHERE id = ?');
         $consultaExiste->bindParam(1, $id);
         $consultaExiste->execute();
         if ($consultaExiste->rowCount() == 0) { //si no existe el equipo cargamos aviso de error
@@ -37,6 +37,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
         
             $mensajesError[] = 'Debe indicar un nombre.';
     }
+
+    //Para comprobar que no existen registros diferentes al que quiero modificar 
+    //con el nombre que estoy dándole
+    $checkNombre = $conexion->prepare('SELECT *
+                                            FROM extraescolar
+                                            WHERE nombre=? AND id != ?
+                                            ');
+    $checkNombre->bindParam(1, $datos['nombre']);
+    $checkNombre -> bindParam(2, $datos['id']);
+    $checkNombre->execute();
+
+    if ($checkNombre->rowCount() > 0) {
+        $mensajesError[] = 'Ese nombre ya está en uso';
+    }
     if($plazas == null) $mensajesError[] = 'Debe indicar un número de plazas disponibles.';
     if($plazas <6 || $plazas >20){
         $mensajesError[] = 'El número de plzas debe estar entre 6 y 20.';
@@ -46,8 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
     if (count($mensajesError) == 0) {
         $campos = getParams($datos);
-        $update = "UPDATE extraescolar SET $campos WHERE id = :id";
-        $consulta = $conexion->prepare($update);
+        $consulta = $conexion -> prepare("UPDATE extraescolar SET $campos WHERE id = :id");
         bindAllParams($consulta, $datos);
         $consulta->execute();
         //En caso de que ninguna de las opciones anteriores se haya ejecutado

@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         altura, as Altura
                         anno_nacimiento as Nacimiento,
                         array con los titulos
+                        SELECT JSON_ARRAYAGG(
                         
                         FROM tenistas j
                         JOIN titulos t ON j.id = t.tenista_id

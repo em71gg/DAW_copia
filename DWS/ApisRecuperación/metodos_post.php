@@ -21,9 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    $checkNombreApellidos = $conexion->prepare("SELECT *
+    $checkNombreApellidos = $conexion->prepare('SELECT *
     FROM alumnos
-    WHERE nombre=? AND apellidos=?");
+    WHERE nombre=? AND apellidos=?');
     $checkNombreApellidos->bindParam(1, $datos['nombre']);
     $checkNombreApellidos -> bindParam(2, $datos['apellidos']);
     $checkNombreApellidos->execute();
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (count($mensajesError) == 0) {
-        $alta = $conexion->prepare("INSERT 
+        $alta = $conexion->prepare('INSERT 
                                     INTO alumnos 
                                     (nombre,
                                     apellidos,
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     (:nombre, 
                                     :apellidos,
                                     :edad )
-                                    ");
+                                    ');
         bindAllParams($alta, $datos);
         $alta->execute();
         $idAlta = $conexion->lastInsertId();

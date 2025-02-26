@@ -12,12 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
         $id = $datos['id'];
 
        //Primero hay que borrar las claves forasteras de otras tablas
-        $delForeignKey1 = $conexion -> prepare("DELETE FROM clases WHERE extraescolar_id=?");
+        $delForeignKey1 = $conexion -> prepare('DELETE FROM clases WHERE extraescolar_id=?');
         $delForeignKey1 -> bindParam(1, $id);
         $delForeignKey1 -> execute();
         $delForeignKey1 = null;
 
-        $delForeignKey2 = $conexion -> prepare("DELETE FROM ubicacion WHERE extraescolar_id=?");
+        $delForeignKey2 = $conexion -> prepare('DELETE FROM ubicacion WHERE extraescolar_id=?');
         $delForeignKey2 -> bindParam(1, $id);
         $delForeignKey2 -> execute();
         $delForeignKey2 = null;
