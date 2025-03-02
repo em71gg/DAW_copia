@@ -1,0 +1,22 @@
+<header>
+  <mat-toolbar>
+    <mat-icon>catching_pokemon</mat-icon>
+    <span class="toolbar-title">Pokemon App</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+</header>
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <app-menu-lateral></app-menu-lateral>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<footer>
+  <p>© 2025 - Emilio Garruta</p>
+</footer>

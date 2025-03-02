@@ -7,14 +7,15 @@
 
 /* Estilos generales */
 body{
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #f7fafc;
     color: #4a5568;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     flex-direction: column;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    min-height: 100vh;
+    
 }
 
 /* Header */
@@ -60,6 +61,7 @@ header {
 #options-header{
     display: flex;
     flex-direction: column;
+    justify-content:flex-end;
     align-items: right;
     gap:1rem;  
 }
@@ -71,6 +73,7 @@ header {
 }
 
 .logout-button  {
+    width: 100%;
     padding: 0.75rem 1rem;
     font-size: 1rem;
     background-color: #3b82f6;
@@ -85,9 +88,9 @@ header {
 .fcc-btn {
     padding: 0.75rem 1rem;
     font-size: 1rem;
-    background-color: #3b82f6;
+    background-color: #3b82f6; 
     color: white !important;
-    border: 2px solid transparent;
+    border: 1px solid #fbfbfb;;
     border-radius: 0.375rem;
     font-weight: 600;
     cursor: pointer;
@@ -125,6 +128,24 @@ header {
 .logout-button::placeholder{
     color: rgb(203, 224, 255);
 }
+#noActivo {
+    font-style: italic;
+}
+#linkSin {
+    text-decoration: none;
+    
+    color: #fff;
+}
+
+#linkTabla {
+    color: #2563EB; 
+    font-weight: bold;
+    text-decoration: none;   
+}
+
+#linkTabla:hover {
+    text-decoration: underline;
+}
 
 /* Modo oscuro */
 /*body.dark-mode .header-bg {
@@ -145,6 +166,9 @@ main {
 /* Tarjetas de contenido */
 .table-container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 .container-table{
     background-color: white;
@@ -161,12 +185,25 @@ main {
    /* overflow: hidden;
     border-radius: 0.75rem;
   }*/
+
+  .malla{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+  .mallaDemandante{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
   #customers {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif;
    
     overflow: hidden;/*adapta el contenido al contenedor que lo contiene*/
     border-collapse: collapse;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
     width: 100%;
   }
   thead{
@@ -194,6 +231,12 @@ main {
     /*background-color: #368dfe;*/
     color: white;
   }
+  tfoot{
+    display: table-footer-group; /* Asegura que se comporte como un pie de tabla */
+    visibility: visible;
+    border-radius: 0 0 0.75rem 0.75rem;
+    background: linear-gradient(to right, #3b82f6, #2563eb, #3b82f6);
+  }
 
 
 
@@ -208,6 +251,7 @@ main {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 2px solid #93c5fd;
     padding: 1.5rem;
+    gap: 1.5rem;
 }
 
 .text-center {

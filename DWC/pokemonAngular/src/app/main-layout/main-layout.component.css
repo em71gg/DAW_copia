@@ -1,0 +1,23 @@
+.toolbar-title {
+  margin-left: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+footer {
+  background-color: rgb(202, 249, 158);
+}
+
+header {
+  background-color: rgb(202, 249, 158);
+}
+
+mat-toolbar {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

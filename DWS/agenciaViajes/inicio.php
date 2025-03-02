@@ -4,7 +4,7 @@ require_once('./utiles/variables.php');
 
 $conexion = conectarPDO($host, $user, $password, $bbdd);
 
-$consulta = $conexion->prepare("SELECT nombre, descripcion, fecha_actividad, aforo FROM ofertas WHERE visada=1");
+$consulta = $conexion->prepare("SELECT nombre, descripcion, fecha_actividad, aforo FROM ofertas WHERE visada=1 ORDER BY fecha_actividad DESC");
 $consulta->execute();
 
 $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -19,7 +19,7 @@ $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrada</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
 <body>
@@ -75,7 +75,11 @@ $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
                             }
                             ?>
                         </tbody>
-
+                         <tfoot>
+                            <tr>
+                                <td colspan="4"></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
 

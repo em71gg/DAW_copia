@@ -1,0 +1,14 @@
+<h2>Agregar Pokémon a mi colección</h2>
+<form [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <mat-label>ID del Pokémon</mat-label>
+    <input matInput formControlName="id" type="number" required>
+    <mat-error *ngIf="pokemonForm.get('id')?.hasError('required') && pokemonForm.get('id')?.touched && pokemonForm.get('id')?.dirty">
+      El ID es obligatorio
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Buscar y Agregar</button>
+</form>
+<div *ngIf="feedbackMessage" class="feedback-message">
+  {{ feedbackMessage }}
+</div>

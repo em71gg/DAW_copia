@@ -1,6 +1,32 @@
 <?php
-require_once('../utiles/funciones.php');
-require_once('../utiles/variables.php');
+session_name("sesion-privada");
+session_start();
+
+if (!isset($_SESSION['id']) || !isset($_SESSION['perfil_id'])) {
+    session_unset();
+    session_destroy();
+    //echo "no hay variables de sesion";
+    header('location: ../inicio.php');
+    exit();
+}
+else {
+    switch ($_SESSION['perfil_id']){
+        case 1: 
+            header('location: ./administrador.php');
+            break;
+        case 2:
+            header('location: ./gestor.php');
+            break;
+        case 3:
+            header('location: ./ofertante.php');
+            break;
+        case 4:
+            header('location: ./demandante.php');
+            break;
+    }
+}
+
+
 
 $conexion = conectarPDO($host, $user, $password, $bbdd);
 

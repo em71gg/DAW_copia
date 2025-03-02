@@ -158,7 +158,7 @@
  * @param {PDOStatement|null} $consulta La consulta preparada (opcional).
  * @param {PDO|null} $conexion La conexión PDO a la base de datos.
  */
-  function desconectarPDO($consulta, $conexion) {
+  function desconectarPDO(&$consulta, &$conexion) {
     // Libera la consulta si es un objeto válido
     if ($consulta instanceof PDOStatement) {
         $consulta = null;

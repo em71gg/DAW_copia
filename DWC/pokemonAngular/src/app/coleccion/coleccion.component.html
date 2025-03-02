@@ -1,0 +1,18 @@
+<h2>Lista de Pokémon</h2>
+<div class="accordion-container">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let pokemon of pokemons">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ pokemon.name | titlecase }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="panel-content">
+        <img [src]="pokemon.sprite" alt="{{ pokemon.name }}" class="pokemon-sprite">
+        <div class="pokemon-details">
+          <p>ID: {{ pokemon.id }}</p>
+          <p>Tipos: {{ pokemon.types.join(', ') || 'Cargando...' }}</p>
+          <button mat-raised-button color="primary" (click)="addToMyCollection(pokemon)">Agregar a mi colección</button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

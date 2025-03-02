@@ -1,0 +1,10 @@
+<h2>Mi Lista de Pokémon</h2>
+<mat-list>
+  <mat-list-item *ngFor="let pokemon of myCollection">
+    <img [src]="pokemon.sprite" alt="{{ pokemon.name }}" class="pokemon-sprite">
+    <span>{{ pokemon.name | titlecase }} (ID: {{ pokemon.id }})</span>
+    <button mat-icon-button (click)="removeFromCollection(pokemon.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>
