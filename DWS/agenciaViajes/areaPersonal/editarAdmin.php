@@ -110,6 +110,12 @@ $rdo = $consulta -> fetchAll(PDO::FETCH_ASSOC);
                             Registrar
                         </a>
                     </p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        Volver a la página de administrador
+                        <a class="text-blue-600 decoration-2 hover:underline font-medium" href="./administrador.php">
+                            Volver
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>

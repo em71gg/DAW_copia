@@ -14,39 +14,101 @@ $flag =null;
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $flag = $_POST['elegido'];
+    $flag = isset($_POST['elegido']) ? $_POST['elegido'] : null;;
 }
 
-$conexion = conectarPDO($host, $user, $password, $bbdd);
-try{
-    $consulta = $conexion->prepare("SELECT 
-    o.id AS Identificador,    
-    c.categoria AS Categoria,
-    o.nombre AS Nombre,
-    o.descripcion AS Descripcion,
-    o.fecha_actividad AS Fecha, 
-    o.aforo AS Aforo,
-    o.visada AS visada,
-    COUNT(s.oferta_id) AS Solicitudes
-    FROM ofertas o 
-    JOIN categorias c ON o.categoria_id=c.id
-    LEFT JOIN solicitudes s ON o.id=s.oferta_id 
-    GROUP BY o.id
-    ORDER BY o.fecha_actividad DESC
-");
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['visar'] ==1) {
+    $flag = 1;
+    $conexion = conectarPDO($host, $user, $password, $bbdd);
+    try{
+        $consulta = $conexion->prepare('SELECT 
+        o.id AS ID,
+        o.nombre AS Nombre,
+        c.categoria AS Categoria,
+        o.descripcion AS Descripcion,
+        o.fecha_actividad AS Fecha,
+        o.aforo AS Aforo,
+        u.nombre AS Usuario,
+        o.created_at AS Creada,
+        o.updated_at AS Actualizada
+        FROM ofertas o
+        LEFT JOIN usuarios u ON o.usuario_id = u.id
+        LEFT JOIN categorias c ON o.categoria_id = c.id
+            
+        WHERE o.visada=0 
+        ORDER BY fecha_actividad ASC
+    ');
 
-$consulta->execute();
+    $consulta->execute();
 
-$rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
+    $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+    catch (PDOException $e) {
+        echo "ERROR: " . $e -> getMessage();
+    }
+    finally {
+        desconectarPDO($consulta, $conexion);
+    }
+}else{
+    $conexion = conectarPDO($host, $user, $password, $bbdd);
+    try{
+        $consulta = $conexion->prepare("SELECT 
+        o.id AS Identificador,    
+        c.categoria AS Categoria,
+        o.nombre AS Nombre,
+        o.descripcion AS Descripcion,
+        o.fecha_actividad AS Fecha, 
+        o.aforo AS Aforo,
+        o.visada AS visada,
+        COUNT(s.oferta_id) AS Solicitudes
+        FROM ofertas o 
+        JOIN categorias c ON o.categoria_id=c.id
+        LEFT JOIN solicitudes s ON o.id=s.oferta_id 
+        GROUP BY o.id
+        ORDER BY o.fecha_actividad DESC
+    ");
+
+    $consulta->execute();
+
+    $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+    catch (PDOException $e) {
+        echo "ERROR: " . $e -> getMessage();
+    }
+    finally {
+        desconectarPDO($consulta, $conexion);
+    }
 
 }
-catch (PDOException $e) {
-    echo "ERROR: " . $e -> getMessage();
-}
-finally {
-    desconectarPDO($consulta, $conexion);
-}
 
+if($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $conexion = conectarPDO($host, $user, $password, $bbdd);
+    $id = isset($_GET['ofertaID']) ? $_GET['ofertaID'] : null;
+    $visada= 1;
+    try {
+        $visar = $conexion ->prepare ('UPDATE 
+                                            ofertas
+                                        SET
+                                            visada= ?
+                                        WHERE id = ?                                    
+                                    ');
+        $visar -> bindParam(1, $visada);
+        $visar -> bindParam(2, $id);
+        $visar -> execute();
+
+        if($visar -> rowCount()>0) {
+            $salida = "Oferta Validada";
+            echo "Enviar mensaje a cliente";
+        }
+
+    }catch (PDOException $e) {
+        echo "error: " .$e -> getMessage();
+    } finally{
+        desconectarPDO($visar, $conexion);
+    }
+}
 ?>
 
 
@@ -95,7 +157,7 @@ finally {
                 </div>
                 <div class='buttons'>
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
-                        <div class='malla'>
+                        <div class='mallaAdmin'>
                             <div class='mallaBton'>
                                 <button
                                     type="submit"
@@ -123,10 +185,17 @@ finally {
                                     Listar activos
                                 </button>
                             </div> 
-                            <div class="mallaBton">
-                                <div class="logout-button">
-                                    <a id="linkSin"  href="./editarAdmin.php">Empleados</a>  
-                                </div>
+                            <div class='mallaBton'>
+                                <button
+                                    type="submit"
+                                    class="logout-button"
+                                    name="visar"
+                                    value=1>
+                                    Visar
+                                </button>
+                            </div>
+                            <div class="logout-button">
+                                <a id="linkSin"  href="./editarAdmin.php">Empleados</a>  
                             </div>
                         </div>
                             
@@ -141,9 +210,67 @@ finally {
                 <div class="text-center">
                     <h1 class="title">Listado de actividades activas</h1>
                 </div>
+                <?php if($flag ==1):
+                ?>
+                    <div id="div-table">
+                        <table id="customers">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Categoria</th>
+                                    <th>Descripción de la actividad</th>
+                                    <th>Fecha</th>
+                                    <th>Aforo</th>
+                                    <th>Usuario</th>
+                                    <th>Creada</th>
+                                    <th>Actualizada</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php
+                                if(empty($rdo)){
+                                    echo "<tr><td colspan='7' id='noActivo'> No hay actividades activas</td></tr>";
+                                }
+                                else{
+                                
+                                        foreach ($rdo as $campo) {
+                                        
+                                            echo "<tr>
+                                            <td>" . $campo['ID'] . "</td>
+                                            <td>" . $campo['Nombre'] . "</td>
+                                            <td>" . $campo['Categoria'] . "</td>
+                                            <td>" . $campo['Descripcion'] . "</td>
+                                            <td>" . $campo['Fecha'] . "</td>
+                                            <td>" . $campo['Aforo'] . "</td>
+                                            <td>" . $campo['Usuario'] . "</td>
+                                            <td>" . $campo['Creada'] . "</td>
+                                            <td>" . $campo['Actualizada'] . "</td>
+                                            <td> <a id='linkTabla' href='" . htmlspecialchars($_SERVER['PHP_SELF']) ."?accion=visar&ofertaID={$campo['ID']}'>Visar</td>
+                                        </tr>" . PHP_EOL;
+                                        }
+                                    //}
+                                    
+                                }
+                                
+                                ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="10"></td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+
+                <?php else:
+                ?>
                 <div id="div-table">
                     <table id="customers">
-                        <thead>
+                     <thead>
                             <tr>
                                 <th>Nombre</th>
                                 <th>Fecha</th>
@@ -195,7 +322,8 @@ finally {
 
                     </table>
                 </div>
-
+                <?php endif;
+                ?>
             </div>
 
         </div>
