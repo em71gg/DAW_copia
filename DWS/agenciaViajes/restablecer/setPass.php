@@ -4,6 +4,7 @@ session_start();
 if (!isset($_SESSION['email'])) header('refresh:3, url=../login.php'); //si llego sin la variable de sesion vuelvo a login
 require_once('../utiles/funciones.php');
 require_once('../utiles/variables.php');
+echo $_SESSION['email'];
 $errores = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -27,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //$timeToken = "$token|$timeStamp";
 
         $conexion = conectarPDO($host, $user, $password, $bbdd);
-        $insertToken = $conexion->prepare('UPDATE usuarios SET token=?, activo="0", fecha=CURRENT_TIMESTAMP WHERE email =?');
+        $insertToken = $conexion->prepare('UPDATE usuarios SET token=?, activo="0" WHERE email =?');
         $insertToken->bindParam(1, $token);
         $insertToken->bindParam(2, $_SESSION['email']);
         $insertToken->execute();
-        desconectarPDO($insertToken, $conexion);
+        
 
         if ($insertToken->rowCount() > 0) { //se actualizó el token con éxito enviamos correo
             /* Envío De Email Con Token */
@@ -54,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Envio del email
             mail($_SESSION['email'], 'Activa tu cuenta', $textoEmail, $headers);
             /* Redirección a login.php con GET para informar del envío del email */
-            header('Location: linkconfirmación.php');
+            header('Location: linkconfirmacion.php');
             exit();
         }
     }

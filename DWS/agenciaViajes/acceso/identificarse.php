@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-  <h1>Entrar</h1>
+  <!--<h1>Entrar</h1>-->
   <!-- Mostramos errores por HTML -->
   <?php if (count($errores) > 0): ?>
     <ul class="errores">
@@ -89,11 +89,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <p>¡Gracias por registrarte! Revisa tu bandeja de correo para activar la cuenta.</p>
   <?php endif; ?>
   <!-- Mensaje de cuenta activa -->
-  <?php if (isset($_REQUEST["activada"])): ?>
+  <?php if (isset($_REQUEST["activada"])): 
+      header('Refresh: 3, url= ./login.php')
+    ?>
     <p>¡Cuenta activada! Inicie sesion.</p>
+    
   <?php endif; ?>
   <!-- Formulario de identificación -->
-  <form method="post">
+ <!-- <form method="post">
     <p>
       <input type="text" name="email" placeholder="Email">
     </p>
@@ -103,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <p>
       <input type="submit" value="Entrar">
     </p>
-  </form>
+  </form>-->
 </body>
 
 </html>

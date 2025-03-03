@@ -1,9 +1,9 @@
 <?php
-session_name("sesion-privada");
-session_start();
+//session_name("sesion-privada");
+//session_start();
 // Comprueba si existe la sesión "email", en caso contrario vuelve a la página de login
-if (!isset($_SESSION["email"])) header("Location: ../login.php");
-$rol = $_SESSION['rol_id'];
+//if (!isset($_SESSION["email"])) header("Location: ../login.php");
+//$rol = $_SESSION['rol_id'];
 
 
 require_once('../utiles/variables.php');

@@ -36,7 +36,7 @@ $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
                             <a class="fcc-btn" href="./acceso/login.php">Login</a>  
                         </div>
                         <div class="logout-button-container">
-                            <a class="fcc-btn" href="./acceso/registrarse.php">Registrarse</a>
+                            <a class="fcc-btn" href="./acceso/registro.php">Registrarse</a>
                         </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ $errores = [];
 $email = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = obtenerValorCampo('email');
+    echo $email;
     if (!empty($email)) {
         if (validarEmail($email)) { //si el email es válio se comprueba si está registrado
 
@@ -13,9 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $consulta = $conexion->prepare("SELECT * FROM usuarios WHERE email=?");
             $consulta->bindParam(1, $email);
             $consulta->execute();
-            desconectarPDO($consulta, $conexion);
-
-            if ($consulta->rowCount() > 0) { //Si el email existe en la bbdd llevo  creo sesion y llevo a introducir contraseña
+            
+            if ($consulta-> rowCount() > 0) { //Si el email existe en la bbdd llevo  creo sesion y llevo a introducir contraseña
                 echo "$email existe en la base de datos";
                 echo "Valor email tras crear la sesion: $email";
 

@@ -21,7 +21,7 @@ if (count($_REQUEST) > 0) {
             if ($diferencia > 300) { //si pasan 5 minutos no dejo que se restablezca
                 $flag = 2;
                 session_destroy();
-                header('refresh:3, url=../login.php');
+                header('refresh:3, url=../acceso/login.php');
             } else {
                 //$flag = 1;
 
@@ -36,13 +36,13 @@ if (count($_REQUEST) > 0) {
                 if ($consulta->rowCount() > 0) { //consulta con éxito.
                     $flag = 1;
                     session_destroy();
-                    header('refresh:3, url=../login.php');
+                    header('refresh:3, url=../acceso/login.php');
                 }
             }
         } else { //error en el link
             $errores['errorLink'] = "Se ha producido un error en la activación.";
             session_destroy();
-            header('refresh:3, url=../login.php');
+            header('refresh:3, url=../acceso/login.php');
         }
     }
 }
