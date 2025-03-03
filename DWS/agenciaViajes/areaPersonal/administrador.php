@@ -31,13 +31,10 @@ try{
     FROM ofertas o 
     JOIN categorias c ON o.categoria_id=c.id
     LEFT JOIN solicitudes s ON o.id=s.oferta_id 
-    WHERE /*o.visada=1 
-        AND o.fecha_actividad< NOW() 
-        AND*/ o.usuario_id= ?
     GROUP BY o.id
     ORDER BY o.fecha_actividad DESC
 ");
-$consulta -> bindParam(1, $_SESSION['id']);
+
 $consulta->execute();
 
 $rdo = $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -73,6 +70,7 @@ finally {
                     <?php
                     echo"<p>La variable \$_SESSION['id'] es = ". $_SESSION['id'] . "</p>";
                     echo"<p>La variable \$_SESSION['perfil_id'] es = ". $_SESSION['perfil_id'] . "</p>";
+                    echo"<p>La variable \$_SESSION['email'] es = ". $_SESSION['email'] . "</p>";
                     ?>
                 </div>
                 <div>
@@ -127,7 +125,7 @@ finally {
                             </div> 
                             <div class="mallaBton">
                                 <div class="logout-button">
-                                    <a id="linkSin"  href="../acciones/altaOferta.php">Nueva Actividad</a>  
+                                    <a id="linkSin"  href="./editarAdmin.php">Empleados</a>  
                                 </div>
                             </div>
                         </div>
@@ -180,7 +178,7 @@ finally {
                                         <td>" . $campo['Identificador'] . "</td>
                                         <td>" . $campo['Categoria'] . "</td>
                                         <td>" . $campo['Descripcion'] . "</td>
-                                        <td> <a id='linkTabla' href='editarOfertante.php?estado={$campo['visada']}&idOferta={$campo['Identificador']}'>Editar</td>
+                                        <td> <a id='linkTabla' href='editarListadosAdmin.php?estado={$campo['visada']}&idOferta={$campo['Identificador']}'>Editar</td>
                                     </tr>" . PHP_EOL;
                                     }
                                 //}
@@ -204,4 +202,4 @@ finally {
     </main>
 </body>
 
-</html><p>Privado</p>
+</html>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $conexion = conectarPDO($host, $user, $password, $bbdd);
         try {
-            $consultaUsuarios = $conexion->prepare("SELECT password, id, perfil_id FROM usuarios WHERE email = ?");
+            $consultaUsuarios = $conexion->prepare("SELECT password, id, perfil_id, email FROM usuarios WHERE email = ?");
             $consultaUsuarios->bindParam(1, $email);
             $consultaUsuarios->execute();
 
@@ -27,10 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $contrasena = $row['password'];
                 $perfilId = $row['perfil_id'];
                 $usuarioId = $row['id'];
+                $email = $row['email'];
             }
             else{
 
-                $consultaGestores = $conexion -> prepare ("SELECT password, id, perfil_id FROM gestores WHERE email = ?");
+                $consultaGestores = $conexion -> prepare ("SELECT password, id, perfil_id, email FROM gestores WHERE email = ?");
                 $consultaGestores -> bindParam(1, $email);
                 $consultaGestores -> execute();
 
@@ -39,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $contrasena = $row['password'];
                     $perfilId = $row['perfil_id'];
                     $usuarioId = $row['id'];
+                    $email = $row['email'];
                 }
             }           
             if($usuarioId == null || $perfilId == null) {
@@ -60,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             session_start();
             $_SESSION['id'] = $usuarioId;
             $_SESSION['perfil_id'] = $perfilId;
+            $_SESSION['email'] = $email;
             header('Location: ../areaPersonal/areaPersonal.php');
             exit();
         } else {
