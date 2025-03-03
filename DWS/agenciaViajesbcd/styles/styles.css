@@ -1,0 +1,346 @@
+/* Reset de estilo base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos generales */
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7fafc;
+    color: #4a5568;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    min-height: 100vh;
+    
+}
+
+/* Header */
+header {
+    width: 100%;
+}
+
+/* Fondo degradado y padding */
+.header-bg {
+    background: linear-gradient(to right, #3b82f6, #2563eb, #3b82f6);
+    padding: 2rem 0;
+    height: fit-content;
+    width: 100%;
+}
+
+/* Estilo para el header interno */
+.header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    height: fit-content;
+}
+.header-container div {
+    flex: 1; /* Hace que los elementos a la izquierda y derecha ocupen espacio y centren el título */
+    text-align: center;
+}
+
+/* Título */
+.header-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+
+}
+
+.header-text{
+    font-size: 1rem;
+    color:white;
+}
+
+#options-header{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items: right;
+    gap:1rem;  
+}
+/* inputs cabecera */
+.logout-button-container {
+    color:white;
+    margin:1rem;
+    width: 100%;
+}
+
+.logout-button  {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background-color: #3b82f6;
+    color: white !important;
+    border: 2px solid transparent;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, border 0.3s;
+}
+
+.fcc-btn {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background-color: #3b82f6; 
+    color: white !important;
+    border: 1px solid #fbfbfb;;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, border 0.3s;
+    text-decoration: none;
+  }
+
+.fcc-btn:hover {
+    background-color: #2563eb;
+    border: 2px solid #fbfbfb;  
+}
+
+.fcc-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #2563eb;
+}
+.fcc-btn::placeholder{
+    color: rgb(203, 224, 255);
+}
+
+#user{
+    color:white;
+}
+
+.logout-button:hover {
+    background-color: #2563eb;
+    border: 2px solid #fbfbfb;
+    
+}
+
+.logout-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #2563eb;
+}
+.logout-button::placeholder{
+    color: rgb(203, 224, 255);
+}
+#noActivo {
+    font-style: italic;
+}
+#linkSin {
+    text-decoration: none;
+    
+    color: #fff;
+}
+
+#linkTabla {
+    color: #2563EB; 
+    font-weight: bold;
+    text-decoration: none;   
+}
+
+#linkTabla:hover {
+    text-decoration: underline;
+}
+
+/* Modo oscuro */
+/*body.dark-mode .header-bg {
+    background: linear-gradient(to right, #6b7280, #4b5563, #6b7280);
+}*/
+
+/* Contenedor principal */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    color: #4a5568;
+    width: 100%;
+    max-width: auto;
+    padding: 1.5rem;
+}
+
+/* Tarjetas de contenido */
+.table-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.container-table{
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #93c5fd;
+    padding: 1.5rem;
+  }
+
+ /* #div-table{
+    width: 90%; /* O cualquier otro tamaño deseado */
+    /*max-width: 600px;*/
+    /*overflow-x: auto; /* Para evitar desbordamiento horizontal */
+   /* overflow: hidden;
+    border-radius: 0.75rem;
+  }*/
+
+  .malla{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+  .mallaDemandante{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+  #customers {
+    font-family: 'Roboto', sans-serif;
+   
+    overflow: hidden;/*adapta el contenido al contenedor que lo contiene*/
+    border-collapse: collapse;
+    border-radius: 10px;
+    width: 100%;
+  }
+  thead{
+    border-radius: 0.75rem 0.75rem 0 0;
+    background: linear-gradient(to right, #3b82f6, #2563eb, #3b82f6);
+  }
+  #customers td,
+  #customers th {
+    /*border: 1px solid #ddd;*/
+    padding: 8px;
+  }
+ 
+  #customers tr:nth-child(even) {
+    background-color: #eff6fa;
+  }
+
+  #customers tr:hover {
+    background-color: #ddd;
+  }
+
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    /*background-color: #368dfe;*/
+    color: white;
+  }
+  tfoot{
+    display: table-footer-group; /* Asegura que se comporte como un pie de tabla */
+    visibility: visible;
+    border-radius: 0 0 0.75rem 0.75rem;
+    background: linear-gradient(to right, #3b82f6, #2563eb, #3b82f6);
+  }
+
+
+
+.info-table
+{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #93c5fd;
+    padding: 1.5rem;
+    gap: 1.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d3748;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+    color: #4a5568;
+}
+
+.link {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: medium;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* Formulario - Entradas y botones */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.label {
+    display: block;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+    
+}
+
+.input:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 1px #3182ce;
+}
+
+.error {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #2b6cb0;
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 2px #3182ce;
+}
+
+/* Información adicional */
+.info-list {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+}
+
+.info-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #4a5568;
+}
+
