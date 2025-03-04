@@ -148,7 +148,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
             </div>
         </div>
     </header>
-
     <main id="content" role="main">
         <div class="table-container">
             <div class="info-table">
@@ -203,8 +202,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
                 </div>
 
             </div>
-        </div>
-        
+        </div>      
         <div class="table-container">
             <div class="info-table">
                 <div class="text-center">
@@ -265,7 +263,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                         </table>
                     </div>
-
                 <?php else:
                 ?>
                 <div id="div-table">
@@ -282,7 +279,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <?php
                             if(empty($rdo)){
@@ -311,7 +307,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
                                 //}
                                 
                             }
-                            
                             ?>
                         </tbody>
                         <tfoot>

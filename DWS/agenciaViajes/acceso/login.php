@@ -1,6 +1,13 @@
+                    <!--$_COOKIE
+                        Página de login a la parte privada de la aplicación web. Si se hace el login
+                        redirige los datos introducidos a la página v"./acceso.php"
+                        
+                        Si no se recuerda la contraseña da la posibilidad de restablecerla a través 
+                        de un link  que nos llevará a la página "../restablecer/confirmarCorreo.php"
+                    -->
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +15,6 @@
     <title>Entrada</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-
 <body>
     <header>
         <div class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 dark:from-gray-500 dark:via-gray-600 dark:to-gray-500 py-8 md:py-16">
@@ -19,7 +25,6 @@
             </div>
         </div>
     </header>
-
     <main id="content" role="main" class="w-full max-w-md mx-auto p-6">
         <div
             class="mt-7 bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300">
@@ -30,6 +35,7 @@
                     </h1>
                 </div>
                 <div class="mt-5">
+<!--Formulario para introducir el par email:contraseña para hacer el loging  dirige los datos mediante un post a la página "./acceso.php"-->
                     <form action="./acceso.php" method="post" method="post">
                         <div class="grid gap-y-4">
                             <div>
@@ -42,11 +48,9 @@
                                         id="email"
                                         name="email"
                                         class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-
                                         aria-describedby="email-error"
                                         placeholder="Email" />
                                 </div>
-
                             </div>
                             <div>
                                 <label
@@ -58,14 +62,11 @@
                                         id="password"
                                         name="contrasena"
                                         class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-
                                         aria-describedby="email-error"
                                         placeholder="Contraseña" />
                                 </div>
-
                             </div>
                             <div class="text-center">
-
                             </div>
                             <button
                                 type="submit"
@@ -74,8 +75,8 @@
                             </button>
                         </div>
                     </form>
-
                     <div class="text-center">
+<!--Redireccion a resetear la contraseña-->
                         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                             ¿Recuerda su contraseña?
                             <a
@@ -84,18 +85,10 @@
                                 Restablecer contraseña
                             </a>
                         </p>
-
                     </div>
                 </div>
             </div>
-
-        </div>
-
-        
+        </div>  
     </main>
-
-
-
 </body>
-
 </html>

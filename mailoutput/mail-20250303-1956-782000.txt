@@ -1,0 +1,14 @@
+To: demandante4@email.com
+Subject: Activa tu cuenta
+From: agencia@php.com
+Content-type: text/plain; charset=utf-8
+
+
+                    Hola!
+ 
+                    Gracias por registrate en la mejor plataforma de internet, demuestras inteligencia.
+
+                    Para activar entra en el siguiente enlace:
+
+                http://localhost:3000/DWS/agenciaViajes/acceso/verificar-cuenta.php?email=demandante4%40email.com&token=cc1059558179a4b8034ceb3387666841
+                        

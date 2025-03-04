@@ -281,8 +281,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 endif;
                                 ?>
                             </div>
-                          
-                         
                             <div>
                                 <label
                                     for="contrasenna"
